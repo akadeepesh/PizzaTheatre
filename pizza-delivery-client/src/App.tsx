@@ -2,12 +2,14 @@ import React from "react";
 import { ThemeProvider } from "@material-tailwind/react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Landing from "./components/Landing";
+import Landing from "./components/Landing";
 
 const Layout = () => {
   return (
     <>
-      <Routes>{/* <Route path="/" element={<Landing />}></Route> */}</Routes>
+      <Routes>
+        <Route path="/" element={<Landing />}></Route>
+      </Routes>
     </>
   );
 };
