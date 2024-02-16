@@ -2,6 +2,7 @@ import React from "react";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
@@ -13,11 +14,12 @@ const Navbar = () => {
         </h1>
         <div className="flex flex-row">
           <Button variant={"link"} size={"sm"}>
-            <Link href="/login">Login</Link>
+            <Link href="/sign-in">Login</Link>
           </Button>
           <Button variant={"link"} size={"sm"}>
-            <Link href="/login">SignUp</Link>
+            <Link href="/sign-up">SignUp</Link>
           </Button>
+          <UserButton />
         </div>
       </div>
     </div>
