@@ -1,10 +1,8 @@
-import Head from "next/head";
+import Navbar from "@/components/Navbar";
 const HomePage = () => {
   return (
     <div className="">
-      <Head>
-        <title>MakeYourPizza</title>
-      </Head>
+      <Navbar />
     </div>
   );
 };
