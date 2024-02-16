@@ -5,7 +5,6 @@ const HomePage = () => {
   return (
     <div className="">
       <Navbar />
-      {/* <Separator className="mb-9" /> */}
       <Home />
     </div>
   );
