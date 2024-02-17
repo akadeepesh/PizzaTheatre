@@ -1,9 +1,9 @@
-import React from "react";
+import { UserButton } from "@clerk/nextjs";
 
-export default function CustomPage() {
+export default function Menu() {
   return (
-    <div>
-      <h1>Make Your Pizza Here</h1>
+    <div className="h-screen">
+      <UserButton />
     </div>
   );
 }
