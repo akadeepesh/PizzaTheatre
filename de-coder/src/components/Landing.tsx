@@ -5,7 +5,7 @@ import { ImagesSlider } from "./ui/image-slider";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-export default function Home() {
+export default function Landing() {
   const images = [
     "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -33,7 +33,7 @@ export default function Home() {
             Pizza Theator
           </div>
         </motion.p>
-        <Link href="/home">
+        <Link href="/menu">
           <Button className="px-4 py-2 backdrop-blur-sm border bg-primary border-primary-foreground text-white mx-auto text-center rounded-full relative mt-4">
             <span>Let's Have a Taste →</span>
             <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-primary to-transparent" />

@@ -2,9 +2,11 @@ import React from "react";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 const Navbar = () => {
+  const { user } = useUser();
+
   return (
     <div className="fixed top-0 left-0 right-0 z-10 flex justify-center">
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
@@ -13,13 +15,18 @@ const Navbar = () => {
           <Separator className="bg-primary" />
         </h1>
         <div className="flex flex-row">
-          <Button variant={"link"} size={"sm"}>
-            <Link href="/sign-in">Login</Link>
-          </Button>
-          <Button variant={"link"} size={"sm"}>
-            <Link href="/sign-up">SignUp</Link>
-          </Button>
-          <UserButton />
+          {user ? (
+            <UserButton />
+          ) : (
+            <>
+              <Button variant={"link"} size={"sm"}>
+                <Link href="/sign-in">Login</Link>
+              </Button>
+              <Button variant={"link"} size={"sm"}>
+                <Link href="/sign-up">SignUp</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>
