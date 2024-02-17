@@ -16,15 +16,11 @@ const Navbar = () => {
         </h1>
         <div className="flex flex-row">
           {user ? (
-            <div className="">
+            <div>
               <UserButton />
-              <Button variant={"link"} size={"sm"}>
-                <SignOutButton />
-              </Button>
             </div>
           ) : (
             <div>
-              <UserButton />
               <Button variant={"link"} size={"sm"}>
                 <SignInButton />
               </Button>
