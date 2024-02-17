@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
+import Link from "next/link";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -33,7 +34,7 @@ const Navbar = () => {
     >
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
         <h1 className="scroll-m-20 text-3xl md:text-4xl text-primary font-extrabold tracking-tight lg:text-5xl font-serif">
-          <a href="/">Pizza Theater</a>
+          <Link href="/">Pizza Theater</Link>
           <Separator className="bg-primary" />
         </h1>
         <div className="flex flex-row">
