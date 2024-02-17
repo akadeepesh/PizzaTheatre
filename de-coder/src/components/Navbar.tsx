@@ -1,7 +1,6 @@
 import React from "react";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import Link from "next/link";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 // import { UserButton, useUser, SignOutButton } from "@clerk/nextjs";
 
