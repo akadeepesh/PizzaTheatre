@@ -1,8 +1,8 @@
 import React from "react";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
-// import { UserButton, useUser, SignOutButton } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs";
+// import { UserButton, useUser,  } from "@clerk/nextjs";
 
 const Navbar = () => {
   // const { user } = useUser();
