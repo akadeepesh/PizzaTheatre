@@ -1,8 +1,8 @@
 import React from "react";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs";
-// import { UserButton, useUser,  } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+// import { UserButton, useUser } from "@clerk/nextjs";
 
 const Navbar = () => {
   // const { user } = useUser();
@@ -15,12 +15,15 @@ const Navbar = () => {
           <Separator className="bg-primary" />
         </h1>
         <div className="flex flex-row">
-          {/* {user ? (
-            <UserButton />
-            <Button variant={"link"} size={"sm"}>
+          {/* {user ? ( */}
+          <div className="">
+            {/* <UserButton /> */}
+            {/* <Button variant={"link"} size={"sm"}>
               <SignOutButton />
-            </Button>
-          ) : ( */}
+            </Button> */}
+          </div>
+          {/* ) : ( */}
+          <UserButton />
           <div>
             <Button variant={"link"} size={"sm"}>
               <SignInButton />
