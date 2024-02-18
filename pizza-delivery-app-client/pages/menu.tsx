@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-
+import { Separator } from "@/components/ui/separator";
 const pizzas = [
   "Mexican Delight",
   "Cheese Lovers",
@@ -23,6 +23,7 @@ const toppings = [
 // ];
 
 function Items() {
+  const [itemCount, setItemCount] = useState(0);
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas.map((pizza, index) => (
@@ -54,13 +55,37 @@ function Items() {
                 alt="thumbnail"
               />
             </CardItem>
-            <div className="flex justify-between items-center mt-20">
+            <div className="flex justify-between items-center mt-20 gap-20">
               <CardItem
                 translateZ={20}
                 as="button"
-                className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
+                className="rounded-2xl font-normal dark:text-white"
               >
-                Add to Cart →
+                {itemCount === 0 ? (
+                  <div className="text-xs">Add to Cart →</div>
+                ) : (
+                  <div className="flex flex-row justify-evenly">
+                    <div className="bg-secondary rounded-s-2xl pb-1 w-full">
+                      -
+                    </div>
+                    <div className="">
+                      <Separator
+                        orientation="vertical"
+                        className="bg-primary"
+                      />
+                    </div>
+                    <div className="pb-1 w-full">{itemCount}</div>
+                    <div className="">
+                      <Separator
+                        orientation="vertical"
+                        className="bg-primary"
+                      />
+                    </div>
+                    <div className="bg-secondary pb-1 rounded-e-2xl w-full">
+                      +
+                    </div>
+                  </div>
+                )}
               </CardItem>
               <CardItem
                 translateZ={20}
