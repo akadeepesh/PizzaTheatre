@@ -62,7 +62,12 @@ function Items() {
                 className="rounded-2xl font-normal dark:text-white"
               >
                 {itemCount === 0 ? (
-                  <div className="text-xs">Add to Cart →</div>
+                  <div
+                    onClick={() => setItemCount(itemCount + 1)}
+                    className="text-xs"
+                  >
+                    Add to Cart →
+                  </div>
                 ) : (
                   <div className="flex flex-row justify-evenly">
                     <div className="flex justify-center rounded-s-2xl w-full">
