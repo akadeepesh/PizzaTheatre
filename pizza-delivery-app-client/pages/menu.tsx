@@ -4,8 +4,9 @@ import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
+import Cart from "./cart";
 
-interface Pizza {
+export interface Pizza {
   name: string;
   toppings: string;
   price: string;
@@ -26,13 +27,6 @@ const pizzas: Pizza[] = [
   },
 ];
 
-const price = ["99", "99", "99", "129"];
-const toppings = [
-  "Cheese, Jalappeno, Golden Corn",
-  "Classic Cheese Pizza",
-  "Cheese Onion Capsicum",
-  "Loaded with Double Mozzarella Cheese",
-];
 // const images = [
 //   "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 //   "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -83,7 +77,7 @@ function Items() {
               translateZ="60"
               className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
             >
-              {toppings[index]}
+              {pizza.toppings}
             </CardItem>
             <CardItem translateZ="100" className="w-full mt-4">
               <Image
@@ -153,6 +147,7 @@ function Items() {
           </CardBody>
         </CardContainer>
       ))}
+      <Cart cartItems={cartItems} />
     </div>
   );
 }
