@@ -23,7 +23,7 @@ const toppings = [
 // ];
 
 function Items() {
-  const [itemCount, setItemCount] = useState(0);
+  const [itemCount, setItemCount] = useState(1);
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas.map((pizza, index) => (
@@ -65,7 +65,7 @@ function Items() {
                   <div className="text-xs">Add to Cart →</div>
                 ) : (
                   <div className="flex flex-row justify-evenly">
-                    <div className="bg-secondary rounded-s-2xl pb-1 w-full">
+                    <div className="flex justify-center rounded-s-2xl w-full">
                       -
                     </div>
                     <div className="">
@@ -74,16 +74,14 @@ function Items() {
                         className="bg-primary"
                       />
                     </div>
-                    <div className="pb-1 w-full">{itemCount}</div>
+                    <div className=" w-full">{itemCount}</div>
                     <div className="">
                       <Separator
                         orientation="vertical"
                         className="bg-primary"
                       />
                     </div>
-                    <div className="bg-secondary pb-1 rounded-e-2xl w-full">
-                      +
-                    </div>
+                    <div className="rounded-e-2xl w-full">+</div>
                   </div>
                 )}
               </CardItem>
