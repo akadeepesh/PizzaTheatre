@@ -29,13 +29,21 @@ const Navbar = () => {
   return (
     <div
       className={`fixed top-0 left-0 right-0 z-10 flex justify-center transition-all duration-300 ${
-        isScrolled ? "bg-secondary" : ""
+        isScrolled ? "dark:bg-navbar bg-navbarLight" : ""
       }`}
     >
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
-        <h1 className="scroll-m-20 text-3xl md:text-4xl text-primary font-extrabold tracking-tight lg:text-5xl font-serif">
+        <h1
+          className={`scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-serif ${
+            isScrolled ? "dark:text-secondary text-primary" : "text-primary"
+          }`}
+        >
           <Link href="/">Pizza Theater</Link>
-          <Separator className="bg-primary" />
+          <Separator
+            className={`${
+              isScrolled ? "dark:bg-secondary bg-primary" : "bg-primary"
+            }`}
+          />
         </h1>
         <div className="flex flex-row">
           {user ? (
