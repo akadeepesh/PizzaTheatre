@@ -5,12 +5,27 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
 
-const pizzas = [
-  "Mexican Delight",
-  "Cheese Lovers",
-  "Veg Treat",
-  "Double Cheese Wonder",
+interface Pizza {
+  name: string;
+  toppings: string;
+  price: string;
+}
+
+const pizzas: Pizza[] = [
+  {
+    name: "Mexican Delight",
+    toppings: "Cheese, Jalappeno, Golden Corn",
+    price: "99",
+  },
+  { name: "Cheese Lovers", toppings: "Classic Cheese Pizza", price: "99" },
+  { name: "Veg Treat", toppings: "Cheese Onion Capsicum", price: "99" },
+  {
+    name: "Double Cheese Wonder",
+    toppings: "Loaded with Double Mozzarella Cheese",
+    price: "129",
+  },
 ];
+
 const price = ["99", "99", "99", "129"];
 const toppings = [
   "Cheese, Jalappeno, Golden Corn",
@@ -25,12 +40,18 @@ const toppings = [
 // ];
 
 function Items() {
-  const [itemCount, setItemCount] = useState(new Array(pizzas.length).fill(0));
+  const [itemCount, setItemCount] = useState<number[]>(
+    new Array(pizzas.length).fill(0)
+  );
+  const [cartItems, setCartItems] = useState<Pizza[]>([]);
 
   const handleAddToCart = (index: number) => {
     const newCounts = [...itemCount];
     newCounts[index]++;
     setItemCount(newCounts);
+
+    const pizza = pizzas[index];
+    setCartItems([...cartItems, pizza]);
   };
 
   const handleRemoveFromCart = (index: number) => {
@@ -39,6 +60,10 @@ function Items() {
       newCounts[index]--;
     }
     setItemCount(newCounts);
+
+    const updatedCartItems = [...cartItems];
+    updatedCartItems.splice(index, 1);
+    setCartItems(updatedCartItems);
   };
 
   return (
@@ -50,8 +75,8 @@ function Items() {
               translateZ="50"
               className="text-xl flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
             >
-              <div className="">{pizza}</div>
-              <div className="">₹ {price[index]}</div>
+              <div className="">{pizza.name}</div>
+              <div className="">₹ {pizza.price}</div>
             </CardItem>
             <CardItem
               as="p"
@@ -88,7 +113,6 @@ function Items() {
                 ) : (
                   <div className="flex flex-row justify-evenly">
                     <div
-                      // onClick={() => setItemCount(itemCount - 1)}
                       onClick={() => handleRemoveFromCart(index)}
                       className="rounded-s-2xl w-full"
                     >
@@ -110,7 +134,6 @@ function Items() {
                       />
                     </div>
                     <div
-                      // onClick={() => setItemCount(itemCount + 1)}
                       onClick={() => handleAddToCart(index)}
                       className="rounded-e-2xl w-full"
                     >
