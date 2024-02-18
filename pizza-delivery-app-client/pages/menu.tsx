@@ -25,7 +25,22 @@ const toppings = [
 // ];
 
 function Items() {
-  const [itemCount, setItemCount] = useState(0);
+  const [itemCount, setItemCount] = useState(new Array(pizzas.length).fill(0));
+
+  const handleAddToCart = (index: number) => {
+    const newCounts = [...itemCount];
+    newCounts[index]++;
+    setItemCount(newCounts);
+  };
+
+  const handleRemoveFromCart = (index: number) => {
+    const newCounts = [...itemCount];
+    if (newCounts[index] > 0) {
+      newCounts[index]--;
+    }
+    setItemCount(newCounts);
+  };
+
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas.map((pizza, index) => (
@@ -57,22 +72,26 @@ function Items() {
                 alt="thumbnail"
               />
             </CardItem>
-            <div className="flex justify-between items-center mt-20 gap-20">
+            <div className="flex justify-between items-center mt-20 gap-20 select-none">
               <CardItem
                 translateZ={20}
                 as="button"
                 className="rounded-2xl font-normal dark:text-white"
               >
-                {itemCount === 0 ? (
+                {itemCount[index] === 0 ? (
                   <div
-                    onClick={() => setItemCount(itemCount + 1)}
+                    onClick={() => handleAddToCart(index)}
                     className="text-xs"
                   >
                     Add to Cart →
                   </div>
                 ) : (
                   <div className="flex flex-row justify-evenly">
-                    <div className="flex justify-center rounded-s-2xl w-full">
+                    <div
+                      // onClick={() => setItemCount(itemCount - 1)}
+                      onClick={() => handleRemoveFromCart(index)}
+                      className="rounded-s-2xl w-full"
+                    >
                       -
                     </div>
                     <div className="">
@@ -81,14 +100,22 @@ function Items() {
                         className="bg-primary"
                       />
                     </div>
-                    <div className=" w-full">{itemCount}</div>
+                    <div className="cursor-default w-full">
+                      {itemCount[index]}
+                    </div>
                     <div className="">
                       <Separator
                         orientation="vertical"
                         className="bg-primary"
                       />
                     </div>
-                    <div className="rounded-e-2xl w-full">+</div>
+                    <div
+                      // onClick={() => setItemCount(itemCount + 1)}
+                      onClick={() => handleAddToCart(index)}
+                      className="rounded-e-2xl w-full"
+                    >
+                      +
+                    </div>
                   </div>
                 )}
               </CardItem>
