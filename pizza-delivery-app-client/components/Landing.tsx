@@ -29,7 +29,7 @@ export default function Landing() {
         <motion.p className="font-bold text-xl md:text-4xl lg:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
           You deserve the best Pizza around you
           <div className="font-extrabold text-3xl tracking-tight md:text-5xl lg:text-7xl font-serif text-primary">
-            Pizza Theator
+            Pizza Theatre
           </div>
         </motion.p>
         <Link href="/menu">

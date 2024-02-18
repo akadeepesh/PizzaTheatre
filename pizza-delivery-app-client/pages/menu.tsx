@@ -3,6 +3,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
+import Head from "next/head";
+
 const pizzas = [
   "Mexican Delight",
   "Cheese Lovers",
@@ -108,6 +110,9 @@ function Items() {
 const Menu = () => {
   return (
     <div className="">
+      <Head>
+        <title>Pizza Theatre | Menu</title>
+      </Head>
       <Navbar />
       <Items />
     </div>
