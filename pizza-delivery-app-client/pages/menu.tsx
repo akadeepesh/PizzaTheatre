@@ -23,7 +23,7 @@ const toppings = [
 // ];
 
 function Items() {
-  const [itemCount, setItemCount] = useState(1);
+  const [itemCount, setItemCount] = useState(0);
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas.map((pizza, index) => (
