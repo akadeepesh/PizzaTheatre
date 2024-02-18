@@ -34,7 +34,7 @@ const Navbar = () => {
     >
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
         <h1
-          className={`scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-serif ${
+          className={`scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-ProtestRevolution ${
             isScrolled ? "dark:text-secondary text-primary" : "text-primary"
           }`}
         >

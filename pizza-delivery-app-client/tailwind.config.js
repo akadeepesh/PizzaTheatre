@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        ProtestRevolution: ["Protest Revolution", "sans-serif"],
+        Anta: ["Anta", "sans-serif"],
+        Annapura: ["Annapurna SIL", "sans-serif"],
+      },
       colors: {
         navbar: "#EF251A",
         navbarLight: "#FBC8C6",
