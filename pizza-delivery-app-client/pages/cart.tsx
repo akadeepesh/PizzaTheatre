@@ -24,7 +24,7 @@ const Cart: React.FC<CartProps> = ({ cartItems }) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col justify-end items-center">
       <h2>Cart Items</h2>
       <ul>
         {Object.entries(pizzaCounts).map(([name, count]) => {
