@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <div
       className={`fixed top-0 left-0 right-0 z-10 flex justify-center transition-all duration-300 ${
-        isScrolled ? "dark:bg-navbar bg-navbarLight" : "bg-background"
+        isScrolled ? "dark:bg-navbar bg-navbarLight" : ""
       }`}
     >
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
