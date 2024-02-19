@@ -1,44 +1,16 @@
+import Navbar from "@/components/Navbar";
 import React from "react";
-import { Pizza } from "./menu";
 
-interface CartProps {
-  cartItems: Pizza[];
-}
-
-const Cart: React.FC<CartProps> = ({ cartItems }) => {
-  // Check if cartItems is undefined or null
-  if (!cartItems) {
-    return <div>No items in the cart</div>;
-  }
-
-  // Create an object to store counts of each pizza
-  const pizzaCounts: { [name: string]: number } = {};
-
-  // Count the occurrences of each pizza in the cart
-  cartItems.forEach((item) => {
-    if (item.name in pizzaCounts) {
-      pizzaCounts[item.name]++;
-    } else {
-      pizzaCounts[item.name] = 1;
-    }
-  });
-
+const cart = () => {
   return (
-    <div className="flex flex-col justify-end items-center">
-      <h2>Cart Items</h2>
-      <ul>
-        {Object.entries(pizzaCounts).map(([name, count]) => {
-          const item = cartItems.find((pizza) => pizza.name === name);
-          if (!item) return null;
-          return (
-            <li key={name}>
-              {count} {item.name} - ₹{parseInt(item.price) * count}
-            </li>
-          );
-        })}
-      </ul>
+    <div className="">
+      <Navbar />
+      <div className="flex flex-wrap flex-row justify-between max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36 bg-white">
+        <div className="bg-red-500 w-3/5 h-full">cart items</div>
+        <div className="bg-lime-500 w-1/3 h-full">buy menu</div>
+      </div>
     </div>
   );
 };
 
-export default Cart;
+export default cart;

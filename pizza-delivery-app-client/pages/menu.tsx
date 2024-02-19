@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
-import Cart from "./cart";
+import Cart from "../components/items";
 
 export interface Pizza {
   name: string;
