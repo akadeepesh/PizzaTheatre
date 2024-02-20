@@ -85,7 +85,7 @@ const Navbar = () => {
                         className="gap-2"
                       >
                         <FontAwesomeIcon size="xl" icon={faCartShopping} />{" "}
-                        <p className="text-lg">Cart</p>
+                        <span className="text-lg">Cart</span>
                       </Button>
                     </Link>
                     <Link href={"/orders"}>
@@ -95,7 +95,7 @@ const Navbar = () => {
                         className="gap-2"
                       >
                         <FontAwesomeIcon size="xl" icon={faCartShopping} />{" "}
-                        <p className="text-lg">Orders</p>
+                        <span className="text-lg">Orders</span>
                       </Button>
                     </Link>
                   </div>
