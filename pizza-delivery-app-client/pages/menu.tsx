@@ -13,18 +13,22 @@ export interface Pizza {
 }
 
 const pizzas: Pizza[] = [
+  { name: "Cheese Lovers", toppings: "Classic Cheese Pizza", price: "129" },
+  { name: "Veg Treat", toppings: "Cheese, Onion, Capsicum", price: "129" },
   {
     name: "Mexican Delight",
     toppings: "Cheese, Jalappeno, Golden Corn",
-    price: "99",
-  },
-  { name: "Cheese Lovers", toppings: "Classic Cheese Pizza", price: "99" },
-  { name: "Veg Treat", toppings: "Cheese Onion Capsicum", price: "99" },
-  {
-    name: "Double Cheese Wonder",
-    toppings: "Loaded with Double Mozzarella Cheese",
     price: "129",
   },
+  { name: "Spicy Mushroom", toppings: "Special Colli Garlic Sauce, Onion, Capsicum, Mushroom", price: "169" },
+  { name: "Spicy Paneer", toppings: "Special Colli Garlic Sauce, Onion, Capsicum, Paneer", price: "169" },
+  { name: "Golden Choice", toppings: "Cheese, Onion, Sweet Corn, Paneer", price: "169" },
+  { name: "Mixicana Veg Wonder", toppings: "Cheese, Onion, Capsicum, Tomatoes, Jalapenos", price: "169" },
+  { name: "Paneer Makhni", toppings: "Spl. Makhni Sauce, Onion, Capsicum, Paneer", price: "199" },
+  { name: "Tandoori Veggie Delight", toppings: "Cheese, Onion, Capsicum, Mushroom, Red Pepper with Spl Tandoori Sauce", price: "199" },
+  { name: "Veggie Lover", toppings: "Cheese, Onion, Capsicum, Mushroom, Tomatoes", price: "199" },
+  { name: "Tandoori Paneer", toppings: "Cheese, Onion, Capsicum, Red Pepper, Paneer with Spl. Tandoori Sauce", price: "299" },
+  
 ];
 
 // const images = [
