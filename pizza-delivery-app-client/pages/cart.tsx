@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Image from "next/image";
@@ -7,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 const cart = () => {
   return (
     <div className="">
-      <Navbar />
       <div className="flex flex-wrap flex-row justify-between max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
         <div className="w-3/5 h-full">
           <CardContainer className="inter-var w-full">

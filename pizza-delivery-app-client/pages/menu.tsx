@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
@@ -20,15 +19,48 @@ const pizzas: Pizza[] = [
     toppings: "Cheese, Jalappeno, Golden Corn",
     price: "129",
   },
-  { name: "Spicy Mushroom", toppings: "Special Colli Garlic Sauce, Onion, Capsicum, Mushroom", price: "169" },
-  { name: "Spicy Paneer", toppings: "Special Colli Garlic Sauce, Onion, Capsicum, Paneer", price: "169" },
-  { name: "Golden Choice", toppings: "Cheese, Onion, Sweet Corn, Paneer", price: "169" },
-  { name: "Mixicana Veg Wonder", toppings: "Cheese, Onion, Capsicum, Tomatoes, Jalapenos", price: "169" },
-  { name: "Paneer Makhni", toppings: "Spl. Makhni Sauce, Onion, Capsicum, Paneer", price: "199" },
-  { name: "Tandoori Veggie Delight", toppings: "Cheese, Onion, Capsicum, Mushroom, Red Pepper with Spl Tandoori Sauce", price: "199" },
-  { name: "Veggie Lover", toppings: "Cheese, Onion, Capsicum, Mushroom, Tomatoes", price: "199" },
-  { name: "Tandoori Paneer", toppings: "Cheese, Onion, Capsicum, Red Pepper, Paneer with Spl. Tandoori Sauce", price: "299" },
-  
+  {
+    name: "Spicy Mushroom",
+    toppings: "Special Colli Garlic Sauce, Onion, Capsicum, Mushroom",
+    price: "169",
+  },
+  {
+    name: "Spicy Paneer",
+    toppings: "Special Colli Garlic Sauce, Onion, Capsicum, Paneer",
+    price: "169",
+  },
+  {
+    name: "Golden Choice",
+    toppings: "Cheese, Onion, Sweet Corn, Paneer",
+    price: "169",
+  },
+  {
+    name: "Mixicana Veg Wonder",
+    toppings: "Cheese, Onion, Capsicum, Tomatoes, Jalapenos",
+    price: "169",
+  },
+  {
+    name: "Paneer Makhni",
+    toppings: "Spl. Makhni Sauce, Onion, Capsicum, Paneer",
+    price: "199",
+  },
+  {
+    name: "Tandoori Veggie Delight",
+    toppings:
+      "Cheese, Onion, Capsicum, Mushroom, Red Pepper with Spl Tandoori Sauce",
+    price: "199",
+  },
+  {
+    name: "Veggie Lover",
+    toppings: "Cheese, Onion, Capsicum, Mushroom, Tomatoes",
+    price: "199",
+  },
+  {
+    name: "Tandoori Paneer",
+    toppings:
+      "Cheese, Onion, Capsicum, Red Pepper, Paneer with Spl. Tandoori Sauce",
+    price: "299",
+  },
 ];
 
 // const images = [
@@ -162,7 +194,6 @@ const Menu = () => {
       <Head>
         <title>Pizza Theatre | Menu</title>
       </Head>
-      <Navbar />
       <Items />
     </div>
   );

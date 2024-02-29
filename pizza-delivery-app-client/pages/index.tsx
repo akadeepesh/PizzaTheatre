@@ -1,5 +1,4 @@
 import Landing from "@/components/Landing";
-import Navbar from "@/components/Navbar";
 import Head from "next/head";
 
 const HomePage = () => {
@@ -8,7 +7,6 @@ const HomePage = () => {
       <Head>
         <title>Pizza Theatre</title>
       </Head>
-      <Navbar />
       <Landing />
     </div>
   );
