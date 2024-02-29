@@ -6,21 +6,19 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartShopping,
+  faBars,
+  faHouse,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 
 import {
   Drawer,
@@ -73,82 +71,56 @@ const Navbar = () => {
           />
         </h1>
         <div className="md:hidden flex flex-row gap-2">
-          {user ? <UserButton /> : <ModeToggle />}
-          {/* <Sheet>
-            <SheetTrigger>
-              <Button variant={"ghost"} size={"sm"}>
-                <FontAwesomeIcon icon={faBars} />
+          {user ? (
+            <UserButton />
+          ) : (
+            <div className="flex flex-row">
+              <Button variant={"link"} size={"sm"}>
+                <SignInButton />
               </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>
-                  <UserButton />
-                </SheetTitle>
-              </SheetHeader>
-              {user ? (
-                <div className="flex flex-col justify-between h-full">
-                  <div className="flex flex-col my-10">
-                    <Link href={"/cart"}>
-                      <Button
-                        variant={"link"}
-                        size={"default"}
-                        className="gap-2"
-                      >
-                        <FontAwesomeIcon size="xl" icon={faCartShopping} />{" "}
-                        <span className="text-lg">Cart</span>
-                      </Button>
-                    </Link>
-                    <Link href={"/orders"}>
-                      <Button
-                        variant={"link"}
-                        size={"default"}
-                        className="gap-2"
-                      >
-                        <FontAwesomeIcon size="xl" icon={faCartShopping} />{" "}
-                        <span className="text-lg">Orders</span>
-                      </Button>
-                    </Link>
-                  </div>
-                  <Button className="mb-5">
-                    <div className="text-lg">
-                      <SignOutButton />
-                    </div>
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex flex-row">
-                  <Button variant={"link"} size={"sm"}>
-                    <SignInButton />
-                  </Button>
-                  <Button
-                    className="hidden md:flex"
-                    variant={"link"}
-                    size={"sm"}
-                  >
-                    <SignUpButton />
-                  </Button>
-                  <ModeToggle />
-                </div>
-              )}
-            </SheetContent>
-          </Sheet> */}
+              <Button className="hidden md:flex" variant={"link"} size={"sm"}>
+                <SignUpButton />
+              </Button>
+              {/* <ModeToggle /> */}
+            </div>
+          )}
           <Drawer>
-            <DrawerTrigger><Button variant={"ghost"} size={"sm"}>
+            <DrawerTrigger>
+              <Button variant={"ghost"} size={"sm"}>
                 <FontAwesomeIcon icon={faBars} size="xl" />
-              </Button></DrawerTrigger>
+              </Button>
+            </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>
-                  This action cannot be undone.
-                </DrawerDescription>
+                <DrawerTitle className="font-Annapura">
+                  Navigation menu? Here it is!
+                </DrawerTitle>
               </DrawerHeader>
+              <div className="flex flex-col py-2 font-Anta">
+                <Button variant={"link"} size={"sm"}>
+                  <Link href={"/"}>
+                    <FontAwesomeIcon size="sm" icon={faHouse} /> Home
+                  </Link>
+                </Button>
+                <Button variant={"link"} size={"sm"}>
+                  <Link href={"/cart"}>
+                    <FontAwesomeIcon size="sm" icon={faCartShopping} /> Cart
+                  </Link>
+                </Button>
+                <Button variant={"link"} size={"sm"}>
+                  <Link href={"/dashboard/user"}>
+                    <FontAwesomeIcon size="sm" icon={faUser} /> Profile
+                  </Link>
+                </Button>
+              </div>
+              <Separator />
               <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
+                <div className="flex justify-between z*w-full">
+                  <Button>{user ? <SignOutButton /> : <SignUpButton />}</Button>
+                  <DrawerClose>
+                    <Button variant="outline">Close</Button>
+                  </DrawerClose>
+                </div>
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
