@@ -128,6 +128,13 @@ const Navbar = () => {
         <div className="hidden md:flex flex-row">
           {user ? (
             <div className="flex flex-row justify-center items-center gap-2 md:gap-3">
+              <Button
+                variant={"link"}
+                size={"sm"}
+                className="text-sm font-bold font-Annapura"
+              >
+                <Link href={"/custom"}>Create Your Pizza</Link>
+              </Button>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
