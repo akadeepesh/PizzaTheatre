@@ -24,7 +24,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -139,7 +138,7 @@ const Navbar = () => {
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <div>Cart</div>
+                    <p>Cart</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
