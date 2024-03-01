@@ -71,6 +71,23 @@ const custom = () => {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+                <Select>
+                  <SelectTrigger className="bg-gradient-to-br from-yellow-100 to-orange-500 text-primary font-bold">
+                    <SelectValue placeholder="Add Some Cheese" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-primary">
+                    <SelectGroup>
+                      <SelectLabel>Cheese</SelectLabel>
+                      <div className="p-2">
+                        <SelectItem value="mozzarella">Mozzarella</SelectItem>
+                        <SelectItem value="parmesan">Parmesan</SelectItem>
+                        <SelectItem value="cheddar">Cheddar</SelectItem>
+                        <SelectItem value="provolone">Provolone</SelectItem>
+                        <SelectItem value="ricotta">Ricotta</SelectItem>
+                      </div>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
