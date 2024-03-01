@@ -6,8 +6,11 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import Navbar from "@/components/Navbar";
+import dynamic from "next/dynamic";
 
+const Navbar = dynamic(() => import("@/components/Navbar"), {
+  ssr: false,
+});
 config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -20,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }}
         >
           <Component {...pageProps} />
-          {/* <Navbar /> */}
+          <Navbar />
         </ClerkProvider>
       </NextThemesProvider>
     </>
