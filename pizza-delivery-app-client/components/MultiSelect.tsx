@@ -44,13 +44,13 @@ function MultiSelect() {
             backgroundImage:
               "linear-gradient(to bottom right, #FDE68A, #F97316)",
           }),
-          //   option: (styles, { isFocused, isSelected }) => {
-          //     return {
-          //       ...styles,
-          //       backgroundColor: isFocused ? "#FDE68A" : "white",
-          //       color: isSelected ? "black" : "black",
-          //     };
-          //   },
+          // option: (styles, { isFocused, isSelected }) => {
+          //   return {
+          //     ...styles,
+          //     backgroundColor: isFocused ? "#FDE68A" : "white",
+          //     color: isSelected ? "black" : "black",
+          //   };
+          // },
           menu: (styles) => {
             return {
               ...styles,
@@ -58,7 +58,15 @@ function MultiSelect() {
             };
           },
         }}
-        className="z-20 rounded border-none"
+        className={`rounded border-none`}
+        classNames={{
+          control: () =>
+            "bg-gradient-to-br from-yellow-100 to-orange-500 text-primary font-bold",
+          menu: () =>
+            "bg-primary border-1 border-primary-foreground text-primary-foreground",
+          option: (state) =>
+            state.isFocused ? "bg-background" : "bg-background",
+        }}
       />
     </div>
   );
