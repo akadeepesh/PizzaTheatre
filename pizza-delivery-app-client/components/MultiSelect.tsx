@@ -72,6 +72,7 @@ function MultiSelect() {
             return {
               ...styles,
               color: "white dark:black",
+              fontSize: "14px",
             };
           },
           control: (styles) => {
