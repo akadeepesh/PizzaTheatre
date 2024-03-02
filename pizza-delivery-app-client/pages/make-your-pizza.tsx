@@ -23,6 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Image from "next/image";
+import MultiSelect from "@/components/MultiSelect";
 
 const FormSchema = z.object({
   pizzaBase: z.string(),
@@ -49,12 +50,12 @@ const Custom = () => {
                 control={form.control}
                 name="pizzaBase"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="flex flex-col gap-8">
                     <FormLabel>
                       Let&apos;s Make Your Pizza{" "}
                       <span className="font-bold">Your&apos;s</span>
                     </FormLabel>
-                    <div className="ml-5 flex flex-col gap-3">
+                    <div className="ml-5 flex flex-col gap-4">
                       <div className="">
                         <Select
                           onValueChange={field.onChange}
@@ -144,21 +145,20 @@ const Custom = () => {
                         </Select>
                         <FormMessage />
                       </div>
+                      <MultiSelect />
                     </div>
                   </FormItem>
                 )}
               />
-              <Button type="submit">
-                <div className="flex gap-2">
-                  <div className="rounded-full">
-                    <Image
-                      src="/CircelPizzaIcon.jpg"
-                      alt="Icon"
-                      width="64"
-                      height="64"
-                    />
-                  </div>
-                  <div className="">Generate Pizza</div>
+              <Button size={"lg"} type="submit">
+                <div className="flex">
+                  <div className="text-lg">Generate Pizza</div>
+                  <Image
+                    src="/images/CircelPizzaIcon.png"
+                    alt="Icon"
+                    width={30}
+                    height={30}
+                  />
                 </div>
               </Button>
             </form>

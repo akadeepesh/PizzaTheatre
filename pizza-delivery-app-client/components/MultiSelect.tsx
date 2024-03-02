@@ -41,7 +41,7 @@ function MultiSelect() {
   };
 
   return (
-    <div className=" mb-60 z-20">
+    <div className="z-20">
       <Select
         options={Hotels}
         onChange={handleChange}
@@ -55,32 +55,38 @@ function MultiSelect() {
             return {
               ...styles,
               backgroundColor: isFocused ? "black" : "",
-              color: "white",
+              color: "white dark:black",
               borderRadius: "0.5rem",
               width: "95%",
               marginLeft: "0.5rem",
-              zIndex: 20,
             };
           },
           menu: (styles) => {
             return {
               ...styles,
               backgroundColor: "#e11d48",
-              zIndex: 20,
-              border: "1px solid black",
+              border: "1px solid black dark:border-white",
             };
           },
           placeholder: (styles) => {
             return {
               ...styles,
-              color: "#e11d48",
+              color: "white dark:black",
+            };
+          },
+          control: (styles) => {
+            return {
+              ...styles,
+              backgroundColor: "#e11d48",
+              fontWeight: "700",
+              border: "None",
             };
           },
         }}
-        classNames={{
-          control: () =>
-            "bg-gradient-to-br from-yellow-100 to-orange-500 font-bold",
-        }}
+        // classNames={{
+        //   control: () =>
+        //     "bg-gradient-to-br from-yellow-100 to-orange-500 font-bold",
+        // }}
       />
     </div>
   );
