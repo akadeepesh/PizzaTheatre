@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -23,20 +23,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Image from "next/image";
-import MultiSelect from "@/components/MultiSelect";
+import MultiSelect, { Hotel } from "@/components/MultiSelect";
 import Head from "next/head";
 
 const FormSchema = z.object({
   pizzaBase: z.string(),
+  pizaaSauce: z.string(),
+  pizzaCheese: z.string(),
+  pizzaToppings: z.string(),
 });
 
 const Custom = () => {
+  const [selectedOptions, setSelectedOptions] = useState<Hotel[]>([]);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(JSON.stringify(data, null, 2));
+    console.log("selected : ", selectedOptions);
+    console.log(JSON.stringify(data, null));
   }
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
@@ -63,7 +68,7 @@ const Custom = () => {
                         Your&apos;s
                       </span>
                     </FormLabel>
-                    <div className="ml-5 flex flex-col gap-4">
+                    <div className="ml-5 flex flex-col">
                       <div className="">
                         <Select
                           onValueChange={field.onChange}
@@ -77,7 +82,7 @@ const Custom = () => {
                           <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
                             <SelectGroup>
                               <SelectLabel>
-                                Choose Your Favorite Bases
+                                Choose Your Favorite Base
                               </SelectLabel>
                               <div className="p-2">
                                 <SelectItem value="TC">Thin Crust</SelectItem>
@@ -93,71 +98,82 @@ const Custom = () => {
                         </Select>
                         <FormMessage />
                       </div>
-                      <div className="">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="bg-primary font-bold">
-                              <SelectValue placeholder="Looking Some Sauce?" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
-                            <SelectGroup>
-                              <SelectLabel>Pizza Sauce</SelectLabel>
-                              <div className="p-2">
-                                <SelectItem value="marinara">
-                                  Marinara
-                                </SelectItem>
-                                <SelectItem value="pesto">Pesto</SelectItem>
-                                <SelectItem value="alfredo">Alfredo</SelectItem>
-                                <SelectItem value="bbq">BBQ</SelectItem>
-                                <SelectItem value="GarlicButter">
-                                  Garlic Butter
-                                </SelectItem>
-                              </div>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                      <div className="">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="bg-primary font-bold">
-                              <SelectValue placeholder="Add Some Cheese Here" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
-                            <SelectGroup>
-                              <SelectLabel>Cheese</SelectLabel>
-                              <div className="p-2">
-                                <SelectItem value="mozzarella">
-                                  Mozzarella
-                                </SelectItem>
-                                <SelectItem value="parmesan">
-                                  Parmesan
-                                </SelectItem>
-                                <SelectItem value="cheddar">Cheddar</SelectItem>
-                                <SelectItem value="provolone">
-                                  Provolone
-                                </SelectItem>
-                                <SelectItem value="ricotta">Ricotta</SelectItem>
-                              </div>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                      <MultiSelect />
                     </div>
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="pizaaSauce"
+                render={({ field }) => (
+                  <FormItem className="ml-5">
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="bg-primary font-bold">
+                          <SelectValue placeholder="Looking Some Sauce?" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
+                        <SelectGroup>
+                          <SelectLabel>Pizza Sauce</SelectLabel>
+                          <div className="p-2">
+                            <SelectItem value="marinara">Marinara</SelectItem>
+                            <SelectItem value="pesto">Pesto</SelectItem>
+                            <SelectItem value="alfredo">Alfredo</SelectItem>
+                            <SelectItem value="bbq">BBQ</SelectItem>
+                            <SelectItem value="GarlicButter">
+                              Garlic Butter
+                            </SelectItem>
+                          </div>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="pizzaCheese"
+                render={({ field }) => (
+                  <FormItem className="ml-5">
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="bg-primary font-bold">
+                          <SelectValue placeholder="Add Some Cheese Here" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
+                        <SelectGroup>
+                          <SelectLabel>Cheese</SelectLabel>
+                          <div className="p-2">
+                            <SelectItem value="mozzarella">
+                              Mozzarella
+                            </SelectItem>
+                            <SelectItem value="parmesan">Parmesan</SelectItem>
+                            <SelectItem value="cheddar">Cheddar</SelectItem>
+                            <SelectItem value="provolone">Provolone</SelectItem>
+                            <SelectItem value="ricotta">Ricotta</SelectItem>
+                          </div>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="ml-5">
+                <MultiSelect
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                />
+              </div>
               <Button size={"lg"} type="submit">
                 <div className="flex gap-1 items-center">
                   <div className="text-lg font-Anta">Generate Pizza</div>

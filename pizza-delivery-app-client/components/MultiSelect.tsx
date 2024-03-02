@@ -5,9 +5,14 @@ const animatedComponents = makeAnimated();
 
 import type { ActionMeta } from "react-select";
 
-interface Hotel {
+export interface Hotel {
   value: string;
   label: string;
+}
+
+interface MultiSelectProps {
+  selectedOptions: Hotel[];
+  setSelectedOptions: (options: Hotel[]) => void;
 }
 
 const Hotels: Hotel[] = [
@@ -39,16 +44,16 @@ const Hotels: Hotel[] = [
   { value: "double_bbq", label: "Double BBQ" },
 ];
 
-function MultiSelect() {
-  const [selectedOptions, setSelectedOptions] = useState<Hotel[]>([]);
-
+function MultiSelect({
+  selectedOptions,
+  setSelectedOptions,
+}: MultiSelectProps) {
   const handleChange = (
     newValue: readonly Hotel[],
     actionMeta: ActionMeta<Hotel>
   ) => {
     setSelectedOptions(Array.from(newValue));
   };
-
   return (
     <div className="z-20">
       <Select
