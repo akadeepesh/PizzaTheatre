@@ -39,22 +39,17 @@ function MultiSelect() {
         value={selectedOptions}
         placeholder="Add Toppings"
         styles={{
-          control: (baseStyles) => ({
-            ...baseStyles,
-            backgroundImage:
-              "linear-gradient(to bottom right, #FDE68A, #F97316)",
-          }),
-          // option: (styles, { isFocused, isSelected }) => {
-          //   return {
-          //     ...styles,
-          //     backgroundColor: isFocused ? "#FDE68A" : "white",
-          //     color: isSelected ? "black" : "black",
-          //   };
-          // },
+          option: (styles, { isFocused }) => {
+            return {
+              ...styles,
+              backgroundColor: isFocused ? "black" : "",
+              color: "white",
+            };
+          },
           menu: (styles) => {
             return {
               ...styles,
-              backgroundColor: "red",
+              backgroundColor: "#e11d48",
             };
           },
         }}
@@ -64,8 +59,6 @@ function MultiSelect() {
             "bg-gradient-to-br from-yellow-100 to-orange-500 text-primary font-bold",
           menu: () =>
             "bg-primary border-1 border-primary-foreground text-primary-foreground",
-          option: (state) =>
-            state.isFocused ? "bg-background" : "bg-background",
         }}
       />
     </div>
