@@ -174,7 +174,7 @@ const Custom = () => {
                   setSelectedOptions={setSelectedOptions}
                 />
               </div>
-              <Button size={"lg"} type="submit">
+              <Button size={"lg"} type="submit" className="group">
                 <div className="flex gap-1 items-center">
                   <div className="text-lg font-Anta">Generate Pizza</div>
                   <Image
@@ -182,6 +182,7 @@ const Custom = () => {
                     alt="Icon"
                     width={30}
                     height={30}
+                    className="group-hover:animate-spin transition duration-300 ease-in-out"
                   />
                 </div>
               </Button>
