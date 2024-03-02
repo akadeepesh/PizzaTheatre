@@ -37,14 +37,28 @@ function MultiSelect() {
         components={animatedComponents}
         isMulti
         value={selectedOptions}
-        placeholder="Select Hotels"
+        placeholder="Add Toppings"
         styles={{
-          control: (baseStyles, state) => ({
+          control: (baseStyles) => ({
             ...baseStyles,
-            backgroundColor: state.isFocused ? "grey" : "red",
+            backgroundImage:
+              "linear-gradient(to bottom right, #FDE68A, #F97316)",
           }),
+          //   option: (styles, { isFocused, isSelected }) => {
+          //     return {
+          //       ...styles,
+          //       backgroundColor: isFocused ? "#FDE68A" : "white",
+          //       color: isSelected ? "black" : "black",
+          //     };
+          //   },
+          menu: (styles) => {
+            return {
+              ...styles,
+              backgroundColor: "red",
+            };
+          },
         }}
-        className="z-20 rounded"
+        className="z-20 rounded border-none"
       />
     </div>
   );
