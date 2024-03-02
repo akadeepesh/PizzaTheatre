@@ -138,6 +138,22 @@ const Navbar = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
+                    <Link href={"/dashboard/user"}>
+                      <Button variant={"ghost"} size={"sm"}>
+                        <FontAwesomeIcon size="sm" icon={faUser} />
+                      </Button>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <span className="text-sm font-Anta text-secondary-foreground">
+                      User Profile
+                    </span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
                     <Link href={"/cart"}>
                       <Button variant={"ghost"} size={"sm"}>
                         <FontAwesomeIcon icon={faCartShopping} />
@@ -145,7 +161,7 @@ const Navbar = () => {
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Cart</p>
+                    <span>Cart</span>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
