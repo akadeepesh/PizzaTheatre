@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/form";
 import Image from "next/image";
 import MultiSelect from "@/components/MultiSelect";
+import Head from "next/head";
 
 const FormSchema = z.object({
   pizzaBase: z.string(),
@@ -39,6 +40,9 @@ const Custom = () => {
   }
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
+      <Head>
+        <title>Make Your Pizza</title>
+      </Head>
       <div className="w-full justify-between p-10 flex bg-muted text-foreground rounded-badge">
         <div className="w-full max-w-md flex">
           <Form {...form}>

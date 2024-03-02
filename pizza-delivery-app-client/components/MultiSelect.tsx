@@ -28,6 +28,15 @@ const Hotels: Hotel[] = [
     label: "Red Pepper with Spl Tandoori Sauce",
   },
   { value: "paneer", label: "Paneer" },
+  { value: "black_olive_cheese", label: "Olive with Extra Cheese" },
+  { value: "corn", label: "Corn" },
+  { value: "baby_corn", label: "Baby Corn" },
+  { value: "bbq_chicken", label: "BBQ Chicken" },
+  { value: "chicken_sausages", label: "Chicken Sausages" },
+  { value: "chicken_tikka", label: "Chicken Tikka" },
+  { value: "spicy_chicken", label: "Spicy Chicken" },
+  { value: "chicken_rashers", label: "Chicken Rashers" },
+  { value: "double_bbq", label: "Double BBQ" },
 ];
 
 function MultiSelect() {
