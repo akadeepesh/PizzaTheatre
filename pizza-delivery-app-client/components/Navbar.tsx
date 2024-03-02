@@ -131,9 +131,9 @@ const Navbar = () => {
               <Button
                 variant={"link"}
                 size={"sm"}
-                className="text-sm font-bold font-Annapura"
+                className="text-sm font-Anta text-secondary-foreground"
               >
-                <Link href={"/custom"}>Create Your Pizza</Link>
+                <Link href={"/make-your-pizza"}>Create Your Pizza</Link>
               </Button>
               <TooltipProvider>
                 <Tooltip>

@@ -39,7 +39,7 @@ const Custom = () => {
   }
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      <div className="w-full justify-between p-10 flex bg-muted text-foreground">
+      <div className="w-full justify-between p-10 flex bg-muted text-foreground rounded-badge">
         <div className="w-full max-w-md flex">
           <Form {...form}>
             <form
@@ -51,9 +51,13 @@ const Custom = () => {
                 name="pizzaBase"
                 render={({ field }) => (
                   <FormItem className="flex flex-col gap-8">
-                    <FormLabel>
-                      Let&apos;s Make Your Pizza{" "}
-                      <span className="font-bold">Your&apos;s</span>
+                    <FormLabel className="text-xl">
+                      <span className="font-Anta">
+                        Let&apos;s Make Your Pizza{" "}
+                      </span>
+                      <span className="font-bold text-primary font-ProtestRevolution">
+                        Your&apos;s
+                      </span>
                     </FormLabel>
                     <div className="ml-5 flex flex-col gap-4">
                       <div className="">
@@ -151,8 +155,8 @@ const Custom = () => {
                 )}
               />
               <Button size={"lg"} type="submit">
-                <div className="flex">
-                  <div className="text-lg">Generate Pizza</div>
+                <div className="flex gap-1 items-center">
+                  <div className="text-lg font-Anta">Generate Pizza</div>
                   <Image
                     src="/images/CircelPizzaIcon.png"
                     alt="Icon"

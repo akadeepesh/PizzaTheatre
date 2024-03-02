@@ -51,11 +51,10 @@ function MultiSelect() {
         value={selectedOptions}
         placeholder="Add Toppings"
         styles={{
-          option: (styles, { isFocused }) => {
+          option: (styles) => {
             return {
               ...styles,
-              backgroundColor: isFocused ? "black" : "",
-              color: "white dark:black",
+              color: "black",
               borderRadius: "0.5rem",
               width: "95%",
               marginLeft: "0.5rem",
@@ -84,10 +83,6 @@ function MultiSelect() {
             };
           },
         }}
-        // classNames={{
-        //   control: () =>
-        //     "bg-gradient-to-br from-yellow-100 to-orange-500 font-bold",
-        // }}
       />
     </div>
   );
