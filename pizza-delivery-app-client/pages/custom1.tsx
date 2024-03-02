@@ -24,42 +24,51 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const formSchema = z.object({
+const FormSchema = z.object({
   pizzaBase: z.string(),
 });
 
 const Custom = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      pizzaBase: "",
-    },
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(JSON.stringify(data, null, 2));
   }
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      <div className="w-full bg-muted text-foreground">
-        <div className="">
+      <div className="w-full justify-between p-10 flex bg-muted text-foreground">
+        <div className="w-full max-w-md flex">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 w-full"
+            >
               <FormField
                 control={form.control}
                 name="pizzaBase"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Pizza Base</FormLabel>
-                    <FormControl>
-                      <Select {...field}>
-                        <SelectTrigger className="bg-gradient-to-br from-yellow-100 to-orange-500 text-primary font-bold">
-                          <SelectValue placeholder="The Pizza Base!!!" />
-                        </SelectTrigger>
-
-                        <SelectContent className="bg-primary">
+                    <FormLabel>
+                      Let&apos;s Make Your Pizza{" "}
+                      <span className="font-bold">Your&apos;s</span>
+                    </FormLabel>
+                    <div className="ml-5">
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="bg-primary font-bold">
+                            <SelectValue placeholder="The Pizza Base!!!" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
                           <SelectGroup>
-                            <SelectLabel>Pizza Bases</SelectLabel>
+                            <SelectLabel>
+                              Choose Your Favorite Bases
+                            </SelectLabel>
                             <div className="p-2">
                               <SelectItem value="TC">Thin Crust</SelectItem>
                               <SelectItem value="NYS">
@@ -72,12 +81,11 @@ const Custom = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                    </FormControl>
-
-                    <FormDescription>
-                      Choose your favorite pizza base.
-                    </FormDescription>
-                    <FormMessage />
+                      <FormDescription>
+                        Choose your favorite pizza base.
+                      </FormDescription>
+                      <FormMessage />
+                    </div>
                   </FormItem>
                 )}
               />
@@ -85,6 +93,7 @@ const Custom = () => {
             </form>
           </Form>
         </div>
+        <div className="flex w-full max-w-sm">buy menu</div>
       </div>
     </div>
   );
