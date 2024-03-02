@@ -3,7 +3,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 
-const cart = () => {
+const Cart = () => {
   return (
     <div className="">
       <div className="flex flex-wrap flex-row justify-between max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
@@ -73,4 +73,4 @@ const cart = () => {
   );
 };
 
-export default cart;
+export default Cart;

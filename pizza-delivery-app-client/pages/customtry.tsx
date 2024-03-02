@@ -21,7 +21,7 @@ const custom = () => {
         <title>Make Your Custom Pizza</title>
       </Head>
       <div className="bg-secondary w-full text-primary rounded-lg">
-        <div className="h-screen relative w-full overflow-hidden bg-seconday flex flex-col items-center justify-center rounded-lg">
+        <div className="relative w-full overflow-hidden bg-seconday flex flex-col items-center justify-center rounded-lg">
           <div className="absolute inset-0 w-full h-full bg-primary [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
           <Boxes />
           <Label
@@ -96,8 +96,3 @@ const custom = () => {
 };
 
 export default custom;
-// Options :
-// choose pizza base from 5 bases
-// choose any sauce from 5 options
-// choose any cheese type
-// opt veggies from many options
