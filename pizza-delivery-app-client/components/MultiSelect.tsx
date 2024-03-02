@@ -16,6 +16,18 @@ const Hotels: Hotel[] = [
   { value: "capsicum", label: "Capsicum" },
   { value: "red_pepper", label: "Red Pepper" },
   { value: "paneer_tandoori_sauce", label: "Paneer with Spl. Tandoori Sauce" },
+  { value: "jalapeno", label: "Jalapeno" },
+  { value: "golden_corn", label: "Golden Corn" },
+  { value: "mushroom", label: "Mushroom" },
+  { value: "tomatoes", label: "Tomatoes" },
+  { value: "spl_colli_garlic_sauce", label: "Special Colli Garlic Sauce" },
+  { value: "sweet_corn", label: "Sweet Corn" },
+  { value: "spl_makhni_sauce", label: "Spl. Makhni Sauce" },
+  {
+    value: "red_pepper_with_spl_tandoori_sauce",
+    label: "Red Pepper with Spl Tandoori Sauce",
+  },
+  { value: "paneer", label: "Paneer" },
 ];
 
 function MultiSelect() {
@@ -44,6 +56,9 @@ function MultiSelect() {
               ...styles,
               backgroundColor: isFocused ? "black" : "",
               color: "white",
+              borderRadius: "0.5rem",
+              width: "95%",
+              marginLeft: "0.5rem",
             };
           },
           menu: (styles) => {
@@ -52,11 +67,17 @@ function MultiSelect() {
               backgroundColor: "#e11d48",
             };
           },
+          placeholder: (styles) => {
+            return {
+              ...styles,
+              color: "#e11d48",
+            };
+          },
         }}
         className={`rounded border-none`}
         classNames={{
           control: () =>
-            "bg-gradient-to-br from-yellow-100 to-orange-500 text-primary font-bold",
+            "bg-gradient-to-br from-yellow-100 to-orange-500 font-bold",
           menu: () =>
             "bg-primary border-1 border-primary-foreground text-primary-foreground",
         }}
