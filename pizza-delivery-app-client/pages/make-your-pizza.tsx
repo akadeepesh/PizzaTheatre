@@ -17,12 +17,12 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import Image from "next/image";
 
 const FormSchema = z.object({
   pizzaBase: z.string(),
@@ -148,7 +148,19 @@ const Custom = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit">
+                <div className="flex gap-2">
+                  <div className="rounded-full">
+                    <Image
+                      src="/CircelPizzaIcon.jpg"
+                      alt="Icon"
+                      width="64"
+                      height="64"
+                    />
+                  </div>
+                  <div className="">Generate Pizza</div>
+                </div>
+              </Button>
             </form>
           </Form>
         </div>
