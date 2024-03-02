@@ -6,16 +6,16 @@ const animatedComponents = makeAnimated();
 import type { ActionMeta } from "react-select";
 
 interface Hotel {
-  value: number;
+  value: string;
   label: string;
 }
 
 const Hotels: Hotel[] = [
-  { value: 1, label: "Coral Beach Maldives" },
-  { value: 2, label: "Ilaa Beach Maldives" },
-  { value: 3, label: "Finolhu" },
-  { value: 4, label: "Arena" },
-  { value: 5, label: "Kaani Beach Hotel" },
+  { value: "cheese", label: "Cheese" },
+  { value: "onion", label: "Onion" },
+  { value: "capsicum", label: "Capsicum" },
+  { value: "red_pepper", label: "Red Pepper" },
+  { value: "paneer_tandoori_sauce", label: "Paneer with Spl. Tandoori Sauce" },
 ];
 
 function MultiSelect() {
