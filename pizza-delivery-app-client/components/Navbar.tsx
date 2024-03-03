@@ -30,6 +30,15 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 const Navbar = () => {
   const { user } = useUser();
 
@@ -165,7 +174,62 @@ const Navbar = () => {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-              <UserButton />
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <div className="p-0.5 ring-2 dark:ring-stone-100 ring-stone-600 border-transparent focus:border-transparent focus:ring-0 rounded-full">
+                    <UserButton />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    // onClick={() => {
+                    //   router.push(`/profile/${user?.username}`);
+                    // }}
+                  >
+                    My Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    // onClick={() => {
+                    //   router.push(`/support?user=${user?.username}`);
+                    // }}
+                  >
+                    Support
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    // onClick={() => {
+                    //   router.push(`/terms`);
+                    // }}
+                  >
+                    Terms
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    // onClick={() => {
+                    //   router.push(`/privacy`);
+                    // }}
+                  >
+                    Privacy
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    // onClick={() => {
+                    //   router.push(`/home`);
+                    // }}
+                  >
+                    Home Page
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer">
+                    <SignOutButton />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <ModeToggle />
             </div>
           ) : (

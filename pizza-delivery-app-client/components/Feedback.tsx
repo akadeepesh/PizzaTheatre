@@ -85,8 +85,6 @@ const Feedback = () => {
       <div className="flex mt-32">
         <div className="flex flex-row justify-center w-full">
           <AnimatedTooltip items={people} />
-        </div>
-        <div className="rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
           <InfiniteMovingCards
             items={testimonials}
             direction="right"
