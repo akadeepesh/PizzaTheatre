@@ -1,3 +1,4 @@
+import Feedback from "@/components/Feedback";
 import Landing from "@/components/Landing";
 import Head from "next/head";
 
@@ -8,6 +9,7 @@ const HomePage = () => {
         <title>Pizza Theatre</title>
       </Head>
       <Landing />
+      <Feedback />
     </div>
   );
 };

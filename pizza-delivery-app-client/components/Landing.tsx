@@ -26,14 +26,14 @@ export default function Landing() {
         }}
         className="z-50 flex flex-col justify-center items-center"
       >
-        <motion.p className="font-bold font-Anta text-xl md:text-4xl lg:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
+        <motion.p className="font-bold font-Anta text-xl md:text-4xl lg:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b dark:from-neutral-50 dark:to-neutral-400 from-neutral-400 to-neutral-50 py-4">
           You deserve the best Pizza around you
           <div className="font-extrabold text-3xl tracking-tight md:text-5xl lg:text-7xl font-ProtestRevolution text-primary">
             Pizza Theatre
           </div>
         </motion.p>
         <Link href="/menu">
-          <Button className="px-4 py-2 backdrop-blur-sm border bg-primary border-primary-foreground text-white mx-auto text-center rounded-full relative mt-4 font-Annapura">
+          <Button className="px-4 py-2 backdrop-blur-sm border bg-primary border-primary-content text-primary-content mx-auto text-center rounded-full relative mt-4 font-Annapura">
             <div>Let&apos;s Have a Taste →</div>
             <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-primary to-transparent" />
           </Button>
