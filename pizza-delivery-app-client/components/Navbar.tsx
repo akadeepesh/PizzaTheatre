@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useRouter } from "next/router";
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, User, Home, Menu } from "lucide-react";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -84,7 +84,62 @@ const Navbar = () => {
         </h1>
         <div className="md:hidden flex flex-row gap-2">
           {user ? (
-            <UserButton />
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="p-0.5 ring-2 dark:ring-stone-100 ring-stone-600 border-transparent focus:border-transparent focus:ring-0 rounded-full">
+                  <UserButton />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => {
+                    router.push(`/profile/${user?.username}`);
+                  }}
+                >
+                  My Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  // onClick={() => {
+                  //   router.push(`/support?user=${user?.username}`);
+                  // }}
+                >
+                  Support
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  // onClick={() => {
+                  //   router.push(`/terms`);
+                  // }}
+                >
+                  Terms
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  // onClick={() => {
+                  //   router.push(`/privacy`);
+                  // }}
+                >
+                  Privacy
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  // onClick={() => {
+                  //   router.push(`/home`);
+                  // }}
+                >
+                  Home Page
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer">
+                  <SignOutButton />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <div className="flex flex-row">
               <Button variant={"link"} size={"sm"}>
@@ -93,14 +148,12 @@ const Navbar = () => {
               <Button className="hidden md:flex" variant={"link"} size={"sm"}>
                 <SignUpButton />
               </Button>
-              {/* <ModeToggle /> */}
             </div>
           )}
+          <ModeToggle />
           <Drawer>
             <DrawerTrigger>
-              <Button variant={"ghost"} size={"sm"}>
-                <FontAwesomeIcon icon={faBars} size="xl" />
-              </Button>
+              <Menu />
             </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
@@ -110,18 +163,26 @@ const Navbar = () => {
               </DrawerHeader>
               <div className="flex flex-col py-2 font-Anta">
                 <Button variant={"link"} size={"sm"}>
-                  <Link href={"/"}>
-                    <FontAwesomeIcon size="sm" icon={faHouse} /> Home
+                  <Link href={"/"} className="flex flex-row gap-2 items-center">
+                    <Home />
+                    <div className="flex">Home</div>
                   </Link>
                 </Button>
                 <Button variant={"link"} size={"sm"}>
-                  <Link href={"/cart"}>
-                    <ShoppingCart /> Cart
+                  <Link
+                    href={"/cart"}
+                    className="flex flex-row gap-4 items-center"
+                  >
+                    <ShoppingCart />
+                    <div className="flex">Cart</div>
                   </Link>
                 </Button>
                 <Button variant={"link"} size={"sm"}>
-                  <Link href={"/dashboard/user"}>
-                    <FontAwesomeIcon size="sm" icon={faUser} /> Profile
+                  <Link
+                    href={"/dashboard/user"}
+                    className="flex gap-2 items-center"
+                  >
+                    <User /> <div className="flex">Profile</div>
                   </Link>
                 </Button>
               </div>
