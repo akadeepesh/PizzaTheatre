@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { ClerkProvider } from "@clerk/nextjs";
 import { neobrutalism } from "@clerk/themes";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
           <Navbar />
         </ClerkProvider>
+        <Toaster />
       </NextThemesProvider>
     </>
   );

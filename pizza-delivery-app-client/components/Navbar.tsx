@@ -263,9 +263,9 @@ const Navbar = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="cursor-pointer"
-                    // onClick={() => {
-                    //   router.push(`/support?user=${user?.username}`);
-                    // }}
+                    onClick={() => {
+                      router.push(`/support?user=${user?.username}`);
+                    }}
                   >
                     Support
                   </DropdownMenuItem>
