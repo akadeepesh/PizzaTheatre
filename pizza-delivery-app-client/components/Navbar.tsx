@@ -33,7 +33,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useRouter } from "next/router";
-import { ShoppingCart, User, Home, Menu } from "lucide-react";
+import {
+  ShoppingCart,
+  User,
+  Home,
+  Menu,
+  Cookie,
+  AlertCircle,
+} from "lucide-react";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -64,7 +71,7 @@ const Navbar = () => {
     >
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
         <h1
-          className={`scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-ProtestRevolution ${
+          className={`cursor-pointer scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-ProtestRevolution ${
             isScrolled ? "dark:text-secondary text-primary" : "text-primary"
           }`}
           onClick={() => {
@@ -90,48 +97,64 @@ const Navbar = () => {
                 <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="cursor-pointer"
+                  className="cursor-pointer gap-2"
                   onClick={() => {
                     router.push(`/profile/${user?.username}`);
                   }}
                 >
-                  My Profile
+                  <span>
+                    <User size={"1.2rem"} />
+                  </span>
+                  <span>My Profile</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="cursor-pointer"
-                  // onClick={() => {
-                  //   router.push(`/support?user=${user?.username}`);
-                  // }}
+                  className="cursor-pointer gap-2"
+                  onClick={() => {
+                    router.push(`/menu`);
+                  }}
                 >
-                  Support
+                  <span>
+                    <Cookie size={"1.2rem"} />
+                  </span>
+                  <span>Menu</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="cursor-pointer"
-                  // onClick={() => {
-                  //   router.push(`/terms`);
-                  // }}
+                  className="cursor-pointer gap-2"
+                  onClick={() => {
+                    router.push(`/cart`);
+                  }}
                 >
-                  Terms
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  // onClick={() => {
-                  //   router.push(`/privacy`);
-                  // }}
-                >
-                  Privacy
+                  <span>
+                    <ShoppingCart size={"1.2rem"} />
+                  </span>
+                  <span>Cart</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="cursor-pointer"
-                  // onClick={() => {
-                  //   router.push(`/home`);
-                  // }}
+                  className="cursor-pointer gap-1"
+                  onClick={() => {
+                    router.push(`/support?user=${user?.username}`);
+                  }}
                 >
-                  Home Page
+                  <span>
+                    <AlertCircle size={"1.2rem"} />
+                  </span>
+                  <span>Support</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem
+                  className="cursor-pointer gap-1"
+                  onClick={() => {
+                    router.push(`/`);
+                  }}
+                >
+                  <span>
+                    <Home size={"1.2rem"} />
+                  </span>
+                  <span>Home Page</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer bg-destructive">
                   <SignOutButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -254,48 +277,64 @@ const Navbar = () => {
                   <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    className="cursor-pointer"
+                    className="cursor-pointer gap-2"
                     onClick={() => {
                       router.push(`/profile/${user?.username}`);
                     }}
                   >
-                    My Profile
+                    <span>
+                      <User size={"1.2rem"} />
+                    </span>
+                    <span>My Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="cursor-pointer"
+                    className="cursor-pointer gap-2"
+                    onClick={() => {
+                      router.push(`/menu`);
+                    }}
+                  >
+                    <span>
+                      <Cookie size={"1.2rem"} />
+                    </span>
+                    <span>Menu</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer gap-2"
+                    onClick={() => {
+                      router.push(`/cart`);
+                    }}
+                  >
+                    <span>
+                      <ShoppingCart size={"1.2rem"} />
+                    </span>
+                    <span>Cart</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="cursor-pointer gap-1"
                     onClick={() => {
                       router.push(`/support?user=${user?.username}`);
                     }}
                   >
-                    Support
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    // onClick={() => {
-                    //   router.push(`/terms`);
-                    // }}
-                  >
-                    Terms
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    // onClick={() => {
-                    //   router.push(`/privacy`);
-                    // }}
-                  >
-                    Privacy
+                    <span>
+                      <AlertCircle size={"1.2rem"} />
+                    </span>
+                    <span>Support</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    className="cursor-pointer"
-                    // onClick={() => {
-                    //   router.push(`/home`);
-                    // }}
+                    className="cursor-pointer gap-1"
+                    onClick={() => {
+                      router.push(`/`);
+                    }}
                   >
-                    Home Page
+                    <span>
+                      <Home size={"1.2rem"} />
+                    </span>
+                    <span>Home Page</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer bg-destructive">
                     <SignOutButton />
                   </DropdownMenuItem>
                 </DropdownMenuContent>
