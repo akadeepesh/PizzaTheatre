@@ -39,8 +39,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { useRouter } from "next/router";
+import { ShoppingCart, User } from "lucide-react";
+
 const Navbar = () => {
   const { user } = useUser();
+  const router = useRouter();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -112,7 +116,7 @@ const Navbar = () => {
                 </Button>
                 <Button variant={"link"} size={"sm"}>
                   <Link href={"/cart"}>
-                    <FontAwesomeIcon size="sm" icon={faCartShopping} /> Cart
+                    <ShoppingCart /> Cart
                   </Link>
                 </Button>
                 <Button variant={"link"} size={"sm"}>
@@ -140,7 +144,7 @@ const Navbar = () => {
               <Button
                 variant={"link"}
                 size={"sm"}
-                className="text-sm font-Anta text-secondary-foreground"
+                className="text-sm font-Anta dark:text-foreground transition-none"
               >
                 <Link href={"/make-your-pizza"}>Create Your Pizza</Link>
               </Button>
@@ -148,15 +152,17 @@ const Navbar = () => {
                 <Tooltip>
                   <TooltipTrigger>
                     <Link href={"/dashboard/user"}>
-                      <Button variant={"ghost"} size={"sm"}>
-                        <FontAwesomeIcon size="sm" icon={faUser} />
+                      <Button
+                        variant={"ghost"}
+                        size={"sm"}
+                        className="dark:text-foreground text-primary"
+                      >
+                        <User />
                       </Button>
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <span className="text-sm font-Anta text-secondary-foreground">
-                      User Profile
-                    </span>
+                    <span className="text-sm font-Anta">User Profile</span>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -164,8 +170,12 @@ const Navbar = () => {
                 <Tooltip>
                   <TooltipTrigger>
                     <Link href={"/cart"}>
-                      <Button variant={"ghost"} size={"sm"}>
-                        <FontAwesomeIcon icon={faCartShopping} />
+                      <Button
+                        variant={"ghost"}
+                        size={"sm"}
+                        className="text-primary dark:text-primary-foreground"
+                      >
+                        <ShoppingCart />
                       </Button>
                     </Link>
                   </TooltipTrigger>
@@ -185,9 +195,9 @@ const Navbar = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="cursor-pointer"
-                    // onClick={() => {
-                    //   router.push(`/profile/${user?.username}`);
-                    // }}
+                    onClick={() => {
+                      router.push(`/profile/${user?.username}`);
+                    }}
                   >
                     My Profile
                   </DropdownMenuItem>

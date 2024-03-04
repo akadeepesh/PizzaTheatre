@@ -83,13 +83,17 @@ const Feedback = () => {
   return (
     <div className="flex justify-center h-screen">
       <div className="flex mt-32">
-        <div className="flex flex-row justify-center w-full">
-          <AnimatedTooltip items={people} />
-          <InfiniteMovingCards
-            items={testimonials}
-            direction="right"
-            speed="normal"
-          />
+        <div className="flex flex-col w-full">
+          <div className="flex flex-row w-full h-fit justify-center py-20">
+            <AnimatedTooltip items={people} />
+          </div>
+          <div className="rounded-md flex antialiased items-center justify-center relative overflow-hidden">
+            <InfiniteMovingCards
+              items={testimonials}
+              direction="right"
+              speed="normal"
+            />
+          </div>
         </div>
       </div>
     </div>

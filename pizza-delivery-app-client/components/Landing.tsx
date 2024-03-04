@@ -33,7 +33,7 @@ export default function Landing() {
           </div>
         </motion.p>
         <Link href="/menu">
-          <Button className="px-4 py-2 backdrop-blur-sm border bg-primary border-primary-content text-primary-content mx-auto text-center rounded-full relative mt-4 font-Annapura">
+          <Button className="px-4 py-2 backdrop-blur-sm border bg-primary text-primary-content mx-auto text-center rounded-full relative mt-4 font-Annapura">
             <div>Let&apos;s Have a Taste →</div>
             <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-primary to-transparent" />
           </Button>
