@@ -188,7 +188,7 @@ const Navbar = () => {
               </div>
               <Separator />
               <DrawerFooter>
-                <div className="flex justify-between z*w-full">
+                <div className="flex justify-between w-full">
                   <Button>{user ? <SignOutButton /> : <SignUpButton />}</Button>
                   <DrawerClose>
                     <Button variant="outline">Close</Button>
@@ -305,10 +305,26 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex flex-row">
-              <Button variant={"link"} size={"sm"}>
+              <Button
+                variant={"link"}
+                size={"sm"}
+                className={`${
+                  isScrolled
+                    ? "dark:text-secondary text-primary"
+                    : "text-primary"
+                }`}
+              >
                 <SignInButton />
               </Button>
-              <Button className="hidden md:flex" variant={"link"} size={"sm"}>
+              <Button
+                className={`hidden md:flex ${
+                  isScrolled
+                    ? "dark:text-secondary text-primary"
+                    : "text-primary"
+                }`}
+                variant={"link"}
+                size={"sm"}
+              >
                 <SignUpButton />
               </Button>
               <ModeToggle />
