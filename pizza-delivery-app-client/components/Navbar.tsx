@@ -169,7 +169,11 @@ const Navbar = () => {
               </Button>
             </div>
           )}
-          <ModeToggle />
+          <ModeToggle
+            className={`${
+              isScrolled ? "dark:text-secondary text-primary" : "text-primary"
+            }`}
+          />
           <Drawer>
             <DrawerTrigger>
               <Menu />
@@ -339,7 +343,13 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <ModeToggle />
+              <ModeToggle
+                className={`${
+                  isScrolled
+                    ? "dark:text-secondary text-primary"
+                    : "text-primary"
+                }`}
+              />
             </div>
           ) : (
             <div className="flex flex-row">
@@ -365,7 +375,13 @@ const Navbar = () => {
               >
                 <SignUpButton />
               </Button>
-              <ModeToggle />
+              <ModeToggle
+                className={`${
+                  isScrolled
+                    ? "dark:text-secondary text-primary"
+                    : "text-primary"
+                }`}
+              />
             </div>
           )}
         </div>

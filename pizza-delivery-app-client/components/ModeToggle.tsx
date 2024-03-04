@@ -19,7 +19,7 @@ export function ModeToggle({
   return (
     <div className={className} {...props}>
       <Button variant="ghost" size="sm" onClick={toggleTheme}>
-        {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+        {theme === "dark" ? <MoonIcon /> : <SunIcon />}
       </Button>
     </div>
   );
