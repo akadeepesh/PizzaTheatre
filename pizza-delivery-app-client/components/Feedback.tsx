@@ -83,7 +83,6 @@ const Feedback = () => {
           <div className="flex flex-row w-full max-w-sm border-b border-spacing-4 border-primary h-fit justify-center my-16 py-4">
             <AnimatedTooltip items={people} />
           </div>
-          {/* <Separator className="bg-primary mb-20" /> */}
           <div className="rounded-md flex antialiased items-center justify-center relative overflow-hidden">
             <InfiniteMovingCards
               items={testimonials}
