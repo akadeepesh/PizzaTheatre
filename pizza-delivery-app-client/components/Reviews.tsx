@@ -50,31 +50,32 @@ const people = [
 const testimonials = [
   {
     quote:
-      "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
+      "Exquisite! The pizza had a delightful blend of flavors, with a crust that was perfectly crisp on the outside and fluffy on the inside. Every bite was a culinary delight!",
     name: "Jhon Deo",
   },
   {
     quote:
-      "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
+      "Delicious beyond words! The pizza was a symphony of flavors, with fresh ingredients and a mouthwatering sauce that left me craving more. A definite must-try!",
     name: "Robert Johnson",
   },
   {
-    quote: "All that we see or seem is but a dream within a dream.",
+    quote:
+      "Outstanding! The pizza was a culinary masterpiece, with a crust that was expertly baked and toppings that were bursting with freshness. Every bite was pure bliss!",
     name: "Jane Smith",
   },
   {
     quote:
-      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+      "Phenomenal! This pizza exceeded all expectations, with a perfect balance of flavors and a crust that was simply divine. It's safe to say, this is now my go-to pizza spot!",
     name: "Emily Davis",
   },
   {
     quote:
-      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
+      "Spectacular! From the first bite to the last, this pizza was a true delight. The crust was light and airy, the toppings were flavorful, and the overall experience was simply heavenly!",
     name: "Tyler Durden",
   },
 ];
 
-const Feedback = () => {
+const Reviews = () => {
   return (
     <div className="flex justify-center h-screen">
       <div className="flex mt-32">
@@ -95,4 +96,4 @@ const Feedback = () => {
   );
 };
 
-export default Feedback;
+export default Reviews;

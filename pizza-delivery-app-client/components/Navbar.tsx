@@ -5,13 +5,6 @@ import { SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCartShopping,
-  faBars,
-  faHouse,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
 
 import {
   Tooltip,
@@ -74,8 +67,11 @@ const Navbar = () => {
           className={`scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-ProtestRevolution ${
             isScrolled ? "dark:text-secondary text-primary" : "text-primary"
           }`}
+          onClick={() => {
+            router.push(`/`);
+          }}
         >
-          <Link href="/">Pizza Theater</Link>
+          Pizza Theater
           <Separator
             className={`${
               isScrolled ? "dark:bg-secondary bg-primary" : "bg-primary"
@@ -206,8 +202,11 @@ const Navbar = () => {
                 variant={"link"}
                 size={"sm"}
                 className="text-sm font-Anta dark:text-foreground transition-none"
+                onClick={() => {
+                  router.push(`/make-your-pizza`);
+                }}
               >
-                <Link href={"/make-your-pizza"}>Create Your Pizza</Link>
+                Create Your Pizza
               </Button>
               <TooltipProvider>
                 <Tooltip>
