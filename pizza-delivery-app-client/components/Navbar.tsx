@@ -161,11 +161,16 @@ const Navbar = () => {
             </DropdownMenu>
           ) : (
             <div className="flex flex-row">
-              <Button variant={"link"} size={"sm"}>
+              <Button
+                variant={"link"}
+                size={"sm"}
+                className={`${
+                  isScrolled
+                    ? "dark:text-secondary text-primary"
+                    : "text-primary"
+                }`}
+              >
                 <SignInButton />
-              </Button>
-              <Button className="hidden md:flex" variant={"link"} size={"sm"}>
-                <SignUpButton />
               </Button>
             </div>
           )}
@@ -176,7 +181,13 @@ const Navbar = () => {
           />
           <Drawer>
             <DrawerTrigger>
-              <Menu />
+              <Menu
+                className={`${
+                  isScrolled
+                    ? "dark:text-secondary text-primary"
+                    : "text-primary"
+                }`}
+              />
             </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
@@ -344,10 +355,8 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               <ModeToggle
-                className={`${
-                  isScrolled
-                    ? "dark:text-secondary text-primary"
-                    : "text-primary"
+                className={`text-primary ${
+                  isScrolled ? "dark:text-foreground" : "dark:text-foreground"
                 }`}
               />
             </div>
