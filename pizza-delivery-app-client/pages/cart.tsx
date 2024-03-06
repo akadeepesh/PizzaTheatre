@@ -65,7 +65,7 @@ const Cart = () => {
         </div>
         <div className="mockup-window border border-base-300 md:mt-20 w-5/6 md:w-1/3 h-full">
           <div className="flex justify-center border border-base-300 px-4 py-16 bg-secondary">
-            Buy Menu
+            Buy Menu{/* {localStorage.getItem("cartItems")} */}
           </div>
         </div>
       </div>

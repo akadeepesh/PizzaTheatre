@@ -18,7 +18,7 @@ const pizzas: Pizza[] = [
   { name: "Veg Treat", toppings: "Cheese, Onion, Capsicum", price: "129" },
   {
     name: "Mexican Delight",
-    toppings: "Cheese, Jalappeno, Golden Corn",
+    toppings: "Cheese, Jalapeno, Golden Corn",
     price: "129",
   },
   {
@@ -63,6 +63,57 @@ const pizzas: Pizza[] = [
       "Cheese, Onion, Capsicum, Red Pepper, Paneer with Spl. Tandoori Sauce",
     price: "299",
   },
+  // Additional pizzas
+  {
+    name: "Margherita",
+    toppings: "Tomato, Mozzarella, Basil",
+    price: "149",
+  },
+  {
+    name: "Pepperoni Feast",
+    toppings: "Pepperoni, Cheese, Tomato Sauce",
+    price: "179",
+  },
+  {
+    name: "Hawaiian Delight",
+    toppings: "Ham, Pineapple, Cheese",
+    price: "169",
+  },
+  {
+    name: "BBQ Chicken",
+    toppings: "BBQ Sauce, Chicken, Red Onions",
+    price: "189",
+  },
+  {
+    name: "Supreme",
+    toppings: "Pepperoni, Sausage, Bell Peppers, Onions, Olives",
+    price: "199",
+  },
+  {
+    name: "Buffalo Chicken",
+    toppings: "Buffalo Sauce, Chicken, Ranch Dressing, Mozzarella",
+    price: "189",
+  },
+  {
+    name: "Mediterranean",
+    toppings: "Spinach, Feta Cheese, Olives, Sun-Dried Tomatoes",
+    price: "179",
+  },
+  {
+    name: "Four Cheese",
+    toppings: "Mozzarella, Cheddar, Gouda, Parmesan",
+    price: "169",
+  },
+  {
+    name: "Pesto Veggie",
+    toppings: "Pesto Sauce, Mushrooms, Tomatoes, Bell Peppers",
+    price: "179",
+  },
+  {
+    name: "Meat Lover's",
+    toppings: "Pepperoni, Sausage, Bacon, Ham",
+    price: "209",
+  },
 ];
 
 // const images = [
@@ -76,19 +127,18 @@ export function Items() {
     new Array(pizzas.length).fill(0)
   );
   const [cartItems, setCartItems] = useState<Pizza[]>([]);
+  const newCounts = [...itemCount];
 
   const handleAddToCart = (index: number) => {
-    const newCounts = [...itemCount];
     newCounts[index]++;
     setItemCount(newCounts);
-
     const pizza = pizzas[index];
     setCartItems([...cartItems, pizza]);
+    // localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
 
   const handleRemoveFromCart = (index: number) => {
-    const newCounts = [...itemCount];
-    if (newCounts[index] >= 0) {
+    if (newCounts[index] > 0) {
       newCounts[index]--;
     }
     setItemCount(newCounts);
