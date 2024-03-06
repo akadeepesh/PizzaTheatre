@@ -2,8 +2,9 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
+import Cart from "../components/items";
 import Head from "next/head";
-import Cart from "@/components/Items";
+
 import { Minus, Plus } from "lucide-react";
 
 export interface Pizza {
