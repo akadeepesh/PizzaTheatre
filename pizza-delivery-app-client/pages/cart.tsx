@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 const Cart = () => {
   return (
     <div className="">
-      <div className="flex flex-wrap flex-row justify-between max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
+      <div className="flex flex-col md:flex-row justify-between items-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
         <div className="w-3/5 h-full">
           <CardContainer className="inter-var w-full">
             <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-5/6 h-auto rounded-xl p-6 border">
@@ -63,7 +63,7 @@ const Cart = () => {
           </CardContainer>
           <Separator className="bg-primary my-20" />
         </div>
-        <div className="mockup-window border border-base-300 mt-20 w-1/3 h-full">
+        <div className="mockup-window border border-base-300 md:mt-20 w-5/6 md:w-1/3 h-full">
           <div className="flex justify-center border border-base-300 px-4 py-16 bg-secondary">
             Buy Menu
           </div>

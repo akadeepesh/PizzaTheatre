@@ -4,6 +4,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
 import Cart from "../components/items";
+import { Minus, Plus } from "lucide-react";
 
 export interface Pizza {
   name: string;
@@ -86,7 +87,7 @@ export function Items() {
 
   const handleRemoveFromCart = (index: number) => {
     const newCounts = [...itemCount];
-    if (newCounts[index] > 0) {
+    if (newCounts[index] >= 0) {
       newCounts[index]--;
     }
     setItemCount(newCounts);
@@ -141,33 +142,21 @@ export function Items() {
                     Add to Cart →
                   </div>
                 ) : (
-                  <div className="flex flex-row justify-evenly">
+                  <div className="flex flex-row justify-evenly items-center cursor-default">
                     <div
                       onClick={() => handleRemoveFromCart(index)}
-                      className="rounded-s-2xl w-full"
+                      className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                     >
-                      -
+                      <Minus size={20} />
                     </div>
-                    <div className="">
-                      <Separator
-                        orientation="vertical"
-                        className="bg-primary"
-                      />
-                    </div>
-                    <div className="cursor-default w-full">
-                      {itemCount[index]}
-                    </div>
-                    <div className="">
-                      <Separator
-                        orientation="vertical"
-                        className="bg-primary"
-                      />
-                    </div>
+                    <Separator orientation="vertical" className="bg-primary" />
+                    <div>{itemCount[index]}</div>
+                    <Separator orientation="vertical" className="bg-primary" />
                     <div
                       onClick={() => handleAddToCart(index)}
-                      className="rounded-e-2xl w-full"
+                      className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                     >
-                      +
+                      <Plus size={20} />
                     </div>
                   </div>
                 )}
