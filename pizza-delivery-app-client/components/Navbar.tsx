@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
-import Link from "next/link";
 
 import {
   Tooltip,
@@ -57,6 +56,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    checkScroll();
     window.addEventListener("scroll", checkScroll);
     return () => {
       window.removeEventListener("scroll", checkScroll);
@@ -78,7 +78,7 @@ const Navbar = () => {
             router.push(`/`);
           }}
         >
-          Pizza Theater
+          Pizza Theatre
           <Separator
             className={`${
               isScrolled ? "dark:bg-secondary bg-primary" : "bg-primary"
@@ -196,28 +196,31 @@ const Navbar = () => {
                 </DrawerTitle>
               </DrawerHeader>
               <div className="flex flex-col py-2 font-Anta">
-                <Button variant={"link"} size={"sm"}>
-                  <Link href={"/"} className="flex flex-row gap-2 items-center">
-                    <Home />
-                    <div className="flex">Home</div>
-                  </Link>
+                <Button
+                  variant={"link"}
+                  className="flex flex-row gap-2 items-center"
+                  size={"sm"}
+                  onClick={() => router.push("/")}
+                >
+                  <Home />
+                  <div className="flex">Home</div>
                 </Button>
-                <Button variant={"link"} size={"sm"}>
-                  <Link
-                    href={"/cart"}
-                    className="flex flex-row gap-4 items-center"
-                  >
-                    <ShoppingCart />
-                    <div className="flex">Cart</div>
-                  </Link>
+                <Button
+                  variant={"link"}
+                  size={"sm"}
+                  className="flex flex-row gap-4 items-center"
+                  onClick={() => router.push("/cart")}
+                >
+                  <ShoppingCart />
+                  <div className="flex">Cart</div>
                 </Button>
-                <Button variant={"link"} size={"sm"}>
-                  <Link
-                    href={"/dashboard/user"}
-                    className="flex gap-2 items-center"
-                  >
-                    <User /> <div className="flex">Profile</div>
-                  </Link>
+                <Button
+                  variant={"link"}
+                  size={"sm"}
+                  className="flex gap-2 items-center"
+                  onClick={() => router.push("/cart")}
+                >
+                  <User /> <div className="flex">Profile</div>
                 </Button>
               </div>
               <Separator />
@@ -249,15 +252,14 @@ const Navbar = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Link href={"/dashboard/user"}>
-                      <Button
-                        variant={"ghost"}
-                        size={"sm"}
-                        className="dark:text-foreground text-primary"
-                      >
-                        <User />
-                      </Button>
-                    </Link>
+                    <Button
+                      variant={"ghost"}
+                      size={"sm"}
+                      className="dark:text-foreground text-primary"
+                      onClick={() => router.push(`/dashboard/user`)}
+                    >
+                      <User />
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <span className="text-sm font-Anta">User Profile</span>
@@ -267,15 +269,14 @@ const Navbar = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <Link href={"/cart"}>
-                      <Button
-                        variant={"ghost"}
-                        size={"sm"}
-                        className="text-primary dark:text-primary-foreground"
-                      >
-                        <ShoppingCart />
-                      </Button>
-                    </Link>
+                    <Button
+                      variant={"ghost"}
+                      size={"sm"}
+                      className="text-primary dark:text-primary-foreground"
+                      onClick={() => router.push("/cart")}
+                    >
+                      <ShoppingCart />
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <span>Cart</span>
