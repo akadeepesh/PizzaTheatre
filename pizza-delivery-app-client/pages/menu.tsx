@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
-import Cart from "../components/items";
+import Cart from "../components/Items";
 import { Minus, Plus } from "lucide-react";
 
 export interface Pizza {
@@ -137,7 +137,7 @@ export function Items() {
                 {itemCount[index] === 0 ? (
                   <div
                     onClick={() => handleAddToCart(index)}
-                    className="text-xs"
+                    className="text-sm font-Annapura"
                   >
                     Add to Cart →
                   </div>
@@ -164,7 +164,7 @@ export function Items() {
               <CardItem
                 translateZ={20}
                 as="button"
-                className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
+                className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold font-Anta"
               >
                 Buy Now
               </CardItem>
