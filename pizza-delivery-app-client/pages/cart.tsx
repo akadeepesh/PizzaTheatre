@@ -2,7 +2,8 @@ import React from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-
+import { mutation } from "@/convex/_generated/server";
+import { api } from "@/convex/_generated/api";
 const Cart = () => {
   return (
     <div className="">
@@ -65,7 +66,7 @@ const Cart = () => {
         </div>
         <div className="mockup-window border border-base-300 md:mt-20 w-5/6 md:w-1/3 h-full">
           <div className="flex justify-center border border-base-300 px-4 py-16 bg-secondary">
-            Buy Menu{/* {localStorage.getItem("cartItems")} */}
+            {/* Buy Menu{localStorage.getItem("cartItems")} */}
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
-import Cart from "../components/items";
+import Cart from "@/components/items";
 import Head from "next/head";
 
 import { Minus, Plus } from "lucide-react";

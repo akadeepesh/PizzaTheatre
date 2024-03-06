@@ -5,8 +5,7 @@ import { neobrutalism } from "@clerk/themes";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "";
-const convex = new ConvexReactClient(convexUrl);
+const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -28,8 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
         >
           <ConvexProvider client={convex}>
             <Component {...pageProps} />
+            <Navbar />
           </ConvexProvider>
-          <Navbar />
         </ClerkProvider>
         <Toaster />
       </NextThemesProvider>
