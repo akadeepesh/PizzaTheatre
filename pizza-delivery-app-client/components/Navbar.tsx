@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
 
 import {
@@ -22,24 +22,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
 import { useRouter } from "next/router";
-import {
-  ShoppingCart,
-  User,
-  Home,
-  Menu,
-  Cookie,
-  AlertCircle,
-} from "lucide-react";
+import { ShoppingCart, User, Home, Menu } from "lucide-react";
+import UserNavigation from "./UserNavigation";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -87,78 +72,7 @@ const Navbar = () => {
         </h1>
         <div className="md:hidden flex flex-row gap-2">
           {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="p-0.5 ring-2 dark:ring-stone-100 ring-stone-600 border-transparent focus:border-transparent focus:ring-0 rounded-full">
-                  <UserButton />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer gap-2"
-                  onClick={() => {
-                    router.push(`/profile/${user?.username}`);
-                  }}
-                >
-                  <span>
-                    <User size={"1.2rem"} />
-                  </span>
-                  <span>My Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer gap-2"
-                  onClick={() => {
-                    router.push(`/menu`);
-                  }}
-                >
-                  <span>
-                    <Cookie size={"1.2rem"} />
-                  </span>
-                  <span>Menu</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer gap-2"
-                  onClick={() => {
-                    router.push(`/cart`);
-                  }}
-                >
-                  <span>
-                    <ShoppingCart size={"1.2rem"} />
-                  </span>
-                  <span>Cart</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer gap-1"
-                  onClick={() => {
-                    router.push(`/support?user=${user?.username}`);
-                  }}
-                >
-                  <span>
-                    <AlertCircle size={"1.2rem"} />
-                  </span>
-                  <span>Support</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer gap-1"
-                  onClick={() => {
-                    router.push(`/`);
-                  }}
-                >
-                  <span>
-                    <Home size={"1.2rem"} />
-                  </span>
-                  <span>Home Page</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer bg-destructive">
-                  <SignOutButton />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <UserNavigation />
           ) : (
             <div className="flex flex-row">
               <Button
@@ -283,78 +197,7 @@ const Navbar = () => {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <div className="p-0.5 ring-2 dark:ring-stone-100 ring-stone-600 border-transparent focus:border-transparent focus:ring-0 rounded-full">
-                    <UserButton />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="cursor-pointer gap-2"
-                    onClick={() => {
-                      router.push(`/profile/${user?.username}`);
-                    }}
-                  >
-                    <span>
-                      <User size={"1.2rem"} />
-                    </span>
-                    <span>My Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="cursor-pointer gap-2"
-                    onClick={() => {
-                      router.push(`/menu`);
-                    }}
-                  >
-                    <span>
-                      <Cookie size={"1.2rem"} />
-                    </span>
-                    <span>Menu</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="cursor-pointer gap-2"
-                    onClick={() => {
-                      router.push(`/cart`);
-                    }}
-                  >
-                    <span>
-                      <ShoppingCart size={"1.2rem"} />
-                    </span>
-                    <span>Cart</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="cursor-pointer gap-1"
-                    onClick={() => {
-                      router.push(`/support?user=${user?.username}`);
-                    }}
-                  >
-                    <span>
-                      <AlertCircle size={"1.2rem"} />
-                    </span>
-                    <span>Support</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="cursor-pointer gap-1"
-                    onClick={() => {
-                      router.push(`/`);
-                    }}
-                  >
-                    <span>
-                      <Home size={"1.2rem"} />
-                    </span>
-                    <span>Home Page</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer bg-destructive">
-                    <SignOutButton />
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserNavigation />
               <ModeToggle
                 className={`text-primary ${
                   isScrolled ? "dark:text-foreground" : "dark:text-foreground"
