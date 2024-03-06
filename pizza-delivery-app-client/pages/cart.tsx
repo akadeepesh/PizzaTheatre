@@ -4,7 +4,9 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { mutation } from "@/convex/_generated/server";
 import { api } from "@/convex/_generated/api";
+
 const Cart = () => {
+  // const mutateSomething = useMutation()
   return (
     <div className="">
       <div className="flex flex-col md:flex-row justify-between items-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
