@@ -1,10 +1,11 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, useAuth } from "@clerk/nextjs";
 import { neobrutalism } from "@clerk/themes";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ConvexReactClient } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -21,14 +22,15 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
         <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
           appearance={{
             baseTheme: neobrutalism,
           }}
         >
-          <ConvexProvider client={convex}>
+          <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
             <Component {...pageProps} />
             <Navbar />
-          </ConvexProvider>
+          </ConvexProviderWithClerk>
         </ClerkProvider>
         <Toaster />
       </NextThemesProvider>
