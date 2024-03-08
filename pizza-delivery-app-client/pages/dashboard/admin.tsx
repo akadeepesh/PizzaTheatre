@@ -1,4 +1,3 @@
-import Feedback from "@/components/Reviews";
 import React from "react";
 
 const Admin = () => {
