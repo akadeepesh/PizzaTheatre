@@ -16,31 +16,34 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
+import { AlertCircle } from "lucide-react";
+
+const stringToNumber = z.string().transform((val) => val.length);
 
 const FormSchema = z.object({
   pizza_name: z.string(),
   toppings: z.string(),
-  price: z.object({
-    medium: z.number().int(),
-    small: z.number().int(),
-  }),
-  quantity: z.number().int(),
+  price: z
+    .object({
+      medium: stringToNumber.optional(),
+      small: stringToNumber.optional(),
+    })
+    .refine((data) => data.medium !== undefined || data.small !== undefined, {
+      message: "At least one of medium or small pizza price must be provided",
+      path: ["price"],
+    }),
+  quantity: stringToNumber,
 });
+
 const Admin = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    // console.log("Form : ", JSON.stringify(data, null, 2));
+    toast.success(JSON.stringify(data, null, 2));
   }
 
   return (
@@ -102,9 +105,6 @@ const Admin = () => {
                         className="ml-3"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Enter NaN if not available
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -125,14 +125,23 @@ const Admin = () => {
                         required={false}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Enter NaN if not available
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+            {/* <FormDescription className="flex text-primary gap-1 font-Annapura ml-5 items-center justify-center">
+              <AlertCircle size={18} />
+              At least one of medium or small pizza price must be provided
+            </FormDescription> */}
+            {form.formState.errors.price && (
+              <FormDescription className="flex text-primary gap-1 font-Annapura ml-5 items-center justify-center">
+                <AlertCircle size={18} />
+                <div className="text-primary">
+                  {form.formState.errors.price.message}
+                </div>
+              </FormDescription>
+            )}
             <FormField
               control={form.control}
               name="quantity"
