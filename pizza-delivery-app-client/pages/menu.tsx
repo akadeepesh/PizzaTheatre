@@ -64,7 +64,6 @@ const pizzas: Pizza[] = [
       "Cheese, Onion, Capsicum, Red Pepper, Paneer with Spl. Tandoori Sauce",
     price: "299",
   },
-  // Additional pizzas
   {
     name: "Margherita",
     toppings: "Tomato, Mozzarella, Basil",
@@ -153,10 +152,10 @@ export function Items() {
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas.map((pizza, index) => (
         <CardContainer key={index} className="m-5">
-          <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[24rem] h-auto rounded-xl p-6 border">
+          <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[24rem] h-auto rounded-xl p-6 border">
             <CardItem
               translateZ="50"
-              className="text-xl font-Anta flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
+              className="text-xl font-Anta  flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
             >
               <div className="">{pizza.name}</div>
               <div className="">₹ {pizza.price}</div>

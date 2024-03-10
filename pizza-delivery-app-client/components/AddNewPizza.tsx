@@ -4,7 +4,8 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,31 +20,35 @@ import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { AlertCircle } from "lucide-react";
 
-const stringToNumber = z.string().transform((val) => parseInt(val));
+const stringToNumber = z.string().transform((val) => Number(val));
 
 const FormSchema = z.object({
   pizza_name: z.string(),
   toppings: z.string(),
-  price: z
-    .object({
-      medium: stringToNumber.optional(),
-      small: stringToNumber.optional(),
-    })
-    .refine((data) => data.medium !== undefined || data.small !== undefined, {
-      message: "At least one of medium or small pizza price must be provided",
-      path: ["price"],
-    }),
+  price: z.object({
+    medium: stringToNumber,
+    small: stringToNumber,
+  }),
   quantity: stringToNumber,
 });
 
 const AddNewPizza = () => {
+  const addPizza = useMutation(api.pizzas.pizza);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     // console.log("Form : ", JSON.stringify(data, null, 2));
-    toast.success(JSON.stringify(data, null, 2));
+    addPizza({
+      name: data.pizza_name,
+      toppings: data.toppings,
+      price: data.price,
+      quantity: data.quantity,
+    }).then(() => {
+      form.reset();
+      toast.success("Pizza added successfully");
+    });
   }
 
   return (
@@ -130,18 +135,14 @@ const AddNewPizza = () => {
                 )}
               />
             </div>
-            {/* <FormDescription className="flex text-primary gap-1 font-Annapura ml-5 items-center justify-center">
-                  <AlertCircle size={18} />
-                  At least one of medium or small pizza price must be provided
-                </FormDescription> */}
-            {form.formState.errors.price && (
+            {/* {form.formState.errors.price && (
               <FormDescription className="flex text-primary gap-1 font-Annapura ml-5 items-center justify-center">
                 <AlertCircle size={18} />
                 <div className="text-primary">
                   {form.formState.errors.price.message}
                 </div>
               </FormDescription>
-            )}
+            )} */}
             <FormField
               control={form.control}
               name="quantity"
