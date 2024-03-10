@@ -123,7 +123,7 @@ const Navbar = () => {
                 <Button
                   variant={"link"}
                   size={"sm"}
-                  className="flex flex-row gap-4 items-center"
+                  className="flex flex-row gap-4 items-center transition-none"
                   onClick={() => router.push("/cart")}
                 >
                   <ShoppingCart />
@@ -132,7 +132,7 @@ const Navbar = () => {
                 <Button
                   variant={"link"}
                   size={"sm"}
-                  className="flex gap-2 items-center"
+                  className="flex gap-2 items-center transition-none"
                   onClick={() => router.push("/cart")}
                 >
                   <User /> <div className="flex">Profile</div>
@@ -170,7 +170,7 @@ const Navbar = () => {
                     <Button
                       variant={"ghost"}
                       size={"sm"}
-                      className="dark:text-foreground text-primary"
+                      className="dark:text-foreground text-primary transition-none"
                       onClick={() => router.push(`/dashboard/user`)}
                     >
                       <User />
@@ -187,7 +187,7 @@ const Navbar = () => {
                     <Button
                       variant={"ghost"}
                       size={"sm"}
-                      className="text-primary dark:text-primary-foreground"
+                      className="text-primary dark:text-primary-foreground transition-none"
                       onClick={() => router.push("/cart")}
                     >
                       <ShoppingCart />
