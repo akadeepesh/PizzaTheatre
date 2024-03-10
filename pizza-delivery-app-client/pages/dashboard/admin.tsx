@@ -11,7 +11,7 @@ const Admin = () => {
         <title>{user?.fullName} | Dashboard</title>
       </Head>
       <div className="">
-        <CardHoverEffectDemo></CardHoverEffectDemo>
+        <CardHoverEffectDemo />
       </div>
     </div>
   );

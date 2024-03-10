@@ -32,8 +32,10 @@ const UserNavigation = () => {
             <UserButton />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
+        <DropdownMenuContent className="font-Anta">
+          <DropdownMenuLabel className=" font-Annapura text-base text-primary">
+            @{user?.username}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer gap-2"
