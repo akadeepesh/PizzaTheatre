@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { AlertCircle } from "lucide-react";
 
-const stringToNumber = z.string().transform((val) => val.length);
+const stringToNumber = z.string().transform((val) => parseInt(val));
 
 const FormSchema = z.object({
   pizza_name: z.string(),
@@ -48,7 +48,7 @@ const Admin = () => {
 
   return (
     <div className="flex justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      <div className="bg-secondary rounded-3xl w-5/6 flex justify-center items-center">
+      <div className="bg-secondary rounded-3xl w-5/6 flex justify-center items-center font-Anta">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -63,7 +63,7 @@ const Admin = () => {
                   <FormControl>
                     <Input
                       placeholder="Pepperoni Pizza..."
-                      className="ml-3"
+                      className="ml-3 placeholder:font-Annapura"
                       {...field}
                     />
                   </FormControl>
@@ -81,7 +81,7 @@ const Admin = () => {
                     <Input
                       placeholder="Cheese, Capsicum, Tomatoes..."
                       {...field}
-                      className="ml-3"
+                      className="ml-3 placeholder:font-Annapura"
                     />
                   </FormControl>
                   <FormMessage />
@@ -102,7 +102,7 @@ const Admin = () => {
                         placeholder="299"
                         {...field}
                         required={false}
-                        className="ml-3"
+                        className="ml-3 placeholder:font-Annapura"
                       />
                     </FormControl>
                     <FormMessage />
@@ -120,7 +120,7 @@ const Admin = () => {
                         type="number"
                         step={1}
                         placeholder="499"
-                        className="ml-3"
+                        className="ml-3 placeholder:font-Annapura"
                         {...field}
                         required={false}
                       />
@@ -153,18 +153,18 @@ const Admin = () => {
                       type="number"
                       step={1}
                       placeholder="25"
-                      className="ml-3"
+                      className="ml-3 placeholder:font-Annapura"
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription>
+                  <FormDescription className="ml-4 font-Annapura">
                     Quantity of the pizza available in the store
                   </FormDescription>
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Add Pizza</Button>
           </form>
         </Form>
       </div>
