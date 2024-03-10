@@ -1,3 +1,4 @@
+"use client";
 import Feedback from "@/components/Reviews";
 import Landing from "@/components/Landing";
 import Head from "next/head";

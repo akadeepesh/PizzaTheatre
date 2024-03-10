@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 import { InfiniteMovingCards } from "./ui/infinite-moving-cards";

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Pizza } from "../pages/menu";
 
