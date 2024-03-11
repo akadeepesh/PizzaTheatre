@@ -39,3 +39,5 @@ package-lock.json
 tasks.txt
 skills.txt
 languages.txt
+pages/admin/dashboard.tsx
+types/
