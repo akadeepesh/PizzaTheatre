@@ -3,12 +3,8 @@ import React from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
-import { Button } from "@/components/ui/button";
 
 const Cart = () => {
-  const createAdmin = useMutation(api.admin.createAdmin);
   return (
     <div className="">
       <div className="flex flex-col md:flex-row justify-between items-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
@@ -70,10 +66,7 @@ const Cart = () => {
         </div>
         <div className="mockup-window border border-base-300 md:mt-20 w-5/6 md:w-1/3 h-full">
           <div className="flex justify-center border border-base-300 px-4 py-16 bg-secondary">
-            {/* Buy Menu{localStorage.getItem("cartItems")} */}
-            <Button onClick={() => createAdmin({ isAdmin: true })}>
-              Make Admin
-            </Button>
+            Buy Menu
           </div>
         </div>
       </div>
