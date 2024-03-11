@@ -10,6 +10,14 @@ import { Minus, Plus } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 export interface Pizza {
   name: string;
   toppings: string;
@@ -161,7 +169,21 @@ export function Items() {
               className="text-xl font-Anta  flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
             >
               <div className="">{pizza.name}</div>
-              <div className="">₹ {pizza.price.small}</div>
+              <div className="">
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder={`₹ ${pizza.price.small} - S`} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={pizza.price.small} defaultChecked={true}>
+                      ₹ {pizza.price.small} - S
+                    </SelectItem>
+                    <SelectItem value={pizza.price.medium}>
+                      ₹ {pizza.price.medium} - M
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </CardItem>
             <CardItem
               as="p"
