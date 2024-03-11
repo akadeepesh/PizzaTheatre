@@ -45,7 +45,6 @@ const AddNewPizza = () => {
       price: data.price,
       quantity: data.quantity,
     }).then(() => {
-      form.reset();
       toast.success("Pizza added successfully");
     });
   }

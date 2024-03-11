@@ -248,7 +248,6 @@ export function Items() {
           </CardBody>
         </CardContainer>
       ))}
-      <Cart cartItems={cartItems} />
     </div>
   );
 }
