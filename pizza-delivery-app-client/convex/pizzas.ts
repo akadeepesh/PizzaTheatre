@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const pizza = mutation({
   args: {
@@ -18,5 +18,12 @@ export const pizza = mutation({
       price: args.price,
       quantity: args.quantity,
     });
+  },
+});
+
+export const getPizzas = query({
+  args: {},
+  async handler(ctx, args) {
+    return ctx.db.query("pizza").collect();
   },
 });

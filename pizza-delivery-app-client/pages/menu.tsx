@@ -7,6 +7,8 @@ import Cart from "@/components/items";
 import Head from "next/head";
 
 import { Minus, Plus } from "lucide-react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export interface Pizza {
   name: string;
@@ -123,6 +125,7 @@ const pizzas: Pizza[] = [
 // ];
 
 export function Items() {
+  const pizzass = useQuery(api.pizzas.getPizzas);
   const [itemCount, setItemCount] = useState<number[]>(
     new Array(pizzas.length).fill(0)
   );
@@ -150,7 +153,7 @@ export function Items() {
 
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      {pizzas.map((pizza, index) => (
+      {pizzass?.map((pizza, index) => (
         <CardContainer key={index} className="m-5">
           <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[24rem] h-auto rounded-xl p-6 border">
             <CardItem
@@ -158,7 +161,7 @@ export function Items() {
               className="text-xl font-Anta  flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
             >
               <div className="">{pizza.name}</div>
-              <div className="">₹ {pizza.price}</div>
+              <div className="">₹ {pizza.price.small}</div>
             </CardItem>
             <CardItem
               as="p"

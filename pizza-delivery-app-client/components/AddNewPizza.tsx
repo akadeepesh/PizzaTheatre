@@ -39,7 +39,6 @@ const AddNewPizza = () => {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    // console.log("Form : ", JSON.stringify(data, null, 2));
     addPizza({
       name: data.pizza_name,
       toppings: data.toppings,
@@ -52,7 +51,7 @@ const AddNewPizza = () => {
   }
 
   return (
-    <div className="flex justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
+    <div className="flex justify-center max-w-screen-lg mx-auto mt-36 sm:mt-24 md:mt-28 lg:mt-36">
       <div className="bg-secondary rounded-3xl w-5/6 flex justify-center items-center font-Anta">
         <Form {...form}>
           <form
