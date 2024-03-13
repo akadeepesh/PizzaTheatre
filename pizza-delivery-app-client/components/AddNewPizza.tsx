@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
-import { AlertCircle } from "lucide-react";
 
 const stringToNumber = z.string().transform((val) => Number(val));
 
@@ -36,6 +35,15 @@ const AddNewPizza = () => {
   const addPizza = useMutation(api.pizzas.pizza);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      pizza_name: "",
+      toppings: "Cheese",
+      price: {
+        medium: 239,
+        small: 129,
+      },
+      quantity: 100,
+    },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
