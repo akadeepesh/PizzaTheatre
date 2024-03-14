@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useUser } from "@clerk/nextjs";
 
 export interface Pizza {
   name: string;
@@ -133,6 +134,7 @@ const pizzas: Pizza[] = [
 // ];
 
 export function Items() {
+  const { user } = useUser();
   const pizzass = useQuery(api.pizzas.getPizzas);
   const [itemCount, setItemCount] = useState<number[]>(
     new Array(pizzas.length).fill(0)
@@ -212,7 +214,13 @@ export function Items() {
               >
                 {itemCount[index] === 0 ? (
                   <div
-                    onClick={() => handleAddToCart(index)}
+                    onClick={() => {
+                      user?.update({
+                        unsafeMetadata: {
+                          cartItems,
+                        },
+                      });
+                    }}
                     className="text-sm font-Annapura"
                   >
                     Add to Cart →

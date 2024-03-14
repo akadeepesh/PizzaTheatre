@@ -6,6 +6,7 @@
 //   args: {
 //     username: v.string(),
 //     isAdmin: v.boolean(),
+//     cartItems: v.array(pizza),
 //   },
 //   async handler(ctx, args) {
 //     await ctx.db.insert("user", {
