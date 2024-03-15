@@ -5,12 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { userId } = req.body;
+  const { role, userId } = req.body;
 
   await clerkClient.users.updateUserMetadata(userId, {
-    unsafeMetadata: {
-      isAdmin: false,
-      cartItems: [],
+    publicMetadata: {
+      role,
     },
   });
 
