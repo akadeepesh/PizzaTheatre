@@ -166,9 +166,9 @@ export function Items() {
           <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[24rem] h-auto rounded-xl p-6 border">
             <CardItem
               translateZ="50"
-              className="text-xl font-Anta  flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
+              className="text-xl font-Anta flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
             >
-              <div className="">{pizza.name}</div>
+              <div className="select-text">{pizza.name}</div>
               <div className="">
                 <Select>
                   <SelectTrigger>
@@ -188,7 +188,7 @@ export function Items() {
             <CardItem
               as="p"
               translateZ="60"
-              className="text-neutral-500 font-Annapura text-sm max-w-sm mt-2 dark:text-neutral-300"
+              className="text-neutral-500 font-Annapura select-text text-sm max-w-sm mt-2 dark:text-neutral-300"
             >
               {pizza.toppings}
             </CardItem>
