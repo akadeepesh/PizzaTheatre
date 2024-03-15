@@ -5,13 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -21,9 +14,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import axios from "axios";
 
-const SupportPage = () => {
+const AdminPage = () => {
   const [email, setEmail] = useState("");
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,8 +44,8 @@ const SupportPage = () => {
   return (
     <section className="max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36 flex justify-center items-center">
       <NextSeo
-        title="Pizza Theater - Support"
-        description="Get support from Pizza Theater."
+        title="Pizza Theater - Admin Request"
+        description="Become an Admin on Pizza Theater."
         canonical="https://pizza-theater.vercel.app/"
         openGraph={{
           url: "https://pizza-theater.vercel.app/",
@@ -65,7 +57,7 @@ const SupportPage = () => {
       />
       <Card className="lg:md:sm:w-3/4 w-full p-5 font-Anta">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold mb-4">Support Request</h1>
+          <h1 className="text-2xl font-bold mb-4">Admin Request</h1>
         </div>
         <div>
           <form className="w-full" onSubmit={(e) => e.preventDefault()}>
@@ -80,7 +72,7 @@ const SupportPage = () => {
                       </TooltipTrigger>
                       <TooltipContent>
                         <p className="font-Annapura">
-                          Your support request is linked to your account&apos;s
+                          Your Admin request is linked to your account&apos;s
                           username.
                         </p>
                       </TooltipContent>
@@ -128,20 +120,34 @@ const SupportPage = () => {
               id="topic_select_div"
               className="grid w-full items-center gap-1.5 py-4"
             >
-              <Label htmlFor="topic">Topic</Label>
-              <Select>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Select a case" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="content">Problem With Content</SelectItem>
-                  <SelectItem value="bug">Security Bug</SelectItem>
-                  <SelectItem value="feature">Feature Request</SelectItem>
-                  <SelectItem value="question">Questions/Feedback</SelectItem>
-                  <SelectItem value="privacy">Privacy Concerns</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="topic">Brand Name</Label>
+              <Input
+                type="text"
+                id="brand"
+                placeholder="Enter your brand name"
+                className="font-Annapura"
+              />
+              <div className="grid w-full max-w-sm items-center gap-1.5 py-4">
+                <Label htmlFor="picture">
+                  <span className="flex items-center space-x-1">
+                    <p>Brand Proof</p>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Info className="cursor-help" size={12} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-center font-Annapura">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </span>
+                </Label>
+                <Input id="picture" type="file" />
+              </div>
             </div>
             <div className="grid w-full items-center gap-1.5 py-4">
               <Label htmlFor="message-2">Your Message</Label>
@@ -166,4 +172,4 @@ const SupportPage = () => {
   );
 };
 
-export default SupportPage;
+export default AdminPage;

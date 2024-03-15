@@ -74,7 +74,7 @@ const UserNavigation = () => {
           <DropdownMenuItem
             className="cursor-pointer gap-1"
             onClick={() => {
-              router.push(`/admin?user=${user?.username}`);
+              router.push(`/admin-req?user=${user?.username}`);
             }}
           >
             <span>
