@@ -110,33 +110,28 @@ const Navbar = () => {
                   Navigation menu? Here it is!
                 </DrawerTitle>
               </DrawerHeader>
-              <div className="flex flex-col py-2 font-Anta">
-                <Button
-                  variant={"link"}
-                  className="flex flex-row gap-2 items-center"
-                  size={"sm"}
+              <div className="flex flex-row py-2 gap-4 items-center justify-center font-Anta">
+                <div
+                  className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center"
                   onClick={() => router.push("/")}
                 >
                   <Home />
                   <div className="flex">Home</div>
-                </Button>
-                <Button
-                  variant={"link"}
-                  size={"sm"}
-                  className="flex flex-row gap-4 items-center transition-none"
+                </div>
+                <div
+                  className="flex flex-col gap-1 border p-4 px-6 bg-secondary rounded-xl items-center"
                   onClick={() => router.push("/cart")}
                 >
                   <ShoppingCart />
                   <div className="flex">Cart</div>
-                </Button>
-                <Button
-                  variant={"link"}
-                  size={"sm"}
-                  className="flex gap-2 items-center transition-none"
-                  onClick={() => router.push("/cart")}
+                </div>
+                <div
+                  className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center"
+                  onClick={() => router.push("/dashboard/user")}
                 >
-                  <User /> <div className="flex">Profile</div>
-                </Button>
+                  <User />
+                  <div className="flex">Profile</div>
+                </div>
               </div>
               <Separator />
               <DrawerFooter>
