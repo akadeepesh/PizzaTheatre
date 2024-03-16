@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as cart from "../cart.js";
 import type * as pizzas from "../pizzas.js";
 
 /**
@@ -25,6 +26,7 @@ import type * as pizzas from "../pizzas.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  cart: typeof cart;
   pizzas: typeof pizzas;
 }>;
 export declare const api: FilterApi<

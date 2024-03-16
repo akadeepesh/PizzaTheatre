@@ -9,6 +9,7 @@ import Head from "next/head";
 import { Minus, Plus } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
 
 import {
   Select,
@@ -17,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useUser } from "@clerk/nextjs";
 
 export interface Pizza {
   name: string;
@@ -134,15 +136,22 @@ const pizzas: Pizza[] = [
 
 export function Items() {
   const pizzass = useQuery(api.pizzas.getPizzas);
+  const addtoCart = useMutation(api.cart.cartItem);
+  const { user } = useUser();
   const [itemCount, setItemCount] = useState<number[]>(
     new Array(pizzas.length).fill(0)
   );
   const [cartItems, setCartItems] = useState<Pizza[]>([]);
   const newCounts = [...itemCount];
 
-  const handleAddToCart = (index: number) => {
+  const handleAddToCart = (index: number, pizzaId: string) => {
     newCounts[index]++;
     setItemCount(newCounts);
+    addtoCart({
+      userId: String(user?.id),
+      pizzaId: pizzaId,
+      quantity: 1,
+    });
     const pizza = pizzas[index];
     setCartItems([...cartItems, pizza]);
     // localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -212,7 +221,7 @@ export function Items() {
               >
                 {itemCount[index] === 0 ? (
                   <div
-                    onClick={() => handleAddToCart(index)}
+                    onClick={() => handleAddToCart(index, pizza._id)}
                     className="text-sm font-Annapura"
                   >
                     Add to Cart →
@@ -229,7 +238,7 @@ export function Items() {
                     <div>{itemCount[index]}</div>
                     <Separator orientation="vertical" className="bg-primary" />
                     <div
-                      onClick={() => handleAddToCart(index)}
+                      onClick={() => handleAddToCart(index, pizza._id)}
                       className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                     >
                       <Plus size={20} />
