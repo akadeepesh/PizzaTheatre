@@ -9,37 +9,69 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MoveRight } from "lucide-react";
-
+import { MoveRight, Pizza, ShieldCheck, BadgeCheck } from "lucide-react";
 export const Load = () => {
   return <div>Loading...</div>;
 };
 
 export const Loaded = () => {
   const { user } = useUser();
+  const router = useRouter();
   return (
     <div className="flex gap-2 w-full justify-between">
       <div className="flex w-full flex-col gap-10">
         <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
           <CardHeader className="flex flex-row items-center justify-between">
-            <div className="flex flex-col gap-2">
-              <CardTitle className="font-Anta">Your Orders</CardTitle>
-              <CardDescription className="font-Annapura group-hover:text-foreground">
-                Get your order history and find your favorite pizza back
-              </CardDescription>
+            <div className="flex flex-row items-center justify-center gap-4">
+              <Pizza className="size-10 group-hover:size-12 transition-all duration-300" />
+              <div className="flex flex-col gap-2">
+                <CardTitle className="font-Anta">Your Orders</CardTitle>
+                <CardDescription className="font-Annapura group-hover:text-foreground">
+                  Get your order history and find your favorite pizza back
+                </CardDescription>
+              </div>
             </div>
             <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
               <MoveRight />
             </div>
           </CardHeader>
         </Card>
-        <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
+        <Card
+          className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer"
+          onClick={() => {
+            router.push("/dashboard/edit");
+          }}
+        >
           <CardHeader className="flex flex-row items-center justify-between">
-            <div className="flex flex-col gap-2">
-              <CardTitle className="font-Anta">Security</CardTitle>
-              <CardDescription className="font-Annapura group-hover:text-foreground">
-                Edit your profile, change your avatar and manage your devices
-              </CardDescription>
+            <div className="flex flex-row items-center justify-center gap-4">
+              <ShieldCheck className="size-10 group-hover:size-12 transition-all duration-300" />
+              <div className="flex flex-col gap-2">
+                <CardTitle className="font-Anta">Security</CardTitle>
+                <CardDescription className="font-Annapura group-hover:text-foreground">
+                  Edit your profile, change your avatar and manage your devices
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
+              <MoveRight />
+            </div>
+          </CardHeader>
+        </Card>
+        <Card
+          className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer"
+          onClick={() => {
+            router.push(`/support?user=${user?.username}`);
+          }}
+        >
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-center gap-4">
+              <BadgeCheck className="size-10 group-hover:size-12 transition-all duration-300" />
+              <div className="flex flex-col gap-2">
+                <CardTitle className="font-Anta">User Support</CardTitle>
+                <CardDescription className="font-Annapura group-hover:text-foreground">
+                  Get help, support and contact the support team.
+                </CardDescription>
+              </div>
             </div>
             <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
               <MoveRight />
@@ -49,7 +81,7 @@ export const Loaded = () => {
       </div>
       <div className="flex">
         <Avatar className="h-fit max-w-fit w-40 m-10">
-          <AvatarImage src={user?.imageUrl} />
+          <AvatarImage src={user?.imageUrl} className="object-cover" />
           <AvatarFallback>
             {(user?.firstName ?? "N/")[0] + (user?.lastName ?? "A")[0]}
           </AvatarFallback>

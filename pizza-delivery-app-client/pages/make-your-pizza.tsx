@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { NextSeo } from "next-seo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -45,9 +46,18 @@ const Custom = () => {
   }
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      <Head>
-        <title>Make Your Pizza</title>
-      </Head>
+      <NextSeo
+        title={"Make Your Pizza"}
+        description="Pizza Theater is an Pizza ordering app, here you can make your own customized pizza."
+        canonical="https://pizza-theater.vercel.app/"
+        openGraph={{
+          url: "https://pizza-theater.vercel.app/",
+          title: "Pizza Theater",
+          description:
+            "Pizza Theater is an Pizza ordering app that allows you to order your favorite pizza from the comfort of your home.",
+          siteName: "Pizza Theater",
+        }}
+      />
       <div className="w-full justify-between p-10 flex bg-muted text-foreground rounded-badge">
         <div className="w-full max-w-md flex">
           <Form {...form}>

@@ -11,7 +11,7 @@ const User = () => {
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto my-20 sm:my-24 md:my-28 lg:my-36">
       <NextSeo
-        title={isLoaded ? `${user?.fullName} | Edit` : "Loading..."}
+        title={isLoaded ? `${user?.fullName} | Profile Edit` : "Loading..."}
         description="Pizza Theater is an Pizza ordering app that allows you to order your favorite pizza from the comfort of your home."
         canonical="https://pizza-theater.vercel.app/"
         openGraph={{
