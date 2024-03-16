@@ -9,7 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MoveRight, Pizza, ShieldCheck, BadgeCheck } from "lucide-react";
+import {
+  MoveRight,
+  Pizza,
+  ShieldCheck,
+  BadgeCheck,
+  ShoppingBasket,
+} from "lucide-react";
 export const Load = () => {
   return <div>Loading...</div>;
 };
@@ -25,9 +31,25 @@ export const Loaded = () => {
             <div className="flex flex-row items-center justify-center gap-4">
               <Pizza className="size-10 group-hover:size-12 transition-all duration-300" />
               <div className="flex flex-col gap-2">
-                <CardTitle className="font-Anta">Your Orders</CardTitle>
+                <CardTitle className="font-Anta">Order History</CardTitle>
                 <CardDescription className="font-Annapura group-hover:text-foreground">
                   Get your order history and find your favorite pizza back
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
+              <MoveRight />
+            </div>
+          </CardHeader>
+        </Card>
+        <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-center gap-4">
+              <ShoppingBasket className="size-10 group-hover:size-12 transition-all duration-300" />
+              <div className="flex flex-col gap-2">
+                <CardTitle className="font-Anta">Your Cart</CardTitle>
+                <CardDescription className="font-Annapura group-hover:text-foreground">
+                  Find your cart and manage your orders
                 </CardDescription>
               </div>
             </div>
@@ -46,9 +68,9 @@ export const Loaded = () => {
             <div className="flex flex-row items-center justify-center gap-4">
               <ShieldCheck className="size-10 group-hover:size-12 transition-all duration-300" />
               <div className="flex flex-col gap-2">
-                <CardTitle className="font-Anta">Security</CardTitle>
+                <CardTitle className="font-Anta">Account & Security</CardTitle>
                 <CardDescription className="font-Annapura group-hover:text-foreground">
-                  Edit your profile, change your avatar and manage your devices
+                  Edit your profile and manage your devices
                 </CardDescription>
               </div>
             </div>
