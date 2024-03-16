@@ -3,6 +3,13 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@clerk/clerk-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { MoveRight } from "lucide-react";
 
 export const Load = () => {
   return <div>Loading...</div>;
@@ -11,14 +18,43 @@ export const Load = () => {
 export const Loaded = () => {
   const { user } = useUser();
   return (
-    <div className="flex items-center justify-center gap-2">
-      <Avatar>
-        <AvatarImage src={user?.imageUrl} />
-        <AvatarFallback>
-          {(user?.firstName ?? "")[0] + (user?.lastName ?? "")[0]}
-        </AvatarFallback>
-      </Avatar>
-      Welcome to your dashboard
+    <div className="flex gap-2 w-full justify-between">
+      <div className="flex w-full flex-col gap-10">
+        <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div className="flex flex-col gap-2">
+              <CardTitle className="font-Anta">Your Orders</CardTitle>
+              <CardDescription className="font-Annapura group-hover:text-foreground">
+                Get your order history and find your favorite pizza back
+              </CardDescription>
+            </div>
+            <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
+              <MoveRight />
+            </div>
+          </CardHeader>
+        </Card>
+        <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div className="flex flex-col gap-2">
+              <CardTitle className="font-Anta">Security</CardTitle>
+              <CardDescription className="font-Annapura group-hover:text-foreground">
+                Edit your profile, change your avatar and manage your devices
+              </CardDescription>
+            </div>
+            <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
+              <MoveRight />
+            </div>
+          </CardHeader>
+        </Card>
+      </div>
+      <div className="flex">
+        <Avatar className="h-fit max-w-fit w-40 m-10">
+          <AvatarImage src={user?.imageUrl} />
+          <AvatarFallback>
+            {(user?.firstName ?? "N/")[0] + (user?.lastName ?? "A")[0]}
+          </AvatarFallback>
+        </Avatar>
+      </div>
     </div>
   );
 };
@@ -36,7 +72,7 @@ export const Dashboard = () => {
   }, [isLoaded, user?.username, id]);
 
   return (
-    <div className="flex justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
+    <div className="flex max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       <NextSeo
         title={isLoaded ? `Dashboard | ${user?.fullName}` : "Loading..."}
         description="Pizza Theater is an Pizza ordering app that allows you to order your favorite pizza from the comfort of your home."

@@ -127,7 +127,7 @@ const Navbar = () => {
                 </div>
                 <div
                   className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center"
-                  onClick={() => router.push("/dashboard/user")}
+                  onClick={() => router.push(`/dashboard/${user?.username}`)}
                 >
                   <User />
                   <div className="flex">Profile</div>
@@ -166,7 +166,9 @@ const Navbar = () => {
                       variant={"ghost"}
                       size={"sm"}
                       className="dark:text-foreground text-primary transition-none"
-                      onClick={() => router.push(`/dashboard/user`)}
+                      onClick={() =>
+                        router.push(`/dashboard/${user?.username}`)
+                      }
                     >
                       <User />
                     </Button>
