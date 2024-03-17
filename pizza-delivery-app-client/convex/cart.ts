@@ -27,3 +27,10 @@ export const getUserCartItems = query({
       .collect();
   },
 });
+
+export const deleteTask = mutation({
+  args: { id: v.id("cart") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
+  },
+});
