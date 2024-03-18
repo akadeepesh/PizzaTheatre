@@ -5,7 +5,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
 
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, CheckCircle } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
@@ -147,7 +147,7 @@ export function Items() {
                 )}
               </CardItem>
               {itemCount[index] === 0 || itemCount[index] === 1 ? (
-                <div className="w-full">
+                <div className="w-full cursor-pointer">
                   <CardItem
                     translateZ={20}
                     as="button"
@@ -157,16 +157,25 @@ export function Items() {
                   </CardItem>
                 </div>
               ) : (
-                <div
-                  onClick={() => handleManyAddToCart(index, pizza._id)}
-                  className="w-full"
-                >
+                <div className="w-full cursor-pointer">
                   <CardItem
                     translateZ={20}
                     as="button"
                     className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold font-Anta"
                   >
-                    Add {itemCount[index]} To Cart
+                    {added ? (
+                      <div className="flex flex-row items-center justify-center gap-1">
+                        <CheckCircle className=" text-green-500" size={16} />{" "}
+                        Added
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => handleManyAddToCart(index, pizza._id)}
+                        className=""
+                      >
+                        Add {itemCount[index]} To Cart
+                      </div>
+                    )}
                   </CardItem>
                 </div>
               )}
