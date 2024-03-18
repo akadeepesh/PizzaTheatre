@@ -28,6 +28,13 @@ export const getUserCartItems = query({
   },
 });
 
+export const updateTask = mutation({
+  args: { id: v.id("cart"), quantity: v.number() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, { quantity: args.quantity });
+  },
+});
+
 export const deleteTask = mutation({
   args: { id: v.id("cart") },
   handler: async (ctx, args) => {

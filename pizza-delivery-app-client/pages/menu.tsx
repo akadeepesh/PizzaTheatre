@@ -20,11 +20,16 @@ import {
 import { useUser } from "@clerk/nextjs";
 
 export function Items() {
+  const { user } = useUser();
   const pizzas = useQuery(api.pizzas.getPizzas);
   const addtoCart = useMutation(api.cart.cartItem);
-  const { user } = useUser();
+  const updateCart = useMutation(api.cart.updateTask);
+  const delCart = useMutation(api.cart.deleteTask);
+  const getcart = useQuery(api.cart.getUserCartItems, {
+    userId: user?.id || "",
+  });
   const [itemCount, setItemCount] = useState<number[]>([]);
-  const [added, setAdded] = useState<boolean>(false);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     if (pizzas) {
@@ -32,7 +37,7 @@ export function Items() {
     }
   }, [pizzas]);
 
-  const handleOneAddToCart = (index: number, pizzaId: string) => {
+  const AddToCart = (index: number, pizzaId: string) => {
     const newCounts = [...itemCount];
     newCounts[index]++;
     setItemCount(newCounts);
@@ -42,25 +47,60 @@ export function Items() {
         pizzaId: pizzaId,
         quantity: 1,
       });
+    } else {
+      getcart?.map((cartItem) => {
+        if (newCounts[index] === 1 && cartItem.quantity === 0) {
+          addtoCart({
+            userId: String(user?.id),
+            pizzaId: pizzaId,
+            quantity: 1,
+          });
+        }
+        if (cartItem.pizzaId === pizzaId) {
+          updateCart({
+            id: cartItem._id,
+            quantity: newCounts[index],
+          });
+        }
+      });
     }
-  };
-
-  const handleManyAddToCart = (index: number, pizzaId: string) => {
-    const newCounts = [...itemCount];
-    setItemCount(newCounts);
-    addtoCart({
-      userId: String(user?.id),
-      pizzaId: pizzaId,
-      quantity: newCounts[index],
-    });
     setAdded(true);
   };
 
-  const handleRemoveFromCart = (index: number) => {
+  const handleRemoveFromCart = (index: number, pizzaId: string) => {
     const newCounts = [...itemCount];
     if (newCounts[index] > 0) {
       newCounts[index]--;
       setItemCount(newCounts);
+      getcart?.map((cartItem) => {
+        if (cartItem.pizzaId === pizzaId) {
+          updateCart({
+            id: cartItem._id,
+            quantity: newCounts[index],
+          });
+        }
+      });
+    }
+  };
+
+  const deleteFromCart = (index: number, pizzaId: string) => {
+    const newCounts = [...itemCount];
+    newCounts[index] = 0;
+    setItemCount(newCounts);
+    const indexToRemove = itemCount.findIndex(
+      (index) => getcart?.[index]?.pizzaId === pizzaId
+    );
+
+    if (indexToRemove !== -1) {
+      newCounts[indexToRemove] = 0;
+      setItemCount(newCounts);
+
+      const cartItemToDelete = getcart?.find(
+        (cartItem) => cartItem.pizzaId === pizzaId
+      );
+      if (cartItemToDelete) {
+        delCart({ id: cartItemToDelete._id });
+      }
     }
   };
 
@@ -117,28 +157,33 @@ export function Items() {
               >
                 {itemCount[index] === 0 ? (
                   <div
-                    onClick={() => handleOneAddToCart(index, pizza._id)}
+                    onClick={() => AddToCart(index, pizza._id)}
                     className="text-sm font-Annapura"
                   >
                     Add to Cart →
                   </div>
                 ) : (
                   <div className="flex flex-row justify-evenly items-center cursor-default">
-                    <div
-                      onClick={() => handleRemoveFromCart(index)}
-                      className="hover:bg-secondary rounded-md p-1 cursor-pointer"
-                    >
-                      {itemCount[index] === 1 ? (
+                    {itemCount[index] === 1 ? (
+                      <div
+                        onClick={() => deleteFromCart(index, pizza._id)}
+                        className="hover:bg-secondary rounded-md p-1 cursor-pointer"
+                      >
                         <Trash2 size={20} />
-                      ) : (
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => handleRemoveFromCart(index, pizza._id)}
+                        className="hover:bg-secondary rounded-md p-1 cursor-pointer"
+                      >
                         <Minus size={20} />
-                      )}
-                    </div>
+                      </div>
+                    )}
                     <Separator orientation="vertical" className="bg-primary" />
                     <div>{itemCount[index]}</div>
                     <Separator orientation="vertical" className="bg-primary" />
                     <div
-                      onClick={() => handleOneAddToCart(index, pizza._id)}
+                      onClick={() => AddToCart(index, pizza._id)}
                       className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                     >
                       <Plus size={20} />
@@ -170,7 +215,7 @@ export function Items() {
                       </div>
                     ) : (
                       <div
-                        onClick={() => handleManyAddToCart(index, pizza._id)}
+                        onClick={() => AddToCart(index, pizza._id)}
                         className=""
                       >
                         Add {itemCount[index]} To Cart
