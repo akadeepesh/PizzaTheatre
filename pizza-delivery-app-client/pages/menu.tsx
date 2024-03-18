@@ -29,7 +29,6 @@ export function Items() {
     userId: user?.id || "",
   });
   const [itemCount, setItemCount] = useState<number[]>([]);
-  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     if (pizzas) {
@@ -64,7 +63,11 @@ export function Items() {
         }
       });
     }
-    setAdded(true);
+  };
+
+  const getQuantityFromCart = (pizzaId: number) => {
+    const cartItem = getcart?.find((item) => item.pizzaId === pizzaId);
+    return cartItem ? cartItem.quantity : 0;
   };
 
   const handleRemoveFromCart = (index: number, pizzaId: string) => {
@@ -155,7 +158,7 @@ export function Items() {
                 as="button"
                 className="rounded-2xl font-normal dark:text-white"
               >
-                {itemCount[index] === 0 ? (
+                {getQuantityFromCart(pizza._id) === 0 ? (
                   <div
                     onClick={() => AddToCart(index, pizza._id)}
                     className="text-sm font-Annapura"
@@ -164,7 +167,7 @@ export function Items() {
                   </div>
                 ) : (
                   <div className="flex flex-row justify-evenly items-center cursor-default">
-                    {itemCount[index] === 1 ? (
+                    {getQuantityFromCart(pizza._id) === 1 ? (
                       <div
                         onClick={() => deleteFromCart(index, pizza._id)}
                         className="hover:bg-secondary rounded-md p-1 cursor-pointer"
@@ -180,7 +183,7 @@ export function Items() {
                       </div>
                     )}
                     <Separator orientation="vertical" className="bg-primary" />
-                    <div>{itemCount[index]}</div>
+                    <div>{getQuantityFromCart(pizza._id)}</div>
                     <Separator orientation="vertical" className="bg-primary" />
                     <div
                       onClick={() => AddToCart(index, pizza._id)}
@@ -191,39 +194,15 @@ export function Items() {
                   </div>
                 )}
               </CardItem>
-              {itemCount[index] === 0 || itemCount[index] === 1 ? (
-                <div className="w-full cursor-pointer">
-                  <CardItem
-                    translateZ={20}
-                    as="button"
-                    className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold font-Anta"
-                  >
-                    Buy Now
-                  </CardItem>
-                </div>
-              ) : (
-                <div className="w-full cursor-pointer">
-                  <CardItem
-                    translateZ={20}
-                    as="button"
-                    className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold font-Anta"
-                  >
-                    {added ? (
-                      <div className="flex flex-row items-center justify-center gap-1">
-                        <CheckCircle className=" text-green-500" size={16} />{" "}
-                        Added
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => AddToCart(index, pizza._id)}
-                        className=""
-                      >
-                        Add {itemCount[index]} To Cart
-                      </div>
-                    )}
-                  </CardItem>
-                </div>
-              )}
+              <div className="w-full cursor-pointer">
+                <CardItem
+                  translateZ={20}
+                  as="button"
+                  className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold font-Anta"
+                >
+                  Buy Now
+                </CardItem>
+              </div>
             </div>
           </CardBody>
         </CardContainer>
