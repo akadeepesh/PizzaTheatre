@@ -5,7 +5,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
 
-import { Minus, Plus, Trash2, CheckCircle } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
@@ -29,10 +29,12 @@ export function Items() {
     userId: user?.id || "",
   });
   const [itemCount, setItemCount] = useState<number[]>([]);
+  const [selectedSize, setSelectedSize] = useState<string[]>([]);
 
   useEffect(() => {
     if (pizzas) {
       setItemCount(new Array(pizzas.length).fill(0));
+      setSelectedSize(new Array(pizzas.length).fill(""));
     }
   }, [pizzas]);
 
@@ -45,6 +47,7 @@ export function Items() {
         userId: String(user?.id),
         pizzaId: pizzaId,
         quantity: 1,
+        size: selectedSize[index],
       });
     } else {
       getcart?.map((cartItem) => {
@@ -53,6 +56,7 @@ export function Items() {
             userId: String(user?.id),
             pizzaId: pizzaId,
             quantity: 1,
+            size: selectedSize[index],
           });
         }
         if (cartItem.pizzaId === pizzaId) {
@@ -111,22 +115,31 @@ export function Items() {
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas?.map((pizza, index) => (
         <CardContainer key={index} className="m-5">
-          <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[24rem] h-auto rounded-xl p-6 border">
+          <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto md:w-96 h-auto rounded-xl p-6 border">
             <CardItem
               translateZ="50"
               className="text-xl font-Anta flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
             >
               <div className="select-text">{pizza.name}</div>
               <div className="">
-                <Select>
+                <Select
+                  value={selectedSize[index]}
+                  onValueChange={(value) =>
+                    setSelectedSize((prevSelectedSize) => {
+                      const newSelectedSize = [...prevSelectedSize];
+                      newSelectedSize[index] = value;
+                      return newSelectedSize;
+                    })
+                  }
+                >
                   <SelectTrigger>
-                    <SelectValue placeholder={`₹ ${pizza.price.small} - S`} />
+                    <SelectValue placeholder={`Select Size`} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={pizza.price.small} defaultChecked={true}>
+                    <SelectItem value="small">
                       ₹ {pizza.price.small} - S
                     </SelectItem>
-                    <SelectItem value={pizza.price.medium}>
+                    <SelectItem value="medium">
                       ₹ {pizza.price.medium} - M
                     </SelectItem>
                   </SelectContent>

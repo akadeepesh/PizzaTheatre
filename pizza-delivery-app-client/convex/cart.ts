@@ -6,12 +6,14 @@ export const cartItem = mutation({
     userId: v.string(),
     pizzaId: v.string(),
     quantity: v.number(),
+    size: v.string(),
   },
   async handler(ctx, args) {
     await ctx.db.insert("cart", {
       userId: args.userId,
       pizzaId: args.pizzaId,
       quantity: args.quantity,
+      size: args.size,
     });
   },
 });
