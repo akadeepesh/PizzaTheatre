@@ -42,35 +42,29 @@ export function Items() {
     const newCounts = [...itemCount];
     newCounts[index]++;
     setItemCount(newCounts);
-
-    const existingCartItem = getcart?.find(
-      (cartItem) => cartItem.pizzaId === pizzaId
-    );
-    console.log(selectedSize[index], newCounts[index]);
-
-    if (existingCartItem) {
-      if (existingCartItem.size !== selectedSize[index]) {
-        console.log("Updating Cart Item Size");
-        addtoCart({
-          userId: String(user?.id),
-          pizzaId: pizzaId,
-          quantity: 1,
-          size: selectedSize[index],
-        });
-      } else {
-        console.log("Updating Cart Item Quantity");
-        updateCart({
-          id: existingCartItem._id,
-          quantity: newCounts[index],
-        });
-      }
-    } else {
-      console.log("Adding New Cart Item");
+    if (newCounts[index] === 1) {
       addtoCart({
         userId: String(user?.id),
         pizzaId: pizzaId,
         quantity: 1,
         size: selectedSize[index],
+      });
+    } else {
+      getcart?.map((cartItem) => {
+        if (newCounts[index] === 1 && cartItem.quantity === 0) {
+          addtoCart({
+            userId: String(user?.id),
+            pizzaId: pizzaId,
+            quantity: 1,
+            size: selectedSize[index],
+          });
+        }
+        if (cartItem.pizzaId === pizzaId) {
+          updateCart({
+            id: cartItem._id,
+            quantity: newCounts[index],
+          });
+        }
       });
     }
   };
@@ -117,18 +111,6 @@ export function Items() {
     }
   };
 
-  const getCartItemSize = (pizzaId: string) => {
-    const cartItem = getcart?.find((item) => item.pizzaId === pizzaId);
-    return cartItem?.size || "small";
-  };
-
-  useEffect(() => {
-    if (pizzas) {
-      setItemCount(new Array(pizzas.length).fill(0));
-      setSelectedSize(pizzas.map((pizza) => getCartItemSize(pizza._id)));
-    }
-  }, [pizzas, getcart]);
-
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas?.map((pizza, index) => (
@@ -151,7 +133,7 @@ export function Items() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={selectedSize[index]} />
+                    <SelectValue placeholder={`Select Size`} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="small">
