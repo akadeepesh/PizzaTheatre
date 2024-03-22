@@ -1,12 +1,20 @@
 "use client";
 import React from "react";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { NextSeo } from "next-seo";
 import { useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const Cart = () => {
   const { user, isLoaded } = useUser();
@@ -14,7 +22,7 @@ const Cart = () => {
   const pizzass = useQuery(api.pizzas.getPizzas);
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
+    <div className="flex flex-col lg:flex-row justify-between items-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       <div className="w-3/5 h-full">
         <NextSeo
           title={isLoaded ? `${user?.fullName} | Cart` : "Loading..."}
@@ -32,58 +40,58 @@ const Cart = () => {
           const pizza = pizzass?.find((p) => p._id === cartItem.pizzaId);
           return pizza ? (
             <div>
-              <CardContainer className="inter-var w-full">
-                <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-5/6 h-auto rounded-xl p-6 border">
-                  <CardItem
-                    translateZ="50"
-                    className="text-xl flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
-                  >
-                    <div className="">{pizza.name}</div>
-                    <div className="">₹ {pizza.price.small}</div>
-                  </CardItem>
-                  <CardItem
-                    as="p"
-                    translateZ="60"
-                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-                  >
-                    {pizza.toppings}
-                  </CardItem>
-                  <CardItem translateZ="100" className="w-full mt-4">
-                    <Image
-                      src={
-                        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      }
-                      height="1000"
-                      width="1000"
-                      className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                      alt="thumbnail"
-                    />
-                  </CardItem>
-                  <div className="flex justify-between items-center mt-20 select-none">
-                    <CardItem
-                      translateZ={20}
-                      as="button"
-                      className="rounded-2xl font-normal dark:text-white"
-                    >
-                      Select Type
-                    </CardItem>
-                    <CardItem
-                      translateZ={20}
-                      as="button"
-                      className="rounded-2xl font-normal dark:text-white"
-                    >
-                      Value
-                    </CardItem>
-                    <CardItem
-                      translateZ={20}
-                      as="button"
-                      className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                    >
-                      Checkout
-                    </CardItem>
+              {/* <div className="card lg:card-side bg-secondary shadow-xl">
+                <figure>
+                  <img
+                    src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="Album"
+                    className="w-full h-full"
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">{pizza.name}</h2>
+                  <p>{pizza.toppings}</p>
+                  <div className="card-actions flex flex-row justify-end">
+                    {cartItem.quantity}
+                    <button className="btn btn-primary">
+                      {cartItem.size === "small"
+                        ? `${pizza.price.small}`
+                        : `${pizza.price.medium}`}
+                    </button>
                   </div>
-                </CardBody>
-              </CardContainer>
+                </div>
+              </div> */}
+              <Card className="">
+                <div className="flex flex-col lg:flex-row">
+                  <div className="flex w-1/2">
+                    <img
+                      src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Album"
+                      className="rounded-es-md rounded-ss-md"
+                    />
+                  </div>
+                  <div className="flex flex-row lg:flex-col w-1/2">
+                    <CardHeader>
+                      <CardTitle>{pizza.name}</CardTitle>
+                      <CardDescription>{pizza.toppings}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Card Content</p>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="card-actions flex flex-row justify-end">
+                        <Button className="">
+                          {cartItem.quantity} {" X "}
+                          {cartItem.size === "small"
+                            ? `${pizza.price.small}`
+                            : `${pizza.price.medium}`}
+                        </Button>
+                      </div>
+                    </CardFooter>
+                  </div>
+                </div>
+              </Card>
+
               <Separator className="bg-primary my-20" />
             </div>
           ) : (
