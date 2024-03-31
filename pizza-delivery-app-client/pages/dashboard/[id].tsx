@@ -1,7 +1,7 @@
 import { NextSeo } from "next-seo";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,

@@ -27,7 +27,7 @@ const UserNavigation = () => {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger className="rounded-full">
           <div className="p-0.5 ring-2 dark:ring-stone-100 ring-stone-600 border-transparent focus:border-transparent focus:ring-0 rounded-full">
             <UserButton />
           </div>
