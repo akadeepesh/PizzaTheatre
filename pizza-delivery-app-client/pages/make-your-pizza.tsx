@@ -26,6 +26,7 @@ import {
 import Image from "next/image";
 import MultiSelect, { Hotel } from "@/components/MultiSelect";
 import Head from "next/head";
+import FancyMultiSelect from "@/components/MultiSelectTry";
 
 const FormSchema = z.object({
   pizzaBase: z.string(),
@@ -183,6 +184,7 @@ const Custom = () => {
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                 />
+                {/* <FancyMultiSelect /> */}
               </div>
               <Button size={"lg"} type="submit" className="group">
                 <div className="flex gap-1 items-center">
