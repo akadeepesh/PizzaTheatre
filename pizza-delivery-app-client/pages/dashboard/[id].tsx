@@ -16,13 +16,13 @@ import {
   BadgeCheck,
   ShoppingBasket,
 } from "lucide-react";
+import Link from "next/link";
 export const Load = () => {
   return <div>Loading...</div>;
 };
 
 export const Loaded = () => {
   const { user } = useUser();
-  const router = useRouter();
   return (
     <div className="flex gap-2 w-full justify-between">
       <div className="flex w-full flex-col gap-10">
@@ -58,48 +58,44 @@ export const Loaded = () => {
             </div>
           </CardHeader>
         </Card>
-        <Card
-          className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer"
-          onClick={() => {
-            router.push("/dashboard/edit");
-          }}
-        >
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center justify-center gap-4">
-              <ShieldCheck className="size-10 group-hover:size-12 transition-all duration-300" />
-              <div className="flex flex-col gap-2">
-                <CardTitle className="font-Anta">Account & Security</CardTitle>
-                <CardDescription className="font-Annapura group-hover:text-foreground">
-                  Edit your profile and manage your devices
-                </CardDescription>
+        <Link href="/dashboard/edit">
+          <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center justify-center gap-4">
+                <ShieldCheck className="size-10 group-hover:size-12 transition-all duration-300" />
+                <div className="flex flex-col gap-2">
+                  <CardTitle className="font-Anta">
+                    Account & Security
+                  </CardTitle>
+                  <CardDescription className="font-Annapura group-hover:text-foreground">
+                    Edit your profile and manage your devices
+                  </CardDescription>
+                </div>
               </div>
-            </div>
-            <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
-              <MoveRight />
-            </div>
-          </CardHeader>
-        </Card>
-        <Card
-          className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer"
-          onClick={() => {
-            router.push(`/support?user=${user?.username}`);
-          }}
-        >
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center justify-center gap-4">
-              <BadgeCheck className="size-10 group-hover:size-12 transition-all duration-300" />
-              <div className="flex flex-col gap-2">
-                <CardTitle className="font-Anta">User Support</CardTitle>
-                <CardDescription className="font-Annapura group-hover:text-foreground">
-                  Get help, support and contact the support team.
-                </CardDescription>
+              <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
+                <MoveRight />
               </div>
-            </div>
-            <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
-              <MoveRight />
-            </div>
-          </CardHeader>
-        </Card>
+            </CardHeader>
+          </Card>
+        </Link>
+        <Link href={`/support?user=${user?.username}`}>
+          <Card className="h-fit w-full bg-secondary hover:bg-primary group cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center justify-center gap-4">
+                <BadgeCheck className="size-10 group-hover:size-12 transition-all duration-300" />
+                <div className="flex flex-col gap-2">
+                  <CardTitle className="font-Anta">User Support</CardTitle>
+                  <CardDescription className="font-Annapura group-hover:text-foreground">
+                    Get help, support and contact the support team.
+                  </CardDescription>
+                </div>
+              </div>
+              <div className="flex w-fit mr-5 group-hover:mr-0 transition-all duration-300">
+                <MoveRight />
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
       </div>
       <div className="flex">
         <Avatar className="h-fit max-w-fit w-40 m-10">

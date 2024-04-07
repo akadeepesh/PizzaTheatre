@@ -23,13 +23,12 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { useRouter } from "next/router";
 import { ShoppingCart, User, Home, Menu } from "lucide-react";
 import UserNavigation from "./UserNavigation";
+import Link from "next/link";
 
 const Navbar = () => {
   const { user } = useUser();
-  const router = useRouter();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -56,21 +55,20 @@ const Navbar = () => {
       }`}
     >
       <div className="flex md:max-w-screen-xl w-5/6 md:w-full justify-between items-center py-6">
-        <h1
-          className={`cursor-pointer scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-ProtestRevolution ${
-            isScrolled ? "dark:text-secondary text-primary" : "text-primary"
-          }`}
-          onClick={() => {
-            router.push(`/`);
-          }}
-        >
-          Pizza Theatre
-          <Separator
-            className={`${
-              isScrolled ? "dark:bg-secondary bg-primary" : "bg-primary"
+        <Link href="/">
+          <h1
+            className={`cursor-pointer scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl font-ProtestRevolution ${
+              isScrolled ? "dark:text-secondary text-primary" : "text-primary"
             }`}
-          />
-        </h1>
+          >
+            Pizza Theatre
+            <Separator
+              className={`${
+                isScrolled ? "dark:bg-secondary bg-primary" : "bg-primary"
+              }`}
+            />
+          </h1>
+        </Link>
         <div className="md:hidden flex flex-row gap-2">
           {user ? (
             <UserNavigation />
@@ -111,27 +109,24 @@ const Navbar = () => {
                 </DrawerTitle>
               </DrawerHeader>
               <div className="flex flex-row py-2 gap-4 items-center justify-center font-Anta">
-                <div
-                  className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center"
-                  onClick={() => router.push("/")}
-                >
-                  <Home />
-                  <div className="flex">Home</div>
-                </div>
-                <div
-                  className="flex flex-col gap-1 border p-4 px-6 bg-secondary rounded-xl items-center"
-                  onClick={() => router.push("/cart")}
-                >
-                  <ShoppingCart />
-                  <div className="flex">Cart</div>
-                </div>
-                <div
-                  className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center"
-                  onClick={() => router.push(`/dashboard/${user?.username}`)}
-                >
-                  <User />
-                  <div className="flex">Profile</div>
-                </div>
+                <Link href="/">
+                  <div className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center">
+                    <Home />
+                    <div className="flex">Home</div>
+                  </div>
+                </Link>
+                <Link href="/cart">
+                  <div className="flex flex-col gap-1 border p-4 px-6 bg-secondary rounded-xl items-center">
+                    <ShoppingCart />
+                    <div className="flex">Cart</div>
+                  </div>
+                </Link>
+                <Link href={`/dashboard/${user?.username}`}>
+                  <div className="flex flex-col gap-1 border p-4 bg-secondary rounded-xl items-center">
+                    <User />
+                    <div className="flex">Profile</div>
+                  </div>
+                </Link>
               </div>
               <Separator />
               <DrawerFooter>
@@ -149,30 +144,28 @@ const Navbar = () => {
         <div className="hidden md:flex flex-row">
           {user ? (
             <div className="flex flex-row justify-center items-center gap-2 md:gap-3">
-              <Button
-                variant={"link"}
-                size={"sm"}
-                className="text-sm font-Anta dark:text-foreground transition-none"
-                onClick={() => {
-                  router.push(`/make-your-pizza`);
-                }}
-              >
-                Create Your Pizza
-              </Button>
+              <Link href="/make-your-pizza">
+                <Button
+                  variant={"link"}
+                  size={"sm"}
+                  className="text-sm font-Anta dark:text-foreground transition-none"
+                >
+                  Create Your Pizza
+                </Button>
+              </Link>
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <Button
-                      variant={"ghost"}
-                      size={"sm"}
-                      className="dark:text-foreground text-primary transition-none"
-                      onClick={() =>
-                        router.push(`/dashboard/${user?.username}`)
-                      }
-                    >
-                      <User />
-                    </Button>
-                  </TooltipTrigger>
+                  <Link href={`/dashboard/${user?.username}`}>
+                    <TooltipTrigger>
+                      <Button
+                        variant={"ghost"}
+                        size={"sm"}
+                        className="dark:text-foreground text-primary transition-none"
+                      >
+                        <User />
+                      </Button>
+                    </TooltipTrigger>
+                  </Link>
                   <TooltipContent>
                     <span className="text-sm font-Anta">User Profile</span>
                   </TooltipContent>
@@ -180,16 +173,17 @@ const Navbar = () => {
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <Button
-                      variant={"ghost"}
-                      size={"sm"}
-                      className="text-primary dark:text-primary-foreground transition-none"
-                      onClick={() => router.push("/cart")}
-                    >
-                      <ShoppingCart />
-                    </Button>
-                  </TooltipTrigger>
+                  <Link href="/cart">
+                    <TooltipTrigger>
+                      <Button
+                        variant={"ghost"}
+                        size={"sm"}
+                        className="text-primary dark:text-primary-foreground transition-none"
+                      >
+                        <ShoppingCart />
+                      </Button>
+                    </TooltipTrigger>
+                  </Link>
                   <TooltipContent>
                     <span>Cart</span>
                   </TooltipContent>

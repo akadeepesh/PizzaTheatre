@@ -9,8 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { useRouter } from "next/router";
 import {
   ShoppingCart,
   User,
@@ -20,10 +18,10 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 const UserNavigation = () => {
   const { user } = useUser();
-  const router = useRouter();
   return (
     <div>
       <DropdownMenu>
@@ -37,74 +35,56 @@ const UserNavigation = () => {
             @{user?.username}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="cursor-pointer gap-2"
-            onClick={() => {
-              router.push(`/dashboard/${user?.username}`);
-            }}
-          >
-            <span>
-              <User size={"1.2rem"} />
-            </span>
-            <span>My Profile</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer gap-2"
-            onClick={() => {
-              router.push(`/menu`);
-            }}
-          >
-            <span>
-              <Cookie size={"1.2rem"} />
-            </span>
-            <span>Menu</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer gap-2"
-            onClick={() => {
-              router.push(`/cart`);
-            }}
-          >
-            <span>
-              <ShoppingCart size={"1.2rem"} />
-            </span>
-            <span>Cart</span>
-          </DropdownMenuItem>
+          <Link href={`/dashboard/${user?.username}`}>
+            <DropdownMenuItem className="cursor-pointer gap-2">
+              <span>
+                <User size={"1.2rem"} />
+              </span>
+              <span>My Profile</span>
+            </DropdownMenuItem>
+          </Link>
+          <Link href={`/menu`}>
+            <DropdownMenuItem className="cursor-pointer gap-2">
+              <span>
+                <Cookie size={"1.2rem"} />
+              </span>
+              <span>Menu</span>
+            </DropdownMenuItem>
+          </Link>
+          <Link href={`/cart`}>
+            <DropdownMenuItem className="cursor-pointer gap-2">
+              <span>
+                <ShoppingCart size={"1.2rem"} />
+              </span>
+              <span>Cart</span>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="cursor-pointer gap-1"
-            onClick={() => {
-              router.push(`/admin-req?user=${user?.username}`);
-            }}
-          >
-            <span>
-              <ShieldCheck size={"1.2rem"} />
-            </span>
-            <span>Admin Request</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer gap-1"
-            onClick={() => {
-              router.push(`/support?user=${user?.username}`);
-            }}
-          >
-            <span>
-              <AlertCircle size={"1.2rem"} />
-            </span>
-            <span>Support</span>
-          </DropdownMenuItem>
+          <Link href={`/admin-req?user=${user?.username}`}>
+            <DropdownMenuItem className="cursor-pointer gap-1">
+              <span>
+                <ShieldCheck size={"1.2rem"} />
+              </span>
+              <span>Admin Request</span>
+            </DropdownMenuItem>
+          </Link>
+          <Link href={`/support?user=${user?.username}`}>
+            <DropdownMenuItem className="cursor-pointer gap-1">
+              <span>
+                <AlertCircle size={"1.2rem"} />
+              </span>
+              <span>Support</span>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="cursor-pointer gap-1"
-            onClick={() => {
-              router.push(`/`);
-            }}
-          >
-            <span>
-              <Home size={"1.2rem"} />
-            </span>
-            <span>Home Page</span>
-          </DropdownMenuItem>
+          <Link href={`/`}>
+            <DropdownMenuItem className="cursor-pointer gap-1">
+              <span>
+                <Home size={"1.2rem"} />
+              </span>
+              <span>Home Page</span>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer bg-destructive">
             <SignOutButton />
