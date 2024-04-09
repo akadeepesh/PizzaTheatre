@@ -7,9 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
 
-type Framework = Record<"value" | "label", string>;
+type Pizza = Record<"value" | "label", string>;
 
-const FRAMEWORKS = [
+const Pizzas = [
   { value: "cheese", label: "Cheese" },
   { value: "onion", label: "Onion" },
   { value: "capsicum", label: "Capsicum" },
@@ -36,21 +36,21 @@ const FRAMEWORKS = [
   { value: "spicy_chicken", label: "Spicy Chicken" },
   { value: "chicken_rashers", label: "Chicken Rashers" },
   { value: "double_bbq", label: "Double BBQ" },
-] satisfies Framework[];
+] satisfies Pizza[];
 
 const MAX_ITEMS = 6;
 
 export default function FancyMultiSelect() {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Framework[]>([FRAMEWORKS[4]]);
+  const [selected, setSelected] = React.useState<Pizza[]>([Pizzas[4]]);
   const [inputValue, setInputValue] = React.useState("");
   const [selectedValues, setSelectedValues] = React.useState<string[]>([
-    FRAMEWORKS[4].label,
+    Pizzas[4].label,
   ]);
   const [maxItemsReached, setMaxItemsReached] = React.useState(false);
 
-  const handleUnselect = React.useCallback((framework: Framework) => {
+  const handleUnselect = React.useCallback((framework: Pizza) => {
     setSelected((prev) => prev.filter((s) => s.value !== framework.value));
     setSelectedValues((prev) =>
       prev.filter((value) => value !== framework.label)
@@ -77,7 +77,6 @@ export default function FancyMultiSelect() {
             setMaxItemsReached(false);
           }
         }
-        // This is not a default behaviour of the <input /> field
         if (e.key === "Escape") {
           input.blur();
         }
@@ -86,11 +85,11 @@ export default function FancyMultiSelect() {
     []
   );
 
-  const selectables = FRAMEWORKS.filter(
+  const selectables = Pizzas.filter(
     (framework) => !selected.includes(framework)
   );
 
-  const handleSelect = (framework: Framework) => {
+  const handleSelect = (framework: Pizza) => {
     if (selected.length < MAX_ITEMS) {
       setSelected((prev) => [...prev, framework]);
       setSelectedValues((prev) => [...prev, framework.label]);
@@ -104,12 +103,12 @@ export default function FancyMultiSelect() {
       onKeyDown={handleKeyDown}
       className="overflow-visible bg-transparent"
     >
+      {maxItemsReached && (
+        <div className="text-primary mb-1 text-xs">
+          Max {MAX_ITEMS} cheese can be added
+        </div>
+      )}
       <div className="group bg-primary border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-        {maxItemsReached && (
-          <div className="text-red-500 mb-2">
-            Max {MAX_ITEMS} items can be added
-          </div>
-        )}
         <div className="flex gap-1 flex-wrap">
           {selected.map((framework) => {
             return (
@@ -133,32 +132,34 @@ export default function FancyMultiSelect() {
               </Badge>
             );
           })}
-          {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
             ref={inputRef}
             value={inputValue}
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Select frameworks..."
-            className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
+            placeholder="Select toppings..."
+            className="bg-transparent outline-none placeholder:text-foreground placeholder:font-bold flex-1"
           />
         </div>
       </div>
       <div className="relative mt-2">
         {open && selectables.length > 0 ? (
-          <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-            <CommandGroup className="h-full overflow-auto">
-              {selectables.map((framework) => {
+          <div className="absolute w-full z-10 top-0 rounded-md border bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl text-popover-foreground shadow-md outline-none animate-in">
+            <CommandGroup
+              className="h-full overflow-auto"
+              style={{ columnCount: "auto", columnWidth: "200px" }}
+            >
+              {selectables.map((framework, index) => {
                 return (
                   <CommandItem
-                    key={framework.value}
+                    key={index}
                     onMouseDown={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                     }}
                     onSelect={() => handleSelect(framework)}
-                    className={"cursor-pointer"}
+                    className="cursor-pointer"
                   >
                     {framework.label}
                   </CommandItem>
@@ -168,7 +169,8 @@ export default function FancyMultiSelect() {
           </div>
         ) : null}
       </div>
-      <div>Selected Values: {selectedValues.join(", ")}</div>
+
+      {/* <div>Selected Values: {selectedValues.join(", ")}</div> */}
     </Command>
   );
 }

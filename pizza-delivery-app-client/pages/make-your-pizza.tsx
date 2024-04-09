@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { NextSeo } from "next-seo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import {
   Select,
   SelectTrigger,
@@ -24,8 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Image from "next/image";
-import MultiSelect, { Hotel } from "@/components/MultiSelect";
-import Head from "next/head";
+// import MultiSelect, { Hotel } from "@/components/MultiSelect";
 import FancyMultiSelect from "@/components/MultiSelectTry";
 
 const FormSchema = z.object({
@@ -36,14 +36,19 @@ const FormSchema = z.object({
 });
 
 const Custom = () => {
-  const [selectedOptions, setSelectedOptions] = useState<Hotel[]>([]);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("selected : ", selectedOptions);
-    console.log(JSON.stringify(data, null));
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
   return (
     <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
@@ -60,7 +65,7 @@ const Custom = () => {
         }}
       />
       <div className="w-full justify-between p-10 flex bg-muted text-foreground rounded-badge">
-        <div className="w-full max-w-md flex">
+        <div className="w-full flex">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -79,36 +84,32 @@ const Custom = () => {
                         Your&apos;s
                       </span>
                     </FormLabel>
-                    <div className="ml-5 flex flex-col">
-                      <div className="">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="bg-primary font-bold">
-                              <SelectValue placeholder="The Pizza Base!!!" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
-                            <SelectGroup>
-                              <SelectLabel>
-                                Choose Your Favorite Base
-                              </SelectLabel>
-                              <div className="p-2">
-                                <SelectItem value="TC">Thin Crust</SelectItem>
-                                <SelectItem value="NYS">
-                                  New York Style
-                                </SelectItem>
-                                <SelectItem value="DD">Deep Dish</SelectItem>
-                                <SelectItem value="S">Sourdough</SelectItem>
-                                <SelectItem value="N">Neapolitan</SelectItem>
-                              </div>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
+                    <div className="mx-5 flex flex-col">
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="bg-primary font-bold">
+                            <SelectValue placeholder="The Pizza Base!!!" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
+                          <SelectGroup>
+                            <SelectLabel>Choose Your Favorite Base</SelectLabel>
+                            <div className="p-2">
+                              <SelectItem value="TC">Thin Crust</SelectItem>
+                              <SelectItem value="NYS">
+                                New York Style
+                              </SelectItem>
+                              <SelectItem value="DD">Deep Dish</SelectItem>
+                              <SelectItem value="S">Sourdough</SelectItem>
+                              <SelectItem value="N">Neapolitan</SelectItem>
+                            </div>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
                     </div>
                   </FormItem>
                 )}
@@ -117,10 +118,10 @@ const Custom = () => {
                 control={form.control}
                 name="pizaaSauce"
                 render={({ field }) => (
-                  <FormItem className="ml-5">
+                  <FormItem className="mx-5">
                     <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                    // onValueChange={field.onChange}
+                    // defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="bg-primary font-bold">
@@ -150,10 +151,10 @@ const Custom = () => {
                 control={form.control}
                 name="pizzaCheese"
                 render={({ field }) => (
-                  <FormItem className="ml-5">
+                  <FormItem className="mx-5">
                     <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                    // onValueChange={field.onChange}
+                    // defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="bg-primary font-bold">
@@ -179,13 +180,13 @@ const Custom = () => {
                   </FormItem>
                 )}
               />
-              <div className="ml-5">
-                <MultiSelect
+              {/* <div className="mx-5"> */}
+              {/* <MultiSelect
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
-                />
-                {/* <FancyMultiSelect /> */}
-              </div>
+                /> */}
+              {/* <FancyMultiSelect /> */}
+              {/* </div> */}
               <Button size={"lg"} type="submit" className="group">
                 <div className="flex gap-1 items-center">
                   <div className="text-lg font-Anta">Generate Pizza</div>
@@ -201,7 +202,7 @@ const Custom = () => {
             </form>
           </Form>
         </div>
-        <div className="flex w-full max-w-sm">buy menu</div>
+        {/* <div className="flex w-full max-w-sm">buy menu</div> */}
       </div>
     </div>
   );
