@@ -1,15 +1,11 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
-import Head from "next/head";
-
+import Image from "next/image";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
-
 import {
   Select,
   SelectContent,
@@ -18,103 +14,124 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useUser } from "@clerk/nextjs";
+import { Id } from "@/convex/_generated/dataModel";
+import Head from "next/head";
+
+type CartItem = {
+  _id: Id<"cart">;
+  pizzaId: Id<"pizza">;
+  size: string;
+  quantity: number;
+};
 
 export function Items() {
   const { user } = useUser();
   const pizzas = useQuery(api.pizzas.getPizzas);
-  const addtoCart = useMutation(api.cart.cartItem);
-  const updateCart = useMutation(api.cart.updateTask);
-  const delCart = useMutation(api.cart.deleteTask);
-  const getcart = useQuery(api.cart.getUserCartItems, {
+  const updateCartItem = useMutation(api.cart.updateCartItem);
+  const deleteCartItem = useMutation(api.cart.deleteCartItem);
+  const getCart = useQuery(api.cart.getUserCartItems, {
     userId: user?.id || "",
   });
-  const [itemCount, setItemCount] = useState<number[]>([]);
-  const [selectedSize, setSelectedSize] = useState<string[]>([]);
+
+  const [itemCount, setItemCount] = useState<{
+    [key: string]: { [size: string]: number };
+  }>({});
+  const [selectedSize, setSelectedSize] = useState<{ [key: string]: string }>(
+    {},
+  );
 
   useEffect(() => {
-    if (pizzas) {
-      setItemCount(new Array(pizzas.length).fill(0));
-      setSelectedSize(new Array(pizzas.length).fill("small"));
-    }
-  }, [pizzas]);
-
-  const AddToCart = (index: number, pizzaId: string) => {
-    const newCounts = [...itemCount];
-    newCounts[index]++;
-    setItemCount(newCounts);
-    if (newCounts[index] === 1) {
-      addtoCart({
-        userId: String(user?.id),
-        pizzaId: pizzaId,
-        quantity: 1,
-        size: selectedSize[index],
+    if (pizzas && getCart) {
+      const newItemCount: { [key: string]: { [size: string]: number } } = {};
+      const newSelectedSize: { [key: string]: string } = {};
+      pizzas.forEach((pizza) => {
+        newItemCount[pizza._id] = { small: 0, medium: 0 };
+        newSelectedSize[pizza._id] = "small";
       });
-    } else {
-      getcart?.map((cartItem) => {
-        if (newCounts[index] === 1 && cartItem.quantity === 0) {
-          addtoCart({
-            userId: String(user?.id),
-            pizzaId: pizzaId,
-            quantity: 1,
-            size: selectedSize[index],
-          });
-        }
-        if (cartItem.pizzaId === pizzaId) {
-          updateCart({
-            id: cartItem._id,
-            quantity: newCounts[index],
-          });
+      getCart.forEach((item: CartItem) => {
+        if (newItemCount[item.pizzaId]) {
+          newItemCount[item.pizzaId][item.size] = item.quantity;
         }
       });
+      setItemCount(newItemCount);
+      setSelectedSize(newSelectedSize);
     }
-  };
+  }, [pizzas, getCart]);
 
-  const getQuantityFromCart = (pizzaId: number) => {
-    const cartItem = getcart?.find((item) => item.pizzaId === pizzaId);
-    return cartItem ? cartItem.quantity : 0;
-  };
+  const handleAddToCart = async (pizzaId: Id<"pizza">, size: string) => {
+    try {
+      const newCount =
+        ((itemCount[pizzaId] && itemCount[pizzaId][size]) || 0) + 1;
+      setItemCount({
+        ...itemCount,
+        [pizzaId]: { ...itemCount[pizzaId], [size]: newCount },
+      });
 
-  const handleRemoveFromCart = (index: number, pizzaId: string) => {
-    const newCounts = [...itemCount];
-    if (newCounts[index] > 0) {
-      newCounts[index]--;
-      setItemCount(newCounts);
-      getcart?.map((cartItem) => {
-        if (cartItem.pizzaId === pizzaId) {
-          updateCart({
-            id: cartItem._id,
-            quantity: newCounts[index],
-          });
-        }
+      await updateCartItem({
+        userId: user?.id || "",
+        pizzaId,
+        size,
+        quantity: newCount,
+      });
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setItemCount({
+        ...itemCount,
+        [pizzaId]: {
+          ...itemCount[pizzaId],
+          [size]: itemCount[pizzaId]?.[size] || 0,
+        },
       });
     }
   };
 
-  const deleteFromCart = (index: number, pizzaId: string) => {
-    const newCounts = [...itemCount];
-    newCounts[index] = 0;
-    setItemCount(newCounts);
-    const indexToRemove = itemCount.findIndex(
-      (index) => getcart?.[index]?.pizzaId === pizzaId
-    );
-
-    if (indexToRemove !== -1) {
-      newCounts[indexToRemove] = 0;
-      setItemCount(newCounts);
-
-      const cartItemToDelete = getcart?.find(
-        (cartItem) => cartItem.pizzaId === pizzaId
+  const handleRemoveFromCart = async (pizzaId: Id<"pizza">, size: string) => {
+    try {
+      const newCount = Math.max(
+        ((itemCount[pizzaId] && itemCount[pizzaId][size]) || 0) - 1,
+        0,
       );
-      if (cartItemToDelete) {
-        delCart({ id: cartItemToDelete._id });
+      setItemCount({
+        ...itemCount,
+        [pizzaId]: { ...itemCount[pizzaId], [size]: newCount },
+      });
+
+      if (newCount === 0) {
+        await deleteCartItem({
+          userId: user?.id || "",
+          pizzaId,
+          size,
+        });
+      } else {
+        await updateCartItem({
+          userId: user?.id || "",
+          pizzaId,
+          size,
+          quantity: newCount,
+        });
       }
+    } catch (error) {
+      console.error("Error removing from cart:", error);
+      setItemCount({
+        ...itemCount,
+        [pizzaId]: {
+          ...itemCount[pizzaId],
+          [size]: itemCount[pizzaId]?.[size] || 0,
+        },
+      });
     }
   };
+
+  const handleSizeChange = async (pizzaId: Id<"pizza">, size: string) => {
+    setSelectedSize({ ...selectedSize, [pizzaId]: size });
+  };
+
+  if (!pizzas) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      {pizzas?.map((pizza, index) => (
-        <CardContainer key={index} className="m-5">
+      {pizzas.map((pizza) => (
+        <CardContainer key={pizza._id} className="m-5">
           <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto md:w-96 h-auto rounded-xl p-6 border">
             <CardItem
               translateZ="50"
@@ -123,14 +140,8 @@ export function Items() {
               <div className="select-text">{pizza.name}</div>
               <div className="">
                 <Select
-                  value={selectedSize[index]}
-                  onValueChange={(value) =>
-                    setSelectedSize((prevSelectedSize) => {
-                      const newSelectedSize = [...prevSelectedSize];
-                      newSelectedSize[index] = value;
-                      return newSelectedSize;
-                    })
-                  }
+                  value={selectedSize[pizza._id] || "small"}
+                  onValueChange={(value) => handleSizeChange(pizza._id, value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder={`Select Size`} />
@@ -155,9 +166,7 @@ export function Items() {
             </CardItem>
             <CardItem translateZ="100" className="w-full mt-4">
               <Image
-                src={
-                  "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
+                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 height="1000"
                 width="1000"
                 className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
@@ -170,35 +179,53 @@ export function Items() {
                 as="button"
                 className="rounded-2xl font-normal dark:text-white"
               >
-                {getQuantityFromCart(pizza._id) === 0 ? (
+                {(itemCount[pizza._id]?.[selectedSize[pizza._id]] || 0) ===
+                0 ? (
                   <div
-                    onClick={() => AddToCart(index, pizza._id)}
+                    onClick={() =>
+                      handleAddToCart(pizza._id, selectedSize[pizza._id])
+                    }
                     className="text-sm font-Annapura"
                   >
                     Add to Cart →
                   </div>
                 ) : (
                   <div className="flex flex-row justify-evenly items-center cursor-default">
-                    {getQuantityFromCart(pizza._id) === 1 ? (
+                    {(itemCount[pizza._id]?.[selectedSize[pizza._id]] || 0) ===
+                    1 ? (
                       <div
-                        onClick={() => deleteFromCart(index, pizza._id)}
+                        onClick={() =>
+                          handleRemoveFromCart(
+                            pizza._id,
+                            selectedSize[pizza._id],
+                          )
+                        }
                         className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                       >
                         <Trash2 size={20} />
                       </div>
                     ) : (
                       <div
-                        onClick={() => handleRemoveFromCart(index, pizza._id)}
+                        onClick={() =>
+                          handleRemoveFromCart(
+                            pizza._id,
+                            selectedSize[pizza._id],
+                          )
+                        }
                         className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                       >
                         <Minus size={20} />
                       </div>
                     )}
                     <Separator orientation="vertical" className="bg-primary" />
-                    <div>{getQuantityFromCart(pizza._id)}</div>
+                    <div>
+                      {itemCount[pizza._id]?.[selectedSize[pizza._id]] || 0}
+                    </div>
                     <Separator orientation="vertical" className="bg-primary" />
                     <div
-                      onClick={() => AddToCart(index, pizza._id)}
+                      onClick={() =>
+                        handleAddToCart(pizza._id, selectedSize[pizza._id])
+                      }
                       className="hover:bg-secondary rounded-md p-1 cursor-pointer"
                     >
                       <Plus size={20} />

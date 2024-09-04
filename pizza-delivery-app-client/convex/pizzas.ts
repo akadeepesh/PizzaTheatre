@@ -15,7 +15,7 @@ export const pizza = mutation({
     function validatePrice(price: { small?: number; medium?: number }) {
       if (!price.small && !price.medium) {
         throw new Error(
-          "At least one of small or medium price must be provided."
+          "At least one of small or medium price must be provided.",
         );
       }
       if (
@@ -39,7 +39,7 @@ export const pizza = mutation({
 
 export const getPizzas = query({
   args: {},
-  async handler(ctx, args) {
+  async handler(ctx) {
     return ctx.db.query("pizza").collect();
   },
 });

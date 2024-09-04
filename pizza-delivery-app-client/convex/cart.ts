@@ -4,17 +4,26 @@ import { mutation, query } from "./_generated/server";
 export const cartItem = mutation({
   args: {
     userId: v.string(),
-    pizzaId: v.string(),
-    quantity: v.number(),
+    pizzaId: v.id("pizza"),
     size: v.string(),
+    quantity: v.number(),
   },
   async handler(ctx, args) {
-    await ctx.db.insert("cart", {
-      userId: args.userId,
-      pizzaId: args.pizzaId,
-      quantity: args.quantity,
-      size: args.size,
-    });
+    const existingItem = await ctx.db
+      .query("cart")
+      .filter(
+        (q) =>
+          q.eq(q.field("userId"), args.userId) &&
+          q.eq(q.field("pizzaId"), args.pizzaId) &&
+          q.eq(q.field("size"), args.size),
+      )
+      .first();
+
+    if (existingItem) {
+      await ctx.db.patch(existingItem._id, { quantity: args.quantity });
+    } else {
+      await ctx.db.insert("cart", args);
+    }
   },
 });
 
@@ -30,16 +39,55 @@ export const getUserCartItems = query({
   },
 });
 
-export const updateTask = mutation({
-  args: { id: v.id("cart"), quantity: v.number() },
+export const updateCartItem = mutation({
+  args: {
+    userId: v.string(),
+    pizzaId: v.id("pizza"),
+    size: v.string(),
+    quantity: v.number(),
+  },
   handler: async (ctx, args) => {
-    await ctx.db.patch(args.id, { quantity: args.quantity });
+    const existingItem = await ctx.db
+      .query("cart")
+      .filter(
+        (q) =>
+          q.eq(q.field("userId"), args.userId) &&
+          q.eq(q.field("pizzaId"), args.pizzaId) &&
+          q.eq(q.field("size"), args.size),
+      )
+      .first();
+
+    if (existingItem) {
+      if (args.quantity > 0) {
+        await ctx.db.patch(existingItem._id, { quantity: args.quantity });
+      } else {
+        await ctx.db.delete(existingItem._id);
+      }
+    } else if (args.quantity > 0) {
+      await ctx.db.insert("cart", args);
+    }
   },
 });
 
-export const deleteTask = mutation({
-  args: { id: v.id("cart") },
+export const deleteCartItem = mutation({
+  args: {
+    userId: v.string(),
+    pizzaId: v.id("pizza"),
+    size: v.string(),
+  },
   handler: async (ctx, args) => {
-    await ctx.db.delete(args.id);
+    const itemToDelete = await ctx.db
+      .query("cart")
+      .filter(
+        (q) =>
+          q.eq(q.field("userId"), args.userId) &&
+          q.eq(q.field("pizzaId"), args.pizzaId) &&
+          q.eq(q.field("size"), args.size),
+      )
+      .first();
+
+    if (itemToDelete) {
+      await ctx.db.delete(itemToDelete._id);
+    }
   },
 });
