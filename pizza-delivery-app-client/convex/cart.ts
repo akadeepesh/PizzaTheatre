@@ -1,40 +1,13 @@
-import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-
-export const cartItem = mutation({
-  args: {
-    userId: v.string(),
-    pizzaId: v.id("pizza"),
-    size: v.string(),
-    quantity: v.number(),
-  },
-  async handler(ctx, args) {
-    const existingItem = await ctx.db
-      .query("cart")
-      .filter(
-        (q) =>
-          q.eq(q.field("userId"), args.userId) &&
-          q.eq(q.field("pizzaId"), args.pizzaId) &&
-          q.eq(q.field("size"), args.size),
-      )
-      .first();
-
-    if (existingItem) {
-      await ctx.db.patch(existingItem._id, { quantity: args.quantity });
-    } else {
-      await ctx.db.insert("cart", args);
-    }
-  },
-});
+import { v } from "convex/values";
 
 export const getUserCartItems = query({
-  args: {
-    userId: v.string(),
-  },
-  async handler(ctx, args) {
-    return ctx.db
-      .query("cart")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
+  args: { userId: v.string() },
+  handler: async (ctx, args) => {
+    const { userId } = args;
+    return await ctx.db
+      .query("cartItems")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
   },
 });
@@ -42,29 +15,30 @@ export const getUserCartItems = query({
 export const updateCartItem = mutation({
   args: {
     userId: v.string(),
-    pizzaId: v.id("pizza"),
-    size: v.string(),
+    pizzaId: v.id("pizzas"),
+    size: v.union(v.literal("small"), v.literal("medium")),
     quantity: v.number(),
   },
   handler: async (ctx, args) => {
+    const { userId, pizzaId, size, quantity } = args;
+
     const existingItem = await ctx.db
-      .query("cart")
+      .query("cartItems")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .filter(
-        (q) =>
-          q.eq(q.field("userId"), args.userId) &&
-          q.eq(q.field("pizzaId"), args.pizzaId) &&
-          q.eq(q.field("size"), args.size),
+        (q) => q.eq(q.field("pizzaId"), pizzaId) && q.eq(q.field("size"), size),
       )
       .first();
 
     if (existingItem) {
-      if (args.quantity > 0) {
-        await ctx.db.patch(existingItem._id, { quantity: args.quantity });
-      } else {
-        await ctx.db.delete(existingItem._id);
-      }
-    } else if (args.quantity > 0) {
-      await ctx.db.insert("cart", args);
+      await ctx.db.patch(existingItem._id, { quantity });
+    } else {
+      await ctx.db.insert("cartItems", {
+        userId,
+        pizzaId,
+        size,
+        quantity,
+      });
     }
   },
 });
@@ -72,22 +46,22 @@ export const updateCartItem = mutation({
 export const deleteCartItem = mutation({
   args: {
     userId: v.string(),
-    pizzaId: v.id("pizza"),
-    size: v.string(),
+    pizzaId: v.id("pizzas"),
+    size: v.union(v.literal("small"), v.literal("medium")),
   },
   handler: async (ctx, args) => {
-    const itemToDelete = await ctx.db
-      .query("cart")
+    const { userId, pizzaId, size } = args;
+
+    const existingItem = await ctx.db
+      .query("cartItems")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .filter(
-        (q) =>
-          q.eq(q.field("userId"), args.userId) &&
-          q.eq(q.field("pizzaId"), args.pizzaId) &&
-          q.eq(q.field("size"), args.size),
+        (q) => q.eq(q.field("pizzaId"), pizzaId) && q.eq(q.field("size"), size),
       )
       .first();
 
-    if (itemToDelete) {
-      await ctx.db.delete(itemToDelete._id);
+    if (existingItem) {
+      await ctx.db.delete(existingItem._id);
     }
   },
 });

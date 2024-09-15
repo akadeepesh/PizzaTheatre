@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,44 +16,50 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import toast from "react-hot-toast";
 
-const stringToNumber = z.string().transform((val) => Number(val));
-
 const FormSchema = z.object({
-  pizza_name: z.string(),
-  toppings: z.string(),
-  price: z.object({
-    medium: stringToNumber,
-    small: stringToNumber,
-  }),
-  quantity: stringToNumber,
+  name: z.string().min(1, "Pizza name is required"),
+  toppings: z.string().min(1, "Toppings are required"),
+  smallPrice: z.number().min(0, "Price must be a positive number"),
+  mediumPrice: z.number().min(0, "Price must be a positive number"),
+  imageUrl: z.string().url().optional(),
+  isAvailable: z.boolean(),
 });
 
+type FormValues = z.infer<typeof FormSchema>;
+
 const AddNewPizza = () => {
-  const addPizza = useMutation(api.pizzas.pizza);
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const addPizza = useMutation(api.pizzas.addPizza);
+  const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      pizza_name: "",
-      toppings: "Cheese",
-      price: {
-        medium: 239,
-        small: 129,
-      },
-      quantity: 100,
+      name: "",
+      toppings: "",
+      smallPrice: 0,
+      mediumPrice: 0,
+      imageUrl: "",
+      isAvailable: true,
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit(data: FormValues) {
     addPizza({
-      name: data.pizza_name,
-      toppings: data.toppings,
-      price: data.price,
-      quantity: data.quantity,
-    }).then(() => {
-      toast.success("Pizza added successfully");
-    });
+      name: data.name,
+      toppings: data.toppings.split(",").map((topping) => topping.trim()),
+      smallPrice: data.smallPrice,
+      mediumPrice: data.mediumPrice,
+      imageUrl: data.imageUrl || undefined,
+      isAvailable: data.isAvailable,
+    })
+      .then(() => {
+        toast.success("Pizza added successfully");
+        form.reset();
+      })
+      .catch((error: Error) => {
+        toast.error("Failed to add pizza: " + error.message);
+      });
   }
 
   return (
@@ -67,7 +72,7 @@ const AddNewPizza = () => {
           >
             <FormField
               control={form.control}
-              name="pizza_name"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Pizza Name</FormLabel>
@@ -87,14 +92,17 @@ const AddNewPizza = () => {
               name="toppings"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mention toppings</FormLabel>
+                  <FormLabel>Toppings</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Cheese, Capsicum, Tomatoes..."
+                      placeholder="Cheese, Pepperoni, Mushrooms..."
                       {...field}
                       className="ml-3 placeholder:font-Annapura"
                     />
                   </FormControl>
+                  <FormDescription className="ml-4 font-Annapura">
+                    Enter toppings separated by commas
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -102,17 +110,16 @@ const AddNewPizza = () => {
             <div className="flex justify-between items-center flex-row gap-6">
               <FormField
                 control={form.control}
-                name="price.small"
+                name="smallPrice"
                 render={({ field }) => (
                   <FormItem className="w-1/2">
                     <FormLabel>Small Pizza Price</FormLabel>
                     <FormControl>
                       <Input
-                        step={1}
                         type="number"
                         placeholder="299"
                         {...field}
-                        required={false}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                         className="ml-3 placeholder:font-Annapura"
                       />
                     </FormControl>
@@ -122,18 +129,17 @@ const AddNewPizza = () => {
               />
               <FormField
                 control={form.control}
-                name="price.medium"
+                name="mediumPrice"
                 render={({ field }) => (
                   <FormItem className="w-1/2">
                     <FormLabel>Medium Pizza Price</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        step={1}
                         placeholder="499"
-                        className="ml-3 placeholder:font-Annapura"
                         {...field}
-                        required={false}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="ml-3 placeholder:font-Annapura"
                       />
                     </FormControl>
                     <FormMessage />
@@ -141,33 +147,40 @@ const AddNewPizza = () => {
                 )}
               />
             </div>
-            {/* {form.formState.errors.price && (
-              <FormDescription className="flex text-primary gap-1 font-Annapura ml-5 items-center justify-center">
-                <AlertCircle size={18} />
-                <div className="text-primary">
-                  {form.formState.errors.price.message}
-                </div>
-              </FormDescription>
-            )} */}
             <FormField
               control={form.control}
-              name="quantity"
+              name="imageUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Quantity</FormLabel>
+                  <FormLabel>Image URL (optional)</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      step={1}
-                      placeholder="25"
+                      placeholder="https://example.com/pizza-image.jpg"
                       className="ml-3 placeholder:font-Annapura"
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription className="ml-4 font-Annapura">
-                    Quantity of the pizza available in the store
-                  </FormDescription>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isAvailable"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Available</FormLabel>
+                    <FormDescription>
+                      Is this pizza currently available for order?
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />

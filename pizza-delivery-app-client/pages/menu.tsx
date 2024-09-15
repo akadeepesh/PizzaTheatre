@@ -18,111 +18,122 @@ import { Id } from "@/convex/_generated/dataModel";
 import Head from "next/head";
 
 type CartItem = {
-  _id: Id<"cart">;
-  pizzaId: Id<"pizza">;
-  size: string;
+  _id: Id<"cartItems">;
+  pizzaId: Id<"pizzas">;
+  size: "small" | "medium";
   quantity: number;
+};
+
+type Pizza = {
+  _id: Id<"pizzas">;
+  name: string;
+  toppings: string[];
+  smallPrice: number;
+  mediumPrice: number;
+  imageUrl?: string;
 };
 
 export function Items() {
   const { user } = useUser();
-  const pizzas = useQuery(api.pizzas.getPizzas);
+  const pizzas = useQuery(api.pizzas.getPizzas) as Pizza[] | undefined;
   const updateCartItem = useMutation(api.cart.updateCartItem);
   const deleteCartItem = useMutation(api.cart.deleteCartItem);
   const getCart = useQuery(api.cart.getUserCartItems, {
     userId: user?.id || "",
   });
 
-  const [itemCount, setItemCount] = useState<{
-    [key: string]: { [size: string]: number };
+  const [cartItems, setCartItems] = useState<{ [key: string]: CartItem }>({});
+  const [selectedSize, setSelectedSize] = useState<{
+    [key: string]: "small" | "medium";
   }>({});
-  const [selectedSize, setSelectedSize] = useState<{ [key: string]: string }>(
-    {},
-  );
 
   useEffect(() => {
-    if (pizzas && getCart) {
-      const newItemCount: { [key: string]: { [size: string]: number } } = {};
-      const newSelectedSize: { [key: string]: string } = {};
+    if (pizzas) {
+      const newSelectedSize: { [key: string]: "small" | "medium" } = {};
       pizzas.forEach((pizza) => {
-        newItemCount[pizza._id] = { small: 0, medium: 0 };
         newSelectedSize[pizza._id] = "small";
       });
-      getCart.forEach((item: CartItem) => {
-        if (newItemCount[item.pizzaId]) {
-          newItemCount[item.pizzaId][item.size] = item.quantity;
-        }
-      });
-      setItemCount(newItemCount);
       setSelectedSize(newSelectedSize);
     }
-  }, [pizzas, getCart]);
+  }, [pizzas]);
 
-  const handleAddToCart = async (pizzaId: Id<"pizza">, size: string) => {
-    try {
-      const newCount =
-        ((itemCount[pizzaId] && itemCount[pizzaId][size]) || 0) + 1;
-      setItemCount({
-        ...itemCount,
-        [pizzaId]: { ...itemCount[pizzaId], [size]: newCount },
+  useEffect(() => {
+    if (getCart) {
+      const newCartItems: { [key: string]: CartItem } = {};
+      getCart.forEach((item) => {
+        const key = `${item.pizzaId}-${item.size}`;
+        newCartItems[key] = item;
       });
+      setCartItems(newCartItems);
+    }
+  }, [getCart]);
 
+  const handleAddToCart = async (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+  ) => {
+    const key = `${pizzaId}-${size}`;
+    const currentItem = cartItems[key];
+    const newQuantity = currentItem ? currentItem.quantity + 1 : 1;
+
+    try {
       await updateCartItem({
         userId: user?.id || "",
         pizzaId,
         size,
-        quantity: newCount,
+        quantity: newQuantity,
+      });
+
+      setCartItems({
+        ...cartItems,
+        [key]: { ...currentItem, quantity: newQuantity } as CartItem,
       });
     } catch (error) {
       console.error("Error adding to cart:", error);
-      setItemCount({
-        ...itemCount,
-        [pizzaId]: {
-          ...itemCount[pizzaId],
-          [size]: itemCount[pizzaId]?.[size] || 0,
-        },
-      });
     }
   };
 
-  const handleRemoveFromCart = async (pizzaId: Id<"pizza">, size: string) => {
-    try {
-      const newCount = Math.max(
-        ((itemCount[pizzaId] && itemCount[pizzaId][size]) || 0) - 1,
-        0,
-      );
-      setItemCount({
-        ...itemCount,
-        [pizzaId]: { ...itemCount[pizzaId], [size]: newCount },
-      });
+  const handleRemoveFromCart = async (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+  ) => {
+    const key = `${pizzaId}-${size}`;
+    const currentItem = cartItems[key];
+    if (!currentItem) return;
 
-      if (newCount === 0) {
+    const newQuantity = currentItem.quantity - 1;
+
+    try {
+      if (newQuantity === 0) {
         await deleteCartItem({
           userId: user?.id || "",
           pizzaId,
           size,
         });
+        const newCartItems = { ...cartItems };
+        delete newCartItems[key];
+        setCartItems(newCartItems);
       } else {
         await updateCartItem({
           userId: user?.id || "",
           pizzaId,
           size,
-          quantity: newCount,
+          quantity: newQuantity,
+        });
+        setCartItems({
+          ...cartItems,
+          [key]: { ...currentItem, quantity: newQuantity },
         });
       }
     } catch (error) {
       console.error("Error removing from cart:", error);
-      setItemCount({
-        ...itemCount,
-        [pizzaId]: {
-          ...itemCount[pizzaId],
-          [size]: itemCount[pizzaId]?.[size] || 0,
-        },
-      });
     }
   };
 
-  const handleSizeChange = async (pizzaId: Id<"pizza">, size: string) => {
+  const handleSizeChange = (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+  ) => {
     setSelectedSize({ ...selectedSize, [pizzaId]: size });
   };
 
@@ -130,129 +141,107 @@ export function Items() {
 
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      {pizzas.map((pizza) => (
-        <CardContainer key={pizza._id} className="m-5">
-          <CardBody className="bg-gray-50 tracking-tight md:tracking-wide relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto md:w-96 h-auto rounded-xl p-6 border">
-            <CardItem
-              translateZ="50"
-              className="text-xl font-Anta flex flex-row justify-between font-bold text-neutral-600 dark:text-white"
-            >
-              <div className="select-text">{pizza.name}</div>
-              <div className="">
+      {pizzas.map((pizza) => {
+        const size = selectedSize[pizza._id] || "small";
+        const cartKey = `${pizza._id}-${size}`;
+        const quantity = cartItems[cartKey]?.quantity || 0;
+        const price = size === "small" ? pizza.smallPrice : pizza.mediumPrice;
+
+        return (
+          <CardContainer key={pizza._id} className="m-5">
+            <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto md:w-96 h-auto rounded-xl p-6 border">
+              <CardItem
+                translateZ="50"
+                className="text-xl font-bold text-neutral-600 dark:text-white flex justify-between items-center"
+              >
+                <span className="font-Anta">{pizza.name}</span>
                 <Select
-                  value={selectedSize[pizza._id] || "small"}
-                  onValueChange={(value) => handleSizeChange(pizza._id, value)}
+                  value={size}
+                  onValueChange={(value) =>
+                    handleSizeChange(pizza._id, value as "small" | "medium")
+                  }
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder={`Select Size`} />
+                  <SelectTrigger className="w-[120px]">
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="small">
-                      ₹ {pizza.price.small} - S
+                      ₹ {pizza.smallPrice} - S
                     </SelectItem>
                     <SelectItem value="medium">
-                      ₹ {pizza.price.medium} - M
+                      ₹ {pizza.mediumPrice} - M
                     </SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-            </CardItem>
-            <CardItem
-              as="p"
-              translateZ="60"
-              className="text-neutral-500 font-Annapura select-text text-sm max-w-sm mt-2 dark:text-neutral-300"
-            >
-              {pizza.toppings}
-            </CardItem>
-            <CardItem translateZ="100" className="w-full mt-4">
-              <Image
-                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                height="1000"
-                width="1000"
-                className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                alt="thumbnail"
-              />
-            </CardItem>
-            <div className="flex justify-between items-center mt-20 gap-20 select-none">
-              <CardItem
-                translateZ={20}
-                as="button"
-                className="rounded-2xl font-normal dark:text-white"
-              >
-                {(itemCount[pizza._id]?.[selectedSize[pizza._id]] || 0) ===
-                0 ? (
-                  <div
-                    onClick={() =>
-                      handleAddToCart(pizza._id, selectedSize[pizza._id])
-                    }
-                    className="text-sm font-Annapura"
-                  >
-                    Add to Cart →
-                  </div>
-                ) : (
-                  <div className="flex flex-row justify-evenly items-center cursor-default">
-                    {(itemCount[pizza._id]?.[selectedSize[pizza._id]] || 0) ===
-                    1 ? (
-                      <div
-                        onClick={() =>
-                          handleRemoveFromCart(
-                            pizza._id,
-                            selectedSize[pizza._id],
-                          )
-                        }
-                        className="hover:bg-secondary rounded-md p-1 cursor-pointer"
-                      >
-                        <Trash2 size={20} />
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() =>
-                          handleRemoveFromCart(
-                            pizza._id,
-                            selectedSize[pizza._id],
-                          )
-                        }
-                        className="hover:bg-secondary rounded-md p-1 cursor-pointer"
-                      >
-                        <Minus size={20} />
-                      </div>
-                    )}
-                    <Separator orientation="vertical" className="bg-primary" />
-                    <div>
-                      {itemCount[pizza._id]?.[selectedSize[pizza._id]] || 0}
-                    </div>
-                    <Separator orientation="vertical" className="bg-primary" />
-                    <div
-                      onClick={() =>
-                        handleAddToCart(pizza._id, selectedSize[pizza._id])
-                      }
-                      className="hover:bg-secondary rounded-md p-1 cursor-pointer"
-                    >
-                      <Plus size={20} />
-                    </div>
-                  </div>
-                )}
               </CardItem>
-              <div className="w-full cursor-pointer">
+              <CardItem
+                as="p"
+                translateZ="60"
+                className="text-neutral-500 text-sm mt-2 dark:text-neutral-300 font-Annapura"
+              >
+                {pizza.toppings.join(", ")}
+              </CardItem>
+              <CardItem translateZ="100" className="w-full mt-4">
+                <Image
+                  src={pizza.imageUrl || "https://via.placeholder.com/400x240"}
+                  height={240}
+                  width={400}
+                  className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                  alt={pizza.name}
+                />
+              </CardItem>
+              <div className="flex justify-between items-center mt-6">
                 <CardItem
                   translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold font-Anta"
+                  className="text-2xl font-bold dark:text-white"
                 >
-                  Buy Now
+                  ₹{price}
+                </CardItem>
+                <CardItem
+                  translateZ={20}
+                  className="flex items-center space-x-2"
+                >
+                  {quantity === 0 ? (
+                    <button
+                      onClick={() => handleAddToCart(pizza._id, size)}
+                      className="px-4 py-2 bg-black text-white rounded-xl text-sm font-bold"
+                    >
+                      Add to Cart
+                    </button>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleRemoveFromCart(pizza._id, size)}
+                        className="p-1 bg-gray-200 rounded-md"
+                      >
+                        {quantity === 1 ? (
+                          <Trash2 size={20} />
+                        ) : (
+                          <Minus size={20} />
+                        )}
+                      </button>
+                      <span className="font-bold">{quantity}</span>
+                      <button
+                        onClick={() => handleAddToCart(pizza._id, size)}
+                        className="p-1 bg-gray-200 rounded-md"
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
+                  )}
                 </CardItem>
               </div>
-            </div>
-          </CardBody>
-        </CardContainer>
-      ))}
+            </CardBody>
+          </CardContainer>
+        );
+      })}
     </div>
   );
 }
 
 const Menu = () => {
   return (
-    <div className="">
+    <div>
       <Head>
         <title>Pizza Theatre | Menu</title>
       </Head>
