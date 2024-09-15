@@ -199,7 +199,7 @@ export function Items() {
                 </CardItem>
                 <CardItem
                   translateZ={20}
-                  className="flex items-center space-x-2"
+                  className="flex items-center justify-end space-x-2"
                 >
                   {quantity === 0 ? (
                     <button
@@ -212,7 +212,7 @@ export function Items() {
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => handleRemoveFromCart(pizza._id, size)}
-                        className="p-1 bg-gray-200 rounded-md"
+                        className="p-1 bg-secondary rounded-md"
                       >
                         {quantity === 1 ? (
                           <Trash2 size={20} />
@@ -220,10 +220,18 @@ export function Items() {
                           <Minus size={20} />
                         )}
                       </button>
+                      <Separator
+                        className="w-[1px] h-6 bg-muted-foreground"
+                        orientation="vertical"
+                      />
                       <span className="font-bold">{quantity}</span>
+                      <Separator
+                        className="w-[1px] h-6 bg-muted-foreground"
+                        orientation="vertical"
+                      />
                       <button
                         onClick={() => handleAddToCart(pizza._id, size)}
-                        className="p-1 bg-gray-200 rounded-md"
+                        className="p-1 bg-secondary rounded-md"
                       >
                         <Plus size={20} />
                       </button>
