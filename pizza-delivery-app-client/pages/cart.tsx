@@ -40,7 +40,7 @@ const Cart = () => {
     userId: user?.id || "",
   }) as CartItem[] | undefined;
   const pizzas = useQuery(api.pizzas.getPizzas) as Pizza[] | undefined;
-  const updateCartItem = useMutation(api.cart.updateCartItem);
+  const updateCartItem = useMutation(api.cart.updateCartItemQuantity);
   const deleteCartItem = useMutation(api.cart.deleteCartItem);
 
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -57,7 +57,7 @@ const Cart = () => {
         userId: user?.id || "",
         pizzaId: item.pizzaId,
         size: item.size,
-        quantity: newQuantity,
+        quantityChange: newQuantity,
       });
       setCart(
         cart.map((i) =>

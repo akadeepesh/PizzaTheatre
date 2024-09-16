@@ -17,13 +17,6 @@ import { useUser } from "@clerk/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 import Head from "next/head";
 
-type CartItem = {
-  _id: Id<"cartItems">;
-  pizzaId: Id<"pizzas">;
-  size: "small" | "medium";
-  quantity: number;
-};
-
 type Pizza = {
   _id: Id<"pizzas">;
   name: string;
@@ -34,19 +27,16 @@ type Pizza = {
 };
 
 export function Items() {
-  const { user } = useUser();
   const pizzas = useQuery(api.pizzas.getPizzas) as Pizza[] | undefined;
-  const updateCartItem = useMutation(api.cart.updateCartItem);
+  const addToCart = useMutation(api.cart.addToCart);
+  const updateCartItemQuantity = useMutation(api.cart.updateCartItemQuantity);
   const deleteCartItem = useMutation(api.cart.deleteCartItem);
-  const getCart = useQuery(api.cart.getUserCartItems, {
-    userId: user?.id || "",
-  });
+  const getCart = useQuery(api.cart.getUserCartItems);
 
-  const [cartItems, setCartItems] = useState<{ [key: string]: CartItem }>({});
   const [selectedSize, setSelectedSize] = useState<{
     [key: string]: "small" | "medium";
   }>({});
-
+  ``;
   useEffect(() => {
     if (pizzas) {
       const newSelectedSize: { [key: string]: "small" | "medium" } = {};
@@ -57,76 +47,57 @@ export function Items() {
     }
   }, [pizzas]);
 
-  useEffect(() => {
-    if (getCart) {
-      const newCartItems: { [key: string]: CartItem } = {};
-      getCart.forEach((item) => {
-        const key = `${item.pizzaId}-${item.size}`;
-        newCartItems[key] = item;
-      });
-      setCartItems(newCartItems);
-    }
-  }, [getCart]);
+  const getCartItemQuantity = (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+  ) => {
+    return (
+      getCart?.find((item) => item.pizzaId === pizzaId && item.size === size)
+        ?.quantity || 0
+    );
+  };
 
   const handleAddToCart = async (
     pizzaId: Id<"pizzas">,
     size: "small" | "medium",
   ) => {
-    const key = `${pizzaId}-${size}`;
-    const currentItem = cartItems[key];
-    const newQuantity = currentItem ? currentItem.quantity + 1 : 1;
-
     try {
-      await updateCartItem({
-        userId: user?.id || "",
+      await addToCart({
         pizzaId,
         size,
-        quantity: newQuantity,
-      });
-
-      setCartItems({
-        ...cartItems,
-        [key]: { ...currentItem, quantity: newQuantity } as CartItem,
       });
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
   };
 
-  const handleRemoveFromCart = async (
+  const handleUpdateQuantity = async (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+    quantityChange: number,
+  ) => {
+    try {
+      await updateCartItemQuantity({
+        pizzaId,
+        size,
+        quantityChange,
+      });
+    } catch (error) {
+      console.error("Error updating cart item quantity:", error);
+    }
+  };
+
+  const handleDeleteCartItem = async (
     pizzaId: Id<"pizzas">,
     size: "small" | "medium",
   ) => {
-    const key = `${pizzaId}-${size}`;
-    const currentItem = cartItems[key];
-    if (!currentItem) return;
-
-    const newQuantity = currentItem.quantity - 1;
-
     try {
-      if (newQuantity === 0) {
-        await deleteCartItem({
-          userId: user?.id || "",
-          pizzaId,
-          size,
-        });
-        const newCartItems = { ...cartItems };
-        delete newCartItems[key];
-        setCartItems(newCartItems);
-      } else {
-        await updateCartItem({
-          userId: user?.id || "",
-          pizzaId,
-          size,
-          quantity: newQuantity,
-        });
-        setCartItems({
-          ...cartItems,
-          [key]: { ...currentItem, quantity: newQuantity },
-        });
-      }
+      await deleteCartItem({
+        pizzaId,
+        size,
+      });
     } catch (error) {
-      console.error("Error removing from cart:", error);
+      console.error("Error deleting cart item:", error);
     }
   };
 
@@ -143,8 +114,7 @@ export function Items() {
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
       {pizzas.map((pizza) => {
         const size = selectedSize[pizza._id] || "small";
-        const cartKey = `${pizza._id}-${size}`;
-        const quantity = cartItems[cartKey]?.quantity || 0;
+        const quantity = getCartItemQuantity(pizza._id, size);
         const price = size === "small" ? pizza.smallPrice : pizza.mediumPrice;
 
         return (
@@ -211,7 +181,11 @@ export function Items() {
                   ) : (
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() => handleRemoveFromCart(pizza._id, size)}
+                        onClick={() =>
+                          quantity === 1
+                            ? handleDeleteCartItem(pizza._id, size)
+                            : handleUpdateQuantity(pizza._id, size, -1)
+                        }
                         className="p-1 bg-secondary rounded-md"
                       >
                         {quantity === 1 ? (
@@ -230,7 +204,7 @@ export function Items() {
                         orientation="vertical"
                       />
                       <button
-                        onClick={() => handleAddToCart(pizza._id, size)}
+                        onClick={() => handleUpdateQuantity(pizza._id, size, 1)}
                         className="p-1 bg-secondary rounded-md"
                       >
                         <Plus size={20} />
