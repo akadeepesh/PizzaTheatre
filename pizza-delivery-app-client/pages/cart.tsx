@@ -36,12 +36,10 @@ type Pizza = {
 
 const Cart = () => {
   const { user, isLoaded } = useUser();
-  const cartItems = useQuery(api.cart.getUserCartItems, {
-    userId: user?.id || "",
-  }) as CartItem[] | undefined;
+  const cartItems = useQuery(api.cart.getUserCartItems);
   const pizzas = useQuery(api.pizzas.getPizzas) as Pizza[] | undefined;
-  const updateCartItem = useMutation(api.cart.updateCartItemQuantity);
   const deleteCartItem = useMutation(api.cart.deleteCartItem);
+  const updateCartItemQuantity = useMutation(api.cart.updateCartItemQuantity);
 
   const [cart, setCart] = useState<CartItem[]>([]);
 
@@ -51,26 +49,33 @@ const Cart = () => {
     }
   }, [cartItems]);
 
-  const handleQuantityChange = async (item: CartItem, newQuantity: number) => {
-    if (newQuantity > 0) {
-      await updateCartItem({
-        userId: user?.id || "",
-        pizzaId: item.pizzaId,
-        size: item.size,
-        quantityChange: newQuantity,
+  const handleUpdateQuantity = async (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+    quantityChange: number,
+  ) => {
+    try {
+      await updateCartItemQuantity({
+        pizzaId,
+        size,
+        quantityChange,
       });
-      setCart(
-        cart.map((i) =>
-          i._id === item._id ? { ...i, quantity: newQuantity } : i,
-        ),
-      );
-    } else {
+    } catch (error) {
+      console.error("Error updating cart item quantity:", error);
+    }
+  };
+
+  const handleDeleteCartItem = async (
+    pizzaId: Id<"pizzas">,
+    size: "small" | "medium",
+  ) => {
+    try {
       await deleteCartItem({
-        userId: user?.id || "",
-        pizzaId: item.pizzaId,
-        size: item.size,
+        pizzaId,
+        size,
       });
-      setCart(cart.filter((i) => i._id !== item._id));
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
     }
   };
 
@@ -142,10 +147,13 @@ const Cart = () => {
                         <div className="flex items-center space-x-2">
                           <Button
                             onClick={() =>
-                              handleQuantityChange(
-                                cartItem,
-                                cartItem.quantity - 1,
-                              )
+                              cartItem.quantity === 1
+                                ? handleDeleteCartItem(pizza._id, cartItem.size)
+                                : handleUpdateQuantity(
+                                    pizza._id,
+                                    cartItem.size,
+                                    -1,
+                                  )
                             }
                             size="sm"
                             variant="outline"
@@ -159,10 +167,7 @@ const Cart = () => {
                           <span>{cartItem.quantity}</span>
                           <Button
                             onClick={() =>
-                              handleQuantityChange(
-                                cartItem,
-                                cartItem.quantity + 1,
-                              )
+                              handleUpdateQuantity(pizza._id, cartItem.size, 1)
                             }
                             size="sm"
                             variant="outline"
