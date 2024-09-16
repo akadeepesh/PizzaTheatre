@@ -1,211 +1,262 @@
-"use client";
-import React from "react";
-import { NextSeo } from "next-seo";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { PizzaIcon, Flame, Salad, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-} from "@/components/ui/select";
-import * as z from "zod";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Cart } from "@/components/CustomCart";
+import { Pizza, PizzaOption, PizzaOptions } from "@/types/pizza";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import Image from "next/image";
-// import MultiSelect, { Hotel } from "@/components/MultiSelect";
-import FancyMultiSelect from "@/components/MultiSelectTry";
+const pizzaOptions: PizzaOptions = {
+  bases: [
+    { id: "thin", name: "Thin Crust", price: 150 },
+    { id: "thick", name: "Thick Crust", price: 180 },
+    { id: "stuffed", name: "Stuffed Crust", price: 220 },
+    { id: "gluten-free", name: "Gluten-Free", price: 200 },
+  ],
+  sauces: [
+    { id: "tomato", name: "Tomato", price: 20 },
+    { id: "bbq", name: "BBQ", price: 30 },
+    { id: "garlic", name: "Garlic", price: 30 },
+    { id: "pesto", name: "Pesto", price: 40 },
+  ],
+  cheeses: [
+    { id: "mozzarella", name: "Mozzarella", price: 40 },
+    { id: "cheddar", name: "Cheddar", price: 40 },
+    { id: "parmesan", name: "Parmesan", price: 50 },
+    { id: "gouda", name: "Gouda", price: 50 },
+  ],
+  toppings: [
+    { id: "pepperoni", name: "Pepperoni", price: 30 },
+    { id: "mushrooms", name: "Mushrooms", price: 20 },
+    { id: "onions", name: "Onions", price: 20 },
+    { id: "sausage", name: "Sausage", price: 30 },
+    { id: "bellPeppers", name: "Bell Peppers", price: 20 },
+    { id: "olives", name: "Olives", price: 20 },
+    { id: "ham", name: "Ham", price: 30 },
+    { id: "pineapple", name: "Pineapple", price: 20 },
+  ],
+};
 
-const FormSchema = z.object({
-  pizzaBase: z.string(),
-  pizaaSauce: z.string(),
-  pizzaCheese: z.string(),
-  pizzaToppings: z.string(),
-});
+const PizzaBuilder: React.FC = () => {
+  const [base, setBase] = useState<string>("");
+  const [sauce, setSauce] = useState<string>("");
+  const [cheese, setCheese] = useState<string>("");
+  const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
+  const [cart, setCart] = useState<Pizza[]>([]);
 
-const Custom = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  const calculatePrice = (): number => {
+    const basePrice = pizzaOptions.bases.find((b) => b.id === base)?.price || 0;
+    const saucePrice =
+      pizzaOptions.sauces.find((s) => s.id === sauce)?.price || 0;
+    const cheesePrice =
+      pizzaOptions.cheeses.find((c) => c.id === cheese)?.price || 0;
+    const toppingsPrice = selectedToppings.reduce((sum, t) => {
+      const topping = pizzaOptions.toppings.find((top) => top.id === t);
+      return sum + (topping?.price || 0);
+    }, 0);
+    return basePrice + saucePrice + cheesePrice + toppingsPrice;
+  };
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
-  return (
-    <div className="flex flex-wrap justify-center max-w-screen-lg mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
-      <NextSeo
-        title={"Make Your Pizza"}
-        description="Pizza Theater is an Pizza ordering app, here you can make your own customized pizza."
-        canonical="https://pizza-theater.vercel.app/"
-        openGraph={{
-          url: "https://pizza-theater.vercel.app/",
-          title: "Pizza Theater",
-          description:
-            "Pizza Theater is an Pizza ordering app that allows you to order your favorite pizza from the comfort of your home.",
-          siteName: "Pizza Theater",
-        }}
-      />
-      <div className="w-full justify-between p-10 flex bg-muted text-foreground rounded-badge">
-        <div className="w-full flex">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8 w-full"
-            >
-              <FormField
-                control={form.control}
-                name="pizzaBase"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col gap-8">
-                    <FormLabel className="text-xl">
-                      <span className="font-Anta">
-                        Let&apos;s Make Your Pizza{" "}
-                      </span>
-                      <span className="font-bold text-primary font-ProtestRevolution">
-                        Your&apos;s
-                      </span>
-                    </FormLabel>
-                    <div className="mx-5 flex flex-col">
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="bg-primary font-bold">
-                            <SelectValue placeholder="The Pizza Base!!!" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
-                          <SelectGroup>
-                            <SelectLabel>Choose Your Favorite Base</SelectLabel>
-                            <div className="p-2">
-                              <SelectItem value="TC">Thin Crust</SelectItem>
-                              <SelectItem value="NYS">
-                                New York Style
-                              </SelectItem>
-                              <SelectItem value="DD">Deep Dish</SelectItem>
-                              <SelectItem value="S">Sourdough</SelectItem>
-                              <SelectItem value="N">Neapolitan</SelectItem>
-                            </div>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="pizaaSauce"
-                render={({ field }) => (
-                  <FormItem className="mx-5">
-                    <Select
-                    // onValueChange={field.onChange}
-                    // defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="bg-primary font-bold">
-                          <SelectValue placeholder="Looking Some Sauce?" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
-                        <SelectGroup>
-                          <SelectLabel>Pizza Sauce</SelectLabel>
-                          <div className="p-2">
-                            <SelectItem value="marinara">Marinara</SelectItem>
-                            <SelectItem value="pesto">Pesto</SelectItem>
-                            <SelectItem value="alfredo">Alfredo</SelectItem>
-                            <SelectItem value="bbq">BBQ</SelectItem>
-                            <SelectItem value="GarlicButter">
-                              Garlic Butter
-                            </SelectItem>
-                          </div>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="pizzaCheese"
-                render={({ field }) => (
-                  <FormItem className="mx-5">
-                    <Select
-                    // onValueChange={field.onChange}
-                    // defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="bg-primary font-bold">
-                          <SelectValue placeholder="Add Some Cheese Here" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-gradient-to-br from-rose-300 to-red-500 dark:bg-gradient-to-tl">
-                        <SelectGroup>
-                          <SelectLabel>Cheese</SelectLabel>
-                          <div className="p-2">
-                            <SelectItem value="mozzarella">
-                              Mozzarella
-                            </SelectItem>
-                            <SelectItem value="parmesan">Parmesan</SelectItem>
-                            <SelectItem value="cheddar">Cheddar</SelectItem>
-                            <SelectItem value="provolone">Provolone</SelectItem>
-                            <SelectItem value="ricotta">Ricotta</SelectItem>
-                          </div>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* <div className="mx-5"> */}
-              {/* <MultiSelect
-                  selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}
-                /> */}
-              {/* <FancyMultiSelect /> */}
-              {/* </div> */}
-              <Button size={"lg"} type="submit" className="group">
-                <div className="flex gap-1 items-center">
-                  <div className="text-lg font-Anta">Generate Pizza</div>
-                  <Image
-                    src="/images/CircelPizzaIcon.png"
-                    alt="Icon"
-                    width={30}
-                    height={30}
-                    className="group-hover:animate-spin transition duration-300 ease-in-out"
-                  />
-                </div>
+  const handleAddToCart = () => {
+    if (!base || !sauce || !cheese) {
+      alert("Please select a base, sauce, and cheese before adding to cart.");
+      return;
+    }
+    const newPizza: Pizza = {
+      base,
+      sauce,
+      cheese,
+      toppings: selectedToppings,
+      price: calculatePrice(),
+    };
+    setCart([...cart, newPizza]);
+    // Reset selections
+    setBase("");
+    setSauce("");
+    setCheese("");
+    setSelectedToppings([]);
+  };
+
+  const removeFromCart = (index: number) => {
+    setCart(cart.filter((_, i) => i !== index));
+  };
+
+  const OptionCard: React.FC<{
+    title: string;
+    options: PizzaOption[];
+    icon: React.ReactNode;
+    selectedValue: string | string[];
+    onChange: (value: string | string[]) => void;
+    multiple?: boolean;
+  }> = ({
+    title,
+    options,
+    icon,
+    selectedValue,
+    onChange,
+    multiple = false,
+  }) => (
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          {icon}
+          <span>{title}</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea className="h-48 w-full rounded-md">
+          <div className="grid grid-cols-2 gap-2 p-2">
+            {options.map((option) => (
+              <Button
+                key={option.id}
+                variant={
+                  multiple
+                    ? (selectedValue as string[]).includes(option.id)
+                      ? "default"
+                      : "outline"
+                    : selectedValue === option.id
+                      ? "default"
+                      : "outline"
+                }
+                className="justify-start"
+                onClick={() => {
+                  if (multiple) {
+                    const newValue = (selectedValue as string[]).includes(
+                      option.id,
+                    )
+                      ? (selectedValue as string[]).filter(
+                          (id) => id !== option.id,
+                        )
+                      : [...(selectedValue as string[]), option.id];
+                    onChange(newValue);
+                  } else {
+                    onChange(option.id);
+                  }
+                }}
+              >
+                <span className="truncate">{option.name}</span>
+                <Badge variant="secondary" className="ml-auto">
+                  ₹{option.price}
+                </Badge>
               </Button>
-            </form>
-          </Form>
-        </div>
-        {/* <div className="flex w-full max-w-sm">buy menu</div> */}
-      </div>
+            ))}
+          </div>
+        </ScrollArea>
+      </CardContent>
+    </Card>
+  );
+
+  return (
+    <div className="container mx-auto p-6 mt-20">
+      <motion.h1
+        className="text-4xl font-bold text-primary mb-8 text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Craft Your Dream Pizza
+      </motion.h1>
+
+      <Tabs defaultValue="base" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="base">Base</TabsTrigger>
+          <TabsTrigger value="sauce">Sauce</TabsTrigger>
+          <TabsTrigger value="cheese">Cheese</TabsTrigger>
+          <TabsTrigger value="toppings">Toppings</TabsTrigger>
+        </TabsList>
+        <TabsContent value="base">
+          <OptionCard
+            title="Choose Your Base"
+            options={pizzaOptions.bases}
+            icon={<PizzaIcon className="w-6 h-6" />}
+            selectedValue={base}
+            onChange={(value) => setBase(value as string)}
+          />
+        </TabsContent>
+        <TabsContent value="sauce">
+          <OptionCard
+            title="Select Your Sauce"
+            options={pizzaOptions.sauces}
+            icon={<Flame className="w-6 h-6" />}
+            selectedValue={sauce}
+            onChange={(value) => setSauce(value as string)}
+          />
+        </TabsContent>
+        <TabsContent value="cheese">
+          <OptionCard
+            title="Pick Your Cheese"
+            options={pizzaOptions.cheeses}
+            icon={<PizzaIcon className="w-6 h-6" />}
+            selectedValue={cheese}
+            onChange={(value) => setCheese(value as string)}
+          />
+        </TabsContent>
+        <TabsContent value="toppings">
+          <OptionCard
+            title="Choose Your Toppings"
+            options={pizzaOptions.toppings}
+            icon={<Salad className="w-6 h-6" />}
+            selectedValue={selectedToppings}
+            onChange={(value) => setSelectedToppings(value as string[])}
+            multiple
+          />
+        </TabsContent>
+      </Tabs>
+
+      <motion.div
+        className="mt-8 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        {base && sauce && cheese && selectedToppings.length > 0 ? (
+          <Button
+            onClick={handleAddToCart}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+          >
+            Add to Cart (₹{calculatePrice().toFixed(2)})
+          </Button>
+        ) : (
+          <p className="text-muted-foreground">
+            Select a base, sauce, cheese, and toppings to add to cart.
+          </p>
+        )}
+      </motion.div>
+
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            className="fixed bottom-4 right-4 z-50 rounded-full p-4"
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            <span className="sr-only">Cart</span>
+            <Badge variant="secondary" className="ml-2">
+              {cart.length}
+            </Badge>
+          </Button>
+        </SheetTrigger>
+        <SheetContent className="w-[400px] sm:w-[540px]">
+          <SheetHeader>
+            <SheetTitle>Your Pizza Cart</SheetTitle>
+            <SheetDescription>Review your custom pizzas here.</SheetDescription>
+          </SheetHeader>
+          <Cart pizzas={cart} onRemove={removeFromCart} />
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
 
-export default Custom;
+export default PizzaBuilder;

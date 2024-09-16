@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
 import { neobrutalism } from "@clerk/themes";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);

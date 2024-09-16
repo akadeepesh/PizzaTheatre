@@ -165,7 +165,7 @@ export function Items() {
                   translateZ={20}
                   className="text-2xl font-bold dark:text-white"
                 >
-                  ₹{price}
+                  {price * quantity === 0 ? "" : "₹" + price * quantity}
                 </CardItem>
                 <CardItem
                   translateZ={20}

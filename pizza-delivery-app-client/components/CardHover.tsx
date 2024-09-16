@@ -28,16 +28,4 @@ export const projects = [
     description: "Check The Orders Made By Customers",
     link: "/admin/check-buy-orders",
   },
-  // {
-  //   title: "Amazon",
-  //   description:
-  //     "A multinational technology company focusing on e-commerce, cloud computing, digital streaming, and artificial intelligence.",
-  //   link: "https://amazon.com",
-  // },
-  // {
-  //   title: "Microsoft",
-  //   description:
-  //     "A multinational technology company that develops, manufactures, licenses, supports, and sells computer software, consumer electronics, personal computers, and related services.",
-  //   link: "https://microsoft.com",
-  // },
 ];
