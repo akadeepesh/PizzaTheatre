@@ -2,6 +2,7 @@
 import Feedback from "@/components/Reviews";
 import Landing from "@/components/Landing";
 import Head from "next/head";
+import PizzaGlobeLanding from "@/components/PizzaGlobeLanding";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       </Head>
       <Landing />
       <Feedback />
+      <PizzaGlobeLanding />
     </div>
   );
 };
