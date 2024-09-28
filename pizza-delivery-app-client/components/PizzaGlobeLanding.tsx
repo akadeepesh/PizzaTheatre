@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Card, CardContent } from "@/components/ui/card";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((m) => m.World),
@@ -13,15 +12,15 @@ const World = dynamic(
 export const PizzaGlobeLanding: React.FC = () => {
   const globeConfig = {
     pointSize: 4,
-    globeColor: "#EF251A", // Orange color for pizza crust
+    globeColor: "#062056",
     showAtmosphere: true,
-    atmosphereColor: "#FBC8C6", // Yellow color for cheese glow
+    atmosphereColor: "#FFFFFF",
     atmosphereAltitude: 0.1,
-    emissive: "#EF251A", // Red-orange for sauce glow
-    emissiveIntensity: 0.2,
+    emissive: "#062056",
+    emissiveIntensity: 0.1,
     shininess: 0.9,
     polygonColor: "rgba(255,255,255,0.7)",
-    ambientLight: "#38bdf8", // Light salmon color
+    ambientLight: "#38bdf8",
     directionalLeftLight: "#ffffff",
     directionalTopLight: "#ffffff",
     pointLight: "#ffffff",
@@ -29,12 +28,12 @@ export const PizzaGlobeLanding: React.FC = () => {
     arcLength: 0.9,
     rings: 1,
     maxRings: 3,
-    initialPosition: { lat: 0, lng: 0 },
+    initialPosition: { lat: 22.3193, lng: 114.1694 },
     autoRotate: true,
     autoRotateSpeed: 0.5,
   };
 
-  const colors = ["#ea580c", "#b91c1c", "#fca5a5"]; // Tomato, OrangeRed, Red
+  const colors = ["#06b6d4", "#3b82f6", "#6366f1"];
   const sampleArcs = [
     {
       order: 1,
@@ -399,22 +398,22 @@ export const PizzaGlobeLanding: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center max-h-screen h-[91.5svh] md:h-[82.5svh] w-full">
+    <div className="flex flex-col mt-20 items-center justify-center max-h-screen h-[91.5svh] md:h-[82.5svh] w-full">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         className="text-center z-10 mb-8"
       >
-        <h1 className="text-4xl md:text-6xl font-extrabold font-Anta mb-4">
+        <h1 className="text-2xl md:text-4xl font-extrabold font-Anta mb-4">
           Slicing Across the Globe!
         </h1>
-        <p className="text-base md:text-lg font-Annapura text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-xs md:text-base font-Annapura text-muted-foreground max-w-2xl mx-auto">
           Our pizzas are taking over the world, one slice at a time!
         </p>
       </motion.div>
 
-      <div className="relative h-[500px] md:h-[600px] w-full">
+      <div className="relative h-72 md:h-full w-full">
         <World data={sampleArcs} globeConfig={globeConfig} />
       </div>
     </div>

@@ -1,0 +1,337 @@
+[
+
+  {
+
+    "name": "Margherita Classica",
+
+    "toppings": [
+
+      "Fresh Mozzarella",
+
+      "Basil",
+
+      "Tomato Sauce"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Pepperoni Passion",
+
+    "toppings": [
+
+      "Pepperoni",
+
+      "Mozzarella",
+
+      "Tomato Sauce"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Veggie Supreme",
+
+    "toppings": [
+
+      "Bell Peppers",
+
+      "Onions",
+
+      "Mushrooms",
+
+      "Olives",
+
+      "Tomatoes"
+
+    ]
+
+  },
+
+  {
+
+    "name": "BBQ Chicken Deluxe",
+
+    "toppings": [
+
+      "Grilled Chicken",
+
+      "BBQ Sauce",
+
+      "Red Onions",
+
+      "Cilantro"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Hawaiian Luau",
+
+    "toppings": [
+
+      "Ham",
+
+      "Pineapple",
+
+      "Mozzarella",
+
+      "Tomato Sauce"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Quattro Formaggi",
+
+    "toppings": [
+
+      "Mozzarella",
+
+      "Gorgonzola",
+
+      "Parmesan",
+
+      "Ricotta"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Spicy Diavola",
+
+    "toppings": [
+
+      "Spicy Salami",
+
+      "Chili Flakes",
+
+      "Bell Peppers",
+
+      "Onions"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Truffle Mushroom",
+
+    "toppings": [
+
+      "Truffle Oil",
+
+      "Mixed Mushrooms",
+
+      "Arugula",
+
+      "Parmesan"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Meat Lovers' Feast",
+
+    "toppings": [
+
+      "Pepperoni",
+
+      "Sausage",
+
+      "Bacon",
+
+      "Ground Beef",
+
+      "Ham"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Gourmet Prosciutto & Fig",
+
+    "toppings": [
+
+      "Prosciutto",
+
+      "Fresh Figs",
+
+      "Goat Cheese",
+
+      "Balsamic Glaze",
+
+      "Arugula"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Buffalo Chicken Ranch",
+
+    "toppings": [
+
+      "Buffalo Chicken",
+
+      "Ranch Dressing",
+
+      "Red Onions",
+
+      "Blue Cheese Crumbles"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Pesto Perfection",
+
+    "toppings": [
+
+      "Basil Pesto",
+
+      "Cherry Tomatoes",
+
+      "Mozzarella",
+
+      "Pine Nuts"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Seafood Sensation",
+
+    "toppings": [
+
+      "Shrimp",
+
+      "Calamari",
+
+      "Mussels",
+
+      "Garlic",
+
+      "Parsley"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Tex-Mex Fiesta",
+
+    "toppings": [
+
+      "Ground Beef",
+
+      "Jalapeños",
+
+      "Corn",
+
+      "Black Beans",
+
+      "Cheddar Cheese"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Rustic Potato & Rosemary",
+
+    "toppings": [
+
+      "Thin-sliced Potatoes",
+
+      "Fresh Rosemary",
+
+      "Garlic",
+
+      "Olive Oil"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Lobster & Truffle",
+
+    "toppings": [
+
+      "Lobster Meat",
+
+      "Truffle Oil",
+
+      "Mascarpone",
+
+      "Chives"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Greek Odyssey",
+
+    "toppings": [
+
+      "Kalamata Olives",
+
+      "Feta Cheese",
+
+      "Red Onions",
+
+      "Oregano",
+
+      "Olive Oil"
+
+    ]
+
+  },
+
+  {
+
+    "name": "Breakfast All Day",
+
+    "toppings": [
+
+      "Scrambled Eggs",
+
+      "Bacon",
+
+      "Hash Browns",
+
+      "Cheddar Cheese",
+
+      "Hollandaise Sauce"
+
+    ]
+
+  }
+
+]

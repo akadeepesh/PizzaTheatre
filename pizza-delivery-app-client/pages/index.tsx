@@ -11,8 +11,8 @@ const HomePage = () => {
         <title>Pizza Theatre</title>
       </Head>
       <Landing />
-      <Feedback />
       <PizzaGlobeLanding />
+      <Feedback />
     </div>
   );
 };
