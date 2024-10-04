@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Loader2, Minus, Plus, Trash2 } from "lucide-react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import {
@@ -25,6 +25,11 @@ type Pizza = {
   mediumPrice: number;
   imageUrl?: string;
 };
+const LoadingSpinner = () => (
+  <div className="fixed inset-0 flex items-center justify-center dark:bg-black bg-opacity-75 z-50">
+    <Loader2 className="w-16 h-16 text-primary animate-spin" />
+  </div>
+);
 
 export function Items() {
   const pizzas = useQuery(api.pizzas.getPizzas) as Pizza[] | undefined;
@@ -108,7 +113,7 @@ export function Items() {
     setSelectedSize({ ...selectedSize, [pizzaId]: size });
   };
 
-  if (!pizzas) return <div>Loading...</div>;
+  if (!pizzas) return <LoadingSpinner />;
 
   return (
     <div className="flex flex-wrap justify-center max-w-screen-xl mx-auto mt-20 sm:mt-24 md:mt-28 lg:mt-36">
