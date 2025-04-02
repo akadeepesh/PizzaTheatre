@@ -1,5 +1,3 @@
-# 🍕 PizzaTheatre
-
 ![PizzaTheatre Banner](https://github.com/user-attachments/assets/84f2d3b8-11c4-420e-b442-ef459d6f5eff)
 
 PizzaTheatre is a delightful web application that brings the pizzeria experience to your fingertips. Admins can craft and sell pizzas, while users can explore, customize, and order their perfect slice. With an intuitive interface and powerful features, PizzaTheatre makes pizza ordering a breeze!
