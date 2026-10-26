@@ -56,3 +56,9 @@ If you have any questions or need support, please open an issue or contact me at
 ---
 
 Bon Appétit! 🍕✨
+
+---
+
+<p align="center"><sub>
+  Built by <a href="https://akadeepesh.com?ref=github">Deepesh Kumar</a> · more work at <a href="https://akadeepesh.com?ref=github">akadeepesh.com</a>
+</sub></p>
